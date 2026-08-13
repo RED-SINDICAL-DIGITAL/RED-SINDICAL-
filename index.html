@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -24,12 +24,12 @@
         </div>
         <div class="search-box">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="searchInput" placeholder="Buscar en TMDB...">
+            <input type="text" id="searchInput" placeholder="Buscar películas, series o música...">
         </div>
     </nav>
 
     <main class="main-content">
-        <!-- HERO BANNER -->
+        <!-- HERO -->
         <header class="hero" id="hero-banner">
             <div class="hero-overlay"></div>
             <div class="hero-content">
@@ -47,40 +47,42 @@
         <!-- RESULTADOS DE BÚSQUEDA -->
         <section class="content-section" id="resultados-busqueda" style="display: none;">
             <h2>Resultados de Búsqueda</h2>
-            <div class="carousel" id="carousel-busqueda"></div>
+            <div id="busqueda-tmdb">
+                <h3 style="color:var(--text-muted);font-size:16px;margin-bottom:10px;">Películas y Series</h3>
+                <div class="carousel" id="carousel-busqueda"></div>
+            </div>
+            <div id="busqueda-musica">
+                <h3 style="color:var(--text-muted);font-size:16px;margin:20px 0 10px;">Música (iTunes)</h3>
+                <div id="resultados-musica"></div>
+            </div>
         </section>
 
-        <!-- SECCIÓN: CINE -->
+        <!-- SECCIONES -->
         <section class="content-section" id="cine">
             <h2>Cine de Culto y Clásicos</h2>
             <div class="carousel" id="carousel-cine"></div>
         </section>
 
-        <!-- SECCIÓN: SERIES -->
         <section class="content-section" id="series">
             <h2>Series Aclamadas</h2>
             <div class="carousel" id="carousel-series"></div>
         </section>
 
-        <!-- SECCIÓN: TEATRO & ESPECTÁCULOS -->
         <section class="content-section" id="teatro">
             <h2>Teatro, Circo y Conciertos</h2>
             <div class="carousel" id="carousel-teatro"></div>
         </section>
 
-        <!-- SECCIÓN: RADIOS COLABORADORAS -->
         <section class="content-section" id="radios">
             <h2>Radios Colaboradoras</h2>
             <div class="grid-radios" id="contenedor-radios"></div>
         </section>
 
-        <!-- SECCIÓN: ARTISTAS (iTunes) -->
         <section class="content-section" id="artistas">
             <h2>Artistas Destacados</h2>
             <div class="carousel" id="carousel-artistas"></div>
         </section>
 
-        <!-- FOOTER -->
         <footer class="site-footer">
             <div class="footer-content">
                 <h3>Marcos Guido Di Nella</h3>
@@ -97,7 +99,7 @@
     <footer class="player-bar" id="player-bar">
         <div class="player-left">
             <div class="cover-wrapper">
-                <img id="currentCoverArt" src="https://via.placeholder.com/60/111/fff?text=AUDIO" alt="Cover Art">
+                <img id="currentCoverArt" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Crect width='60' height='60' fill='%23111'/%3E%3Ctext x='30' y='35' font-family='Inter' font-size='16' fill='%23aaa' text-anchor='middle'%3EUADAV%3C/text%3E%3C/svg%3E" alt="Cover">
                 <div class="live-pulse" id="live-indicator"></div>
             </div>
             <div class="track-info">
@@ -121,6 +123,7 @@
                 <input type="range" id="progress-slider" min="0" max="100" value="0">
                 <span id="total-time">0:00</span>
             </div>
+            <div id="history-container" style="width:100%; margin-top:5px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center;"></div>
         </div>
 
         <div class="player-right">
@@ -132,11 +135,7 @@
         </div>
     </footer>
 
-    <!-- ======================== -->
     <!-- MODALES -->
-    <!-- ======================== -->
-
-    <!-- MODAL DE VIDEO -->
     <div id="video-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeVideo()">&times;</span>
@@ -144,7 +143,6 @@
         </div>
     </div>
 
-    <!-- MODAL DE SUSCRIPCIÓN -->
     <div id="suscripcion-modal" class="modal">
         <div class="modal-content suscripcion-content">
             <span class="close-btn" onclick="closeSuscripcion()">&times;</span>
@@ -166,7 +164,6 @@
         </div>
     </div>
 
-    <!-- MODAL DE RADIO (Perfil) -->
     <div id="radio-modal" class="modal">
         <div class="modal-content radio-content">
             <span class="close-btn" onclick="closeRadioModal()">&times;</span>
@@ -174,7 +171,6 @@
         </div>
     </div>
 
-    <!-- MODAL DE EPISODIOS DE SERIE -->
     <div id="episodios-modal" class="modal">
         <div class="modal-content episodios-content">
             <span class="close-btn" onclick="closeEpisodios()">&times;</span>
@@ -183,7 +179,6 @@
         </div>
     </div>
 
-    <!-- MODAL DE ARTISTA (iTunes) -->
     <div id="artista-modal" class="modal">
         <div class="modal-content artista-content">
             <span class="close-btn" onclick="closeArtista()">&times;</span>
@@ -191,7 +186,6 @@
         </div>
     </div>
 
-    <!-- MODAL DE COLA DE REPRODUCCIÓN -->
     <div id="queue-modal" class="modal">
         <div class="modal-content queue-content">
             <span class="close-btn" onclick="closeQueue()">&times;</span>
