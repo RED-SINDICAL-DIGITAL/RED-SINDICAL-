@@ -143,7 +143,6 @@
             height: 100vh;
             padding-bottom: 110px;
         }
-        /* Header del main (solo para el título de sección) */
         .main-header {
             position: sticky;
             top: 0;
@@ -269,9 +268,16 @@
             width: 160px;
             border-radius: var(--radius);
             background: var(--bg-card);
+            text-align: center;
         }
-        .card-artista img { aspect-ratio: 1/1; object-fit: cover; border-radius: var(--radius) var(--radius) 0 0; }
-        .card-artista .info { background: var(--bg-card); padding: 12px; text-align: center; }
+        .card-artista img {
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 50%;
+            padding: 12px;
+            background: var(--bg-card);
+        }
+        .card-artista .info { background: var(--bg-card); padding: 0 12px 12px 12px; text-align: center; }
         .card-artista .info h3 { font-size: 15px; font-weight: 600; }
         .card-artista .info p { font-size: 12px; color: var(--text-muted); }
 
@@ -675,7 +681,7 @@
         .cancion-item img {
             width: 44px;
             height: 44px;
-            border-radius: 4px;
+            border-radius: 50%;
             object-fit: cover;
         }
         .cancion-item .nombre { flex: 1; font-weight: 500; }
@@ -893,6 +899,17 @@
         <div id="page-content">
             <!-- INICIO -->
             <div id="pagina-inicio">
+                <!-- Hero (recomendado) -->
+                <div class="hero" id="hero-banner" style="position:relative; height:300px; background-size:cover; background-position:center; border-radius:var(--radius); margin-bottom:30px; display:flex; align-items:flex-end; padding:30px;">
+                    <div style="position:absolute; top:0; left:0; right:0; bottom:0; background:linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%); border-radius:var(--radius);"></div>
+                    <div style="position:relative; z-index:1;">
+                        <span class="badge" style="background:var(--accent); color:white; padding:4px 12px; border-radius:50px; font-size:12px; font-weight:600; display:inline-block; margin-bottom:8px;">RECOMENDADO</span>
+                        <h1 id="hero-title" style="font-size:36px; font-weight:800; margin-bottom:6px;">Cargando...</h1>
+                        <p id="hero-desc" style="color:#ddd; margin-bottom:12px;">Conectando con el catálogo...</p>
+                        <button class="btn-play" id="hero-play" style="background:var(--accent); color:white; border:none; padding:10px 24px; border-radius:50px; font-weight:bold; cursor:pointer; display:inline-flex; align-items:center; gap:8px;">▶ Reproducir</button>
+                    </div>
+                </div>
+
                 <!-- Cine -->
                 <section class="content-section" id="cine">
                     <h2><i class="fa-solid fa-film"></i> Cine de Culto</h2>
@@ -1069,8 +1086,10 @@
             { titulo: "Matrix recargado", enlace: "https://ok.ru/video/5010916379373", premium: false }
         ];
 
+        // Series con TMDB ID para obtener datos enriquecidos
         const seriesData = [
             {
+                tmdbId: 4110,
                 titulo: "Los Simuladores",
                 poster: "https://image.tmdb.org/t/p/w500/8nFg4L8P0M9XQ7Q3lN2o1jYl1q.jpg",
                 episodios: [
@@ -1103,6 +1122,7 @@
                 ]
             },
             {
+                tmdbId: 105267,
                 titulo: "Okupas",
                 poster: "https://image.tmdb.org/t/p/w500/6z2Wp4oXw9gGf5jJ0y8o6N1vLZ.jpg",
                 episodios: [
@@ -1246,9 +1266,9 @@
         });
 
         // ==============================================================
-        // 4. CATÁLOGO ESTÁTICO
+        // 4. CATÁLOGO ESTÁTICO (con TMDB para series)
         // ==============================================================
-        function inicializarCatalogo() {
+        async function inicializarCatalogo() {
             // Cine
             const contCine = $('carousel-cine');
             if (contCine) {
@@ -1262,21 +1282,36 @@
                     }
                 });
             }
-            // Series
+
+            // Series con TMDB
             const contSeries = $('carousel-series');
             if (contSeries) {
                 contSeries.innerHTML = '';
-                seriesData.forEach(serie => {
-                    const poster = serie.poster || `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Crect width='300' height='450' fill='%23111'/%3E%3Ctext x='150' y='225' font-family='Inter' font-size='20' fill='%23666' text-anchor='middle'%3E${encodeURIComponent(serie.titulo)}%3C/text%3E%3C/svg%3E`;
+                for (const serie of seriesData) {
+                    let data = null;
+                    try {
+                        const res = await fetch(`https://api.themoviedb.org/3/tv/${serie.tmdbId}?api_key=3fb36c15f2daa69df6bf8b07b1237183&language=es-ES`);
+                        if (res.ok) data = await res.json();
+                    } catch (e) { console.warn('Error TMDB:', e); }
+                    const poster = data?.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : serie.poster;
+                    const nombre = data?.name || serie.titulo;
+                    const year = data?.first_air_date ? data.first_air_date.substring(0, 4) : '';
                     const card = document.createElement('div');
                     card.className = 'card card-video';
                     card.setAttribute('tabindex', '0');
-                    card.innerHTML = `<img src="${poster}" alt="${serie.titulo}"><div class="info"><h3>${serie.titulo}</h3></div>`;
+                    card.innerHTML = `
+                        <img src="${poster}" alt="${nombre}">
+                        <div class="info">
+                            <h3>${nombre}</h3>
+                            <p>${year} · ${data?.number_of_seasons || '?'} temporadas</p>
+                        </div>
+                    `;
                     card.addEventListener('click', () => abrirEpisodios(serie));
                     card.addEventListener('keydown', (e) => { if (e.key === 'Enter') card.click(); });
                     contSeries.appendChild(card);
-                });
+                }
             }
+
             // Teatro
             const contTeatro = $('carousel-teatro');
             if (contTeatro) {
@@ -1344,7 +1379,6 @@
             });
             audioEl.addEventListener('ended', () => {
                 if (isRadioPlaying) {
-                    // La radio no termina, pero si se corta, reintentar
                     audioEl.load();
                     audioEl.play().catch(e => {});
                 } else {
@@ -1369,7 +1403,6 @@
                     document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
                 }
             });
-            // Cerrar modales al hacer clic fuera
             document.querySelectorAll('.modal').forEach(m => {
                 m.addEventListener('click', (e) => {
                     if (e.target === m) m.classList.remove('active');
@@ -1450,7 +1483,6 @@
             liveIndicator.classList.remove('active');
             isRadioPlaying = false;
             guardarQueue();
-            // Agregar al historial (mini)
             if (item.titulo) {
                 historySongs.unshift(item);
                 if (historySongs.length > 5) historySongs.pop();
@@ -1708,7 +1740,7 @@
         }
 
         // ==============================================================
-        // 9. ARTISTAS - OBTENIDOS DESDE iTunes
+        // 9. ARTISTAS - OBTENIDOS DESDE iTunes (con carátulas redondas)
         // ==============================================================
         async function renderizarArtistas() {
             const cont = $('carousel-artistas');
@@ -1824,7 +1856,8 @@
             const cont = $('canciones-artista');
             if (!cont) return;
             try {
-                const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(nombre)}&entity=song&limit=10`);
+                // Obtener canciones
+                const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(nombre)}&entity=song&limit=12`);
                 const data = await res.json();
                 if (!data.results || data.results.length === 0) {
                     cont.innerHTML = '<p style="color:var(--text-muted);">No se encontraron canciones.</p>';
@@ -1883,7 +1916,6 @@
         // 10. RADIO DEL ARTISTA
         // ==============================================================
         function iniciarRadioArtista(nombre) {
-            // Simular radio del artista: buscar canciones similares y ponerlas en cola
             fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(nombre)}&entity=song&limit=15`)
                 .then(res => res.json())
                 .then(data => {
@@ -1905,7 +1937,7 @@
         }
 
         // ==============================================================
-        // 11. TENDENCIAS
+        // 11. TENDENCIAS (con IP usando ip-api.com)
         // ==============================================================
         async function cargarTendencias() {
             const grid = $('trending-grid');
@@ -1914,10 +1946,15 @@
             try {
                 let country = 'us';
                 try {
-                    const ipRes = await fetch('https://ipapi.co/json/');
+                    // Usamos ip-api.com que permite CORS
+                    const ipRes = await fetch('https://ip-api.com/json/');
                     const ipData = await ipRes.json();
-                    if (ipData && ipData.country_code) country = ipData.country_code.toLowerCase();
-                } catch (e) {}
+                    if (ipData && ipData.countryCode) {
+                        country = ipData.countryCode.toLowerCase();
+                    }
+                } catch (e) {
+                    console.warn('No se pudo obtener ubicación, usando US.');
+                }
                 const res = await fetch(`https://itunes.apple.com/search?term=popular&entity=song&limit=12&country=${country}`);
                 const data = await res.json();
                 if (!data.results || data.results.length === 0) {
@@ -1963,7 +2000,6 @@
                     secResultados.style.display = 'none';
                     return;
                 }
-                // Cambiar a página de buscar
                 cambiarPagina('buscar');
                 timeoutId = setTimeout(async () => {
                     secResultados.style.display = 'block';
@@ -2003,7 +2039,7 @@
                                 const div = document.createElement('div');
                                 div.className = 'resultado-musica';
                                 div.innerHTML = `
-                                    <img src="${cover}" alt="${track.trackName}" style="width:44px;height:44px;border-radius:4px;object-fit:cover;margin-right:12px;">
+                                    <img src="${cover}" alt="${track.trackName}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;margin-right:12px;">
                                     <div class="info">
                                         <span class="nombre">${track.trackName}</span>
                                         <span class="artista">${track.artistName}</span>
@@ -2059,7 +2095,8 @@
             } else if (video.tipo === 'okru') {
                 iframeSrc = `https://ok.ru/videoembed/${video.id}?autoplay=1`;
             }
-            container.innerHTML = `<iframe src="${iframeSrc}" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
+            // Usar solo el atributo 'allow' con las políticas correctas (sin allowfullscreen duplicado)
+            container.innerHTML = `<iframe src="${iframeSrc}" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
             modal.classList.add('active');
             if (audioEl && !audioEl.paused) {
                 audioEl.pause();
@@ -2164,15 +2201,6 @@
         function abrirPlaylist(idx) {
             const pl = playlists[idx];
             if (!pl) return;
-            let mensaje = `Playlist: ${pl.nombre}\n`;
-            if (pl.canciones.length === 0) {
-                mensaje += 'No hay canciones.';
-            } else {
-                pl.canciones.forEach((c, i) => {
-                    mensaje += `${i+1}. ${c.titulo} - ${c.artista}\n`;
-                });
-            }
-            // Mostrar en un modal simple
             const modal = document.createElement('div');
             modal.className = 'modal active';
             modal.style.display = 'flex';
@@ -2209,7 +2237,6 @@
             localStorage.setItem('playlists', JSON.stringify(playlists));
             renderizarPlaylists();
             alert('Canción añadida a la playlist.');
-            // Cerrar modal actual
             document.querySelectorAll('.modal').forEach(m => m.remove());
         }
 
@@ -2219,7 +2246,6 @@
                 pl.canciones.splice(cancionIdx, 1);
                 localStorage.setItem('playlists', JSON.stringify(playlists));
                 renderizarPlaylists();
-                // Refrescar modal
                 document.querySelectorAll('.modal').forEach(m => m.remove());
                 abrirPlaylist(playlistIdx);
             }
@@ -2232,7 +2258,6 @@
             const grid = $('biblioteca-grid');
             if (!grid) return;
             grid.innerHTML = '';
-            // Favoritos
             if (favoritos.length > 0) {
                 favoritos.forEach((fav, idx) => {
                     const div = document.createElement('div');
@@ -2277,21 +2302,16 @@
 
         function cambiarPagina(page) {
             currentPage = page;
-            // Active link
             document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
             const link = document.querySelector(`.sidebar nav a[data-page="${page}"]`);
             if (link) link.classList.add('active');
 
-            // Ocultar todas las páginas
             document.querySelectorAll('#page-content > div').forEach(div => div.style.display = 'none');
-            // Mostrar la seleccionada
             const map = { inicio: 'pagina-inicio', buscar: 'pagina-buscar', biblioteca: 'pagina-biblioteca' };
             const target = document.getElementById(map[page]);
             if (target) target.style.display = 'block';
-            // Actualizar título
             const titles = { inicio: 'Inicio', buscar: 'Buscar', biblioteca: 'Biblioteca' };
             $('page-title').textContent = titles[page] || 'Inicio';
-            // Mostrar/ocultar buscador
             const searchBox = $('search-box-container');
             if (page === 'buscar') {
                 searchBox.style.display = 'flex';
@@ -2349,7 +2369,6 @@
             }
         });
 
-        // Inicialmente mostrar inicio
         cambiarPagina('inicio');
     </script>
 </body>
