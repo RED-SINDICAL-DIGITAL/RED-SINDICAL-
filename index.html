@@ -29,7 +29,6 @@
             padding-bottom: 110px;
             overflow-x: hidden;
         }
-        /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-elevated); }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
@@ -131,6 +130,7 @@
         .card-artista img { aspect-ratio: 1/1; object-fit: cover; border-radius: var(--radius) var(--radius) 0 0; }
         .card-artista .info { background: var(--bg-card); padding: 12px; text-align: center; }
         .card-artista .info h3 { font-size: 16px; font-weight: 600; }
+        .card-artista .info p { font-size: 13px; color: var(--text-muted); }
 
         /* ===== RADIOS ===== */
         .grid-radios {
@@ -698,7 +698,7 @@
 
     <script>
         // ==============================================================
-        // 1. DATOS ESTÁTICOS (PELIS.TXT + ARTISTAS MEJORADOS)
+        // 1. DATOS ESTÁTICOS (PELIS.TXT + SERIES + TEATRO)
         // ==============================================================
         const peliculas = [
             { titulo: "Drive (2011)", enlace: "https://ok.ru/video/8829831350907", premium: true },
@@ -720,11 +720,30 @@
                 episodios: [
                     { numero: 1, titulo: "Tarjeta de Navidad", enlace: "https://ok.ru/video/7286191491722" },
                     { numero: 2, titulo: "Diagnóstico rectoscópico", enlace: "https://ok.ru/video/7286191884938" },
-                    // ... (todos los episodios)
+                    { numero: 3, titulo: "Seguro de desempleo", enlace: "https://ok.ru/video/7286192802442" },
+                    { numero: 4, titulo: "El testigo español", enlace: "https://ok.ru/video/7286192605834" },
+                    { numero: 5, titulo: "El joven simulador", enlace: "https://ok.ru/video/7286192671370" },
+                    { numero: 6, titulo: "El pequeño problema del gran hombre", enlace: "https://ok.ru/video/7286193064586" },
+                    { numero: 7, titulo: "Fuera de cálculo", enlace: "https://ok.ru/video/7289262049930" },
+                    { numero: 8, titulo: "El pacto Copérnico", enlace: "https://ok.ru/video/7286192933514" },
+                    { numero: 9, titulo: "El último héroe", enlace: "https://ok.ru/video/7286192540298" },
+                    { numero: 10, titulo: "Los impresentables", enlace: "https://ok.ru/video/7286192867978" },
+                    { numero: 11, titulo: "El colaborador foráneo", enlace: "https://ok.ru/video/7286192474762" },
+                    { numero: 12, titulo: "Marcela & Pau", enlace: "https://ok.ru/video/7286193130122" },
+                    { numero: 13, titulo: "Un trabajo involuntario", enlace: "https://ok.ru/video/7286192999050" }
                 ],
                 episodiosT2: [
                     { numero: 14, titulo: "Los cuatro Notables", enlace: "https://ok.ru/video/7289262312074" },
-                    // ...
+                    { numero: 15, titulo: "Z-9000", enlace: "https://ok.ru/video/7289262639754" },
+                    { numero: 16, titulo: "La gargantilla de las cuatro estaciones", enlace: "https://ok.ru/video/7289262377610" },
+                    { numero: 17, titulo: "El clan Motul", enlace: "https://ok.ru/video/7289262181002" },
+                    { numero: 18, titulo: "El vengador infantil", enlace: "https://ok.ru/video/7289262443146" },
+                    { numero: 19, titulo: "El matrimonio mixto", enlace: "https://ok.ru/video/7289262246538" },
+                    { numero: 20, titulo: "La Brigada B", enlace: "https://ok.ru/video/7289262049930" },
+                    { numero: 21, titulo: "Fin de semana de descanso", enlace: "https://ok.ru/video/7289262508682" },
+                    { numero: 22, titulo: "El debilitador social", enlace: "https://ok.ru/video/7289262115466" },
+                    { numero: 23, titulo: "El anillo de Salomón", enlace: "https://ok.ru/video/7289262705290" },
+                    { numero: 24, titulo: "Episodio final", enlace: "https://ok.ru/video/7289262574218" }
                 ]
             },
             {
@@ -732,13 +751,32 @@
                 poster: "https://image.tmdb.org/t/p/w500/6z2Wp4oXw9gGf5jJ0y8o6N1vLZ.jpg",
                 episodios: [
                     { numero: 1, titulo: "Los cinco mandamientos", enlace: "https://ok.ru/video/15530211936906" },
-                    // ...
+                    { numero: 2, titulo: "Bienvenidos al tren", enlace: "https://ok.ru/video/15530272623242" },
+                    { numero: 3, titulo: "El ojo blindado", enlace: "https://ok.ru/video/15530272426634" },
+                    { numero: 4, titulo: "El beso de Judas", enlace: "https://ok.ru/video/15530272492170" },
+                    { numero: 5, titulo: "El mascapito", enlace: "https://ok.ru/video/15530272688778" },
+                    { numero: 6, titulo: "Los mantenidos", enlace: "https://ok.ru/video/15530273147530" },
+                    { numero: 7, titulo: "Paranoia", enlace: "https://ok.ru/video/15530272754314" },
+                    { numero: 8, titulo: "El pollo de Troya", enlace: "https://ok.ru/video/15530273016458" },
+                    { numero: 9, titulo: "El guardian", enlace: "https://ok.ru/video/15530272950922" },
+                    { numero: 10, titulo: "Miguel", enlace: "https://ok.ru/video/15530272557706" },
+                    { numero: 11, titulo: "Adios y buena suerte", enlace: "https://ok.ru/video/15530272885386" }
                 ]
             }
         ];
 
-        // (Datos completos de teatro, radios y artistas se mantienen igual que antes)
-        // Por brevedad, mantengo los datos existentes. Se asume que están definidos.
+        const teatroData = [
+            { titulo: "Cirque du Soleil - Kurios", enlace: "https://www.youtube.com/watch?v=o8Yc-v_2k-8", tipo: "youtube", imagen: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500" },
+            { titulo: "Drácula, el musical", enlace: "https://ok.ru/video/7253473561307", tipo: "okru", imagen: "https://images.unsplash.com/photo-1507676184212-d0330a15233c?w=500" },
+            { titulo: "Lo Mejor Del Antro 2020", enlace: "https://ok.ru/video/4066351057488", tipo: "okru", imagen: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=500" },
+            { titulo: "Padre Guilherme (DJ Set)", enlace: "https://www.youtube.com/watch?v=Cp61jtJ9Pgk", tipo: "youtube", imagen: "https://images.unsplash.com/photo-1571266028243-e4733b0f0fb8?w=500" },
+            { titulo: "Michael Jackson - Dangerous Tour", enlace: "https://ok.ru/video/4703389181", tipo: "okru", imagen: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=500" },
+            { titulo: "TEATRO 'La muerte de un viajante'", enlace: "https://www.youtube.com/watch?v=gmriK9_h0lc", tipo: "youtube", imagen: "https://images.unsplash.com/photo-1503095396549-8071a2ebd31a?w=500" },
+            { titulo: "TEATRO 'La casa de Bernarda Alba'", enlace: "https://www.youtube.com/watch?v=pO-K_c0CTCY", tipo: "youtube", imagen: "https://images.unsplash.com/photo-1507676184212-d0330a15233c?w=500" },
+            { titulo: "Edipo el rey (Sófocles)", enlace: "https://www.youtube.com/watch?v=VQbbkGWQdCY", tipo: "youtube", imagen: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500" },
+            { titulo: "Cirque du Soleil - ALEGRÍA, BAZZAR, ECHO", enlace: "https://www.youtube.com/watch?v=o8Yc-v_2k-8", tipo: "youtube", imagen: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500" },
+            { titulo: "Circo Rodas", enlace: "https://www.youtube.com/watch?v=gWs-PNSAj1c", tipo: "youtube", imagen: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500" }
+        ];
 
         // ==============================================================
         // 2. REFERENCIAS DOM Y VARIABLES DE ESTADO
@@ -792,11 +830,65 @@
         });
 
         // ==============================================================
-        // 4. FUNCIONES DE CATÁLOGO (similares a antes, con mejoras)
+        // 4. FUNCIONES DE CATÁLOGO
         // ==============================================================
         async function inicializarCatalogo() {
-            // ... (código existente con las mismas funciones)
-            // Se omite por brevedad, pero se mantiene igual que la versión anterior.
+            // Cine
+            const contCine = $('carousel-cine');
+            for (const peli of peliculas) {
+                const poster = await obtenerPoster(peli.titulo, 'movie');
+                const card = document.createElement('div');
+                card.className = 'card card-video';
+                card.setAttribute('tabindex', '0');
+                card.innerHTML = `
+                    <img src="${poster}" alt="${peli.titulo}">
+                    <div class="info">
+                        <h3>${peli.titulo}</h3>
+                        ${peli.premium ? `<span class="premium-badge"><i class="fa-solid fa-crown"></i> PREMIUM</span>` : ''}
+                    </div>
+                `;
+                card.addEventListener('click', () => {
+                    if (peli.premium && !usuarioSuscrito) {
+                        $('suscripcion-modal').style.display = 'block';
+                        pendingVideo = { tipo: 'okru', id: extraerId(peli.enlace), titulo: peli.titulo };
+                        return;
+                    }
+                    abrirVideo({ tipo: 'okru', id: extraerId(peli.enlace), titulo: peli.titulo });
+                });
+                card.addEventListener('keydown', (e) => { if (e.key === 'Enter') card.click(); });
+                contCine.appendChild(card);
+                if (peli.titulo.includes('Padrino')) {
+                    configurarHero(peli.titulo, peli.enlace);
+                }
+            }
+
+            // Series
+            const contSeries = $('carousel-series');
+            for (const serie of seriesData) {
+                const poster = serie.poster || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22450%22%3E%3Crect width=%22300%22 height=%22450%22 fill=%22%23111%22/%3E%3Ctext x=%22150%22 y=%22225%22 font-family=%22Inter%22 font-size=%2220%22 fill=%22%23666%22 text-anchor=%22middle%22%3E' + encodeURIComponent(serie.titulo) + '%3C/text%3E%3C/svg%3E';
+                const card = document.createElement('div');
+                card.className = 'card card-video';
+                card.setAttribute('tabindex', '0');
+                card.innerHTML = `<img src="${poster}" alt="${serie.titulo}"><div class="info"><h3>${serie.titulo}</h3></div>`;
+                card.addEventListener('click', () => abrirEpisodios(serie));
+                card.addEventListener('keydown', (e) => { if (e.key === 'Enter') card.click(); });
+                contSeries.appendChild(card);
+            }
+
+            // Teatro
+            const contTeatro = $('carousel-teatro');
+            teatroData.forEach(obra => {
+                const card = document.createElement('div');
+                card.className = 'card card-teatro';
+                card.setAttribute('tabindex', '0');
+                card.innerHTML = `
+                    <img src="${obra.imagen}" alt="${obra.titulo}">
+                    <div class="info"><h3>${obra.titulo}</h3></div>
+                `;
+                card.addEventListener('click', () => abrirVideo({ tipo: obra.tipo, id: extraerId(obra.enlace), titulo: obra.titulo }));
+                card.addEventListener('keydown', (e) => { if (e.key === 'Enter') card.click(); });
+                contTeatro.appendChild(card);
+            });
         }
 
         async function obtenerPoster(query, type) {
@@ -1108,285 +1200,7 @@
         // ==============================================================
         // 8. RADIOS - PERFIL
         // ==============================================================
-        // (Código similar al anterior, con mejoras visuales)
-        // Se omite por brevedad, pero se mantiene igual.
-
-        // ==============================================================
-        // 9. ARTISTAS - PERFIL (Spotify style)
-        // ==============================================================
-        // (Código similar al anterior, con mejoras visuales)
-        // Se omite por brevedad.
-
-        // ==============================================================
-        // 10. BUSCADOR (TMDB + iTunes)
-        // ==============================================================
-        function configurarBuscador() {
-            const input = $('searchInput');
-            const secResultados = $('resultados-busqueda');
-            const contResultados = $('carousel-busqueda');
-            const contMusica = $('resultados-musica');
-            let timeoutId;
-            if (!input || !secResultados || !contResultados || !contMusica) return;
-
-            input.addEventListener('input', (e) => {
-                clearTimeout(timeoutId);
-                const query = e.target.value.trim();
-                if (query.length < 2) {
-                    secResultados.style.display = 'none';
-                    return;
-                }
-                timeoutId = setTimeout(async () => {
-                    secResultados.style.display = 'block';
-                    contResultados.innerHTML = '';
-                    contMusica.innerHTML = '<p style="color:var(--text-muted);">Buscando música...</p>';
-
-                    // TMDB
-                    try {
-                        const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=3fb36c15f2daa69df6bf8b07b1237183&language=es-ES&query=${encodeURIComponent(query)}`);
-                        const data = await res.json();
-                        const results = data.results.filter(item => item.media_type !== 'person');
-                        results.forEach(item => {
-                            const card = document.createElement('div');
-                            card.className = 'card card-video';
-                            card.setAttribute('tabindex', '0');
-                            const titulo = item.title || item.name || 'Sin título';
-                            const poster = item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Crect width='300' height='450' fill='%23111'/%3E%3Ctext x='150' y='225' font-family='Inter' font-size='20' fill='%23666' text-anchor='middle'%3ENo%20Image%3C/text%3E%3C/svg%3E`;
-                            card.innerHTML = `<img src="${poster}" alt="${titulo}"><div class="info"><h3>${titulo}</h3></div>`;
-                            card.addEventListener('click', () => {
-                                if (item.media_type === 'movie' || item.media_type === 'tv') {
-                                    buscarTrailer(item.id, item.media_type);
-                                }
-                            });
-                            card.addEventListener('keydown', (e) => { if (e.key === 'Enter') card.click(); });
-                            contResultados.appendChild(card);
-                        });
-                    } catch (e) { /* silencioso */ }
-
-                    // iTunes
-                    try {
-                        const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=10`);
-                        const data = await res.json();
-                        contMusica.innerHTML = '';
-                        if (data.results && data.results.length > 0) {
-                            data.results.forEach(track => {
-                                const div = document.createElement('div');
-                                div.className = 'resultado-musica';
-                                div.innerHTML = `
-                                    <div class="info">
-                                        <span class="nombre">${track.trackName}</span>
-                                        <span class="artista">${track.artistName}</span>
-                                    </div>
-                                    <button class="btn-reproducir">Reproducir</button>
-                                `;
-                                const btn = div.querySelector('.btn-reproducir');
-                                btn.addEventListener('click', (e) => {
-                                    e.stopPropagation();
-                                    const item = {
-                                        url: track.previewUrl,
-                                        titulo: track.trackName,
-                                        artista: track.artistName,
-                                        cover: track.artworkUrl100?.replace('100x100bb', '600x600bb') || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23111%22/%3E%3Ctext x=%2230%22 y=%2235%22 font-family=%22Inter%22 font-size=%2216%22 fill=%22%23aaa%22 text-anchor=%22middle%22%3EUADAV%3C/text%3E%3C/svg%3E'
-                                    };
-                                    reproducirAudio(item);
-                                    secResultados.style.display = 'none';
-                                    input.value = '';
-                                });
-                                div.addEventListener('click', () => btn.click());
-                                contMusica.appendChild(div);
-                            });
-                        } else {
-                            contMusica.innerHTML = '<p style="color:var(--text-muted);">No se encontraron canciones.</p>';
-                        }
-                    } catch (e) {
-                        contMusica.innerHTML = '<p style="color:var(--text-muted);">Error al buscar música.</p>';
-                    }
-
-                    if (contResultados.children.length === 0 && contMusica.children.length === 0) {
-                        contResultados.innerHTML = '<p style="color:var(--text-muted);padding:20px;">No se encontraron resultados.</p>';
-                    }
-                }, 400);
-            });
-        }
-
-        async function buscarTrailer(id, type) {
-            try {
-                const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}/videos?api_key=3fb36c15f2daa69df6bf8b07b1237183&language=es-ES`);
-                const data = await res.json();
-                const trailer = data.results.find(v => v.site === 'YouTube') || data.results[0];
-                if (trailer) {
-                    abrirVideo({ tipo: 'youtube', id: trailer.key, titulo: 'Tráiler' });
-                } else {
-                    alert('No se encontró tráiler.');
-                }
-            } catch (e) {
-                alert('Error al buscar tráiler.');
-            }
-        }
-
-        // ==============================================================
-        // 11. VIDEO (YouTube / OK.ru)
-        // ==============================================================
-        function abrirVideo(video) {
-            const modal = $('video-modal');
-            const container = $('video-container');
-            if (!modal || !container) return;
-            let iframeSrc = '';
-            if (video.tipo === 'youtube') {
-                iframeSrc = `https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`;
-            } else if (video.tipo === 'okru') {
-                iframeSrc = `https://ok.ru/videoembed/${video.id}?autoplay=1`;
-            }
-            container.innerHTML = `<iframe src="${iframeSrc}" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
-            modal.style.display = 'block';
-            if (audioEl && !audioEl.paused) {
-                audioEl.pause();
-                playIcon.className = 'fa-solid fa-circle-play';
-            }
-        }
-
-        function closeVideo() {
-            const modal = $('video-modal');
-            const container = $('video-container');
-            if (modal) modal.style.display = 'none';
-            if (container) container.innerHTML = '';
-        }
-
-        // ==============================================================
-        // 12. EPISODIOS DE SERIES
-        // ==============================================================
-        // (Código similar al anterior)
-
-        // ==============================================================
-        // 13. SUSCRIPCIÓN
-        // ==============================================================
-        function suscribirse(plan) {
-            usuarioSuscrito = true;
-            const modal = $('suscripcion-modal');
-            if (modal) modal.style.display = 'none';
-            alert(`¡Suscripción ${plan} activada! (Simulación)`);
-            if (pendingVideo) {
-                abrirVideo(pendingVideo);
-                pendingVideo = null;
-            }
-        }
-
-        function closeSuscripcion() {
-            const modal = $('suscripcion-modal');
-            if (modal) modal.style.display = 'none';
-            pendingVideo = null;
-        }
-
-        // ==============================================================
-        // 14. HERO
-        // ==============================================================
-        function cargarHeroPorDefecto() {
-            const padrino = peliculas.find(p => p.titulo.includes('Padrino'));
-            if (padrino) {
-                configurarHero(padrino.titulo, padrino.enlace);
-            }
-        }
-
-        function configurarHero(titulo, enlace) {
-            const hero = $('hero-banner');
-            const heroTitle = $('hero-title');
-            const heroDesc = $('hero-desc');
-            const heroPlay = $('hero-play');
-            if (!hero || !heroTitle || !heroDesc || !heroPlay) return;
-            hero.style.backgroundImage = `url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200')`;
-            heroTitle.textContent = titulo;
-            heroDesc.textContent = 'Película clásica recomendada. Haz clic en Reproducir para ver.';
-            heroPlay.onclick = () => {
-                const peli = peliculas.find(p => p.titulo.includes('Padrino'));
-                if (peli.premium && !usuarioSuscrito) {
-                    $('suscripcion-modal').style.display = 'block';
-                    pendingVideo = { tipo: 'okru', id: extraerId(enlace), titulo: titulo };
-                    return;
-                }
-                abrirVideo({ tipo: 'okru', id: extraerId(enlace), titulo: titulo });
-            };
-        }
-
-        // ==============================================================
-        // 15. TENDENCIAS (Música popular precargada)
-        // ==============================================================
-        async function cargarTendencias() {
-            const grid = $('trending-grid');
-            if (!grid) return;
-            grid.innerHTML = '<p style="color:var(--text-muted);">Cargando tendencias...</p>';
-            try {
-                // Buscar algunas canciones populares usando iTunes
-                const busquedas = ['bad bunny', 'dua lipa', 'the weeknd', 'coldplay', 'charly garcia'];
-                let resultados = [];
-                for (const q of busquedas) {
-                    const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&entity=song&limit=3`);
-                    const data = await res.json();
-                    if (data.results) {
-                        resultados = resultados.concat(data.results);
-                    }
-                }
-                // Mezclar y tomar 12
-                resultados = resultados.sort(() => Math.random() - 0.5).slice(0, 12);
-                grid.innerHTML = '';
-                resultados.forEach(track => {
-                    const div = document.createElement('div');
-                    div.className = 'trending-card';
-                    const img = track.artworkUrl100?.replace('100x100bb', '600x600bb') || 'https://via.placeholder.com/200';
-                    div.innerHTML = `
-                        <img src="${img}" alt="${track.trackName}">
-                        <h4>${track.trackName}</h4>
-                        <p>${track.artistName}</p>
-                    `;
-                    div.addEventListener('click', () => {
-                        const item = {
-                            url: track.previewUrl,
-                            titulo: track.trackName,
-                            artista: track.artistName,
-                            cover: img
-                        };
-                        reproducirAudio(item);
-                    });
-                    grid.appendChild(div);
-                });
-            } catch (e) {
-                grid.innerHTML = '<p style="color:var(--text-muted);">No se pudieron cargar tendencias.</p>';
-            }
-        }
-
-        // ==============================================================
-        // 16. UTILIDADES
-        // ==============================================================
-        function extraerId(url) {
-            const match = url.match(/(?:video|videoembed)\/(\d+)/);
-            if (match) return match[1];
-            const ytMatch = url.match(/(?:v=|embed\/)([a-zA-Z0-9_-]{11})/);
-            if (ytMatch) return ytMatch[1];
-            return url;
-        }
-
-        // Cerrar modales al hacer clic fuera
-        window.onclick = (e) => {
-            const modals = ['video-modal', 'suscripcion-modal', 'radio-modal', 'episodios-modal', 'artista-modal', 'queue-modal'];
-            modals.forEach(id => {
-                const modal = document.getElementById(id);
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                    if (id === 'video-modal') {
-                        const container = document.getElementById('video-container');
-                        if (container) container.innerHTML = '';
-                    }
-                    if (id === 'suscripcion-modal') pendingVideo = null;
-                }
-            });
-        };
-
-        // ==============================================================
-        // 17. FUNCIONES FALTANTES (redefinidas para evitar errores)
-        // ==============================================================
-        // Estas funciones se definen aquí para completar el código, aunque ya deberían existir.
-        // Se incluyen para garantizar que todo funcione.
-
         function renderizarRadios() {
-            // Similar a la versión anterior
             const cont = $('contenedor-radios');
             if (!cont) return;
             const radios = [
@@ -1398,7 +1212,7 @@
                     streamUrl: "https://stream.zeno.fm/9s7nnwmknkhvv",
                     zenoUrl: "https://api.zeno.fm/mounts/metadata/subscribe/9s7nnwmknkhvv",
                     seguidores: "12.4K",
-                    biografia: "Beat Digital Radio es la emisora líder en música urbana y hits actuales...",
+                    biografia: "Beat Digital Radio es la emisora líder en música urbana y hits actuales. Nacida en el corazón de la ciudad, conecta a los oyentes con los mejores ritmos, entrevistas exclusivas y la energía de la calle. Nuestro equipo de locutores apasionados trabaja 24/7 para mantenerte al día con la cultura pop y los sonidos que marcan tendencia.",
                     equipo: ["DJ Micky", "Luciana Flow", "El Gordo Salsa", "Natalia Beats"],
                     programacion: [
                         { dia: "Lunes a Viernes", horario: "08:00 - 12:00", programa: "Morning Beats" },
@@ -1419,7 +1233,7 @@
                     streamUrl: "https://stream.zeno.fm/f3wvbb1802quv",
                     zenoUrl: "https://api.zeno.fm/mounts/metadata/subscribe/f3wvbb1802quv",
                     seguidores: "8.7K",
-                    biografia: "UADAV Radio es la voz institucional de la Unión de Artistas y Difusores Audiovisuales...",
+                    biografia: "UADAV Radio es la voz institucional de la Unión de Artistas y Difusores Audiovisuales. Con una trayectoria de más de 20 años, somos referentes en noticias, cultura y análisis social. Nuestro compromiso es dar visibilidad a los creadores y promover el debate intelectual en la región.",
                     equipo: ["Marcos Guido Di Nella", "Laura Paredes", "Carlos Saavedra", "Elena Martínez"],
                     programacion: [
                         { dia: "Lunes a Viernes", horario: "07:00 - 09:00", programa: "Info AM" },
@@ -1499,31 +1313,51 @@
             if (modal) modal.style.display = 'none';
         }
 
-        function renderizarArtistas() {
+        // ==============================================================
+        // 9. ARTISTAS - OBTENIDOS DESDE iTunes (con imágenes reales)
+        // ==============================================================
+        async function renderizarArtistas() {
             const cont = $('carousel-artistas');
             if (!cont) return;
-            const artistas = [
-                { nombre: "Coldplay", avatar: "https://ui-avatars.com/api/?name=Coldplay&size=300&background=1db954&color=fff&font-size=0.4", oyentes: "82.5M", seguidores: "28.1M", bio: "Coldplay es una banda británica de rock alternativo formada en Londres en 1996...", fans: ["Radiohead", "U2", "The Killers", "Imagine Dragons"] },
-                { nombre: "Gustavo Cerati", avatar: "https://ui-avatars.com/api/?name=Gustavo+Cerati&size=300&background=1db954&color=fff&font-size=0.35", oyentes: "4.2M", seguidores: "1.8M", bio: "Gustavo Cerati fue un músico, cantante y compositor argentino, líder de Soda Stereo...", fans: ["Soda Stereo", "Charly García", "Fito Páez", "Spinetta"] },
-                { nombre: "Dua Lipa", avatar: "https://ui-avatars.com/api/?name=Dua+Lipa&size=300&background=1db954&color=fff&font-size=0.4", oyentes: "65.3M", seguidores: "32.7M", bio: "Dua Lipa es una cantante y compositora británica de origen albanés...", fans: ["Lady Gaga", "Kylie Minogue", "Miley Cyrus", "Ariana Grande"] },
-                { nombre: "Charly Garcia", avatar: "https://ui-avatars.com/api/?name=Charly+Garcia&size=300&background=1db954&color=fff&font-size=0.35", oyentes: "2.1M", seguidores: "1.2M", bio: "Charly García es un músico, cantante y compositor argentino, ícono del rock en español...", fans: ["Fito Páez", "Gustavo Cerati", "Andrés Calamaro", "Luis Alberto Spinetta"] },
-                { nombre: "The Weeknd", avatar: "https://ui-avatars.com/api/?name=The+Weeknd&size=300&background=1db954&color=fff&font-size=0.35", oyentes: "95.8M", seguidores: "42.6M", bio: "The Weeknd (Abel Tesfaye) es un cantante, compositor y productor canadiense...", fans: ["Drake", "Kanye West", "Post Malone", "Travis Scott"] }
-            ];
-            artistas.forEach(artista => {
-                const div = document.createElement('div');
-                div.className = 'card card-artista';
-                div.setAttribute('tabindex', '0');
-                div.innerHTML = `
-                    <img src="${artista.avatar}" alt="${artista.nombre}">
-                    <div class="info">
-                        <h3>${artista.nombre}</h3>
-                        <p>Artista</p>
-                    </div>
-                `;
-                div.addEventListener('click', () => abrirPerfilArtista(artista));
-                div.addEventListener('keydown', (e) => { if (e.key === 'Enter') div.click(); });
-                cont.appendChild(div);
-            });
+            cont.innerHTML = '<p style="color:var(--text-muted);">Cargando artistas...</p>';
+            try {
+                // Lista de artistas a buscar
+                const nombres = ["Coldplay", "Gustavo Cerati", "Dua Lipa", "Charly Garcia", "The Weeknd", "Bad Bunny", "Rauw Alejandro", "Karol G"];
+                const artistas = [];
+                for (const nombre of nombres) {
+                    const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(nombre)}&entity=musicArtist&limit=1`);
+                    const data = await res.json();
+                    if (data.results && data.results.length > 0) {
+                        const info = data.results[0];
+                        artistas.push({
+                            nombre: info.artistName,
+                            avatar: info.artworkUrl100 || `https://ui-avatars.com/api/?name=${encodeURIComponent(info.artistName)}&size=300&background=1db954&color=fff&font-size=0.4`,
+                            oyentes: Math.floor(Math.random() * 50000000 + 1000000).toLocaleString(),
+                            seguidores: Math.floor(Math.random() * 10000000 + 100000).toLocaleString(),
+                            bio: `${info.artistName} es un artista reconocido mundialmente. Su música ha trascendido fronteras y ha conquistado a millones de fans.`,
+                            fans: ["Artista 1", "Artista 2", "Artista 3"]
+                        });
+                    }
+                }
+                cont.innerHTML = '';
+                artistas.forEach(artista => {
+                    const div = document.createElement('div');
+                    div.className = 'card card-artista';
+                    div.setAttribute('tabindex', '0');
+                    div.innerHTML = `
+                        <img src="${artista.avatar}" alt="${artista.nombre}">
+                        <div class="info">
+                            <h3>${artista.nombre}</h3>
+                            <p>Artista</p>
+                        </div>
+                    `;
+                    div.addEventListener('click', () => abrirPerfilArtista(artista));
+                    div.addEventListener('keydown', (e) => { if (e.key === 'Enter') div.click(); });
+                    cont.appendChild(div);
+                });
+            } catch (e) {
+                cont.innerHTML = '<p style="color:var(--text-muted);">Error al cargar artistas.</p>';
+            }
         }
 
         function abrirPerfilArtista(artista) {
@@ -1577,14 +1411,9 @@
                 item.addEventListener('click', () => {
                     const nombre = item.dataset.nombre;
                     // Buscar en la lista de artistas (puede que no esté)
-                    const fanArtista = artistasItunes ? artistasItunes.find(a => a.nombre === nombre) : null;
-                    if (fanArtista) {
-                        abrirPerfilArtista(fanArtista);
-                    } else {
-                        // Simular perfil con datos básicos
-                        const fake = { nombre, avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(nombre)}&size=300&background=1db954&color=fff&font-size=0.4`, oyentes: '0', seguidores: '0', bio: `Perfil de ${nombre} (simulado)`, fans: [] };
-                        abrirPerfilArtista(fake);
-                    }
+                    // Simulamos un perfil básico
+                    const fake = { nombre, avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(nombre)}&size=300&background=1db954&color=fff&font-size=0.4`, oyentes: '0', seguidores: '0', bio: `Perfil de ${nombre} (simulado)`, fans: [] };
+                    abrirPerfilArtista(fake);
                 });
             });
             modal.style.display = 'block';
@@ -1607,7 +1436,10 @@
                     const div = document.createElement('div');
                     div.className = 'cancion-item';
                     div.setAttribute('tabindex', '0');
+                    // Usar carátula del álbum real
+                    const cover = track.artworkUrl100?.replace('100x100bb', '600x600bb') || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23111%22/%3E%3Ctext x=%2230%22 y=%2235%22 font-family=%22Inter%22 font-size=%2216%22 fill=%22%23aaa%22 text-anchor=%22middle%22%3EUADAV%3C/text%3E%3C/svg%3E';
                     div.innerHTML = `
+                        <img src="${cover}" alt="${track.trackName}" style="width:50px;height:50px;border-radius:4px;object-fit:cover;margin-right:12px;">
                         <span class="cancion-nombre">${track.trackName}</span>
                         <span class="cancion-duracion">${duration}</span>
                         <button class="btn-reproducir-cancion">Reproducir</button>
@@ -1619,7 +1451,7 @@
                             url: track.previewUrl,
                             titulo: track.trackName,
                             artista: track.artistName,
-                            cover: track.artworkUrl100?.replace('100x100bb', '600x600bb') || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23111%22/%3E%3Ctext x=%2230%22 y=%2235%22 font-family=%22Inter%22 font-size=%2216%22 fill=%22%23aaa%22 text-anchor=%22middle%22%3EUADAV%3C/text%3E%3C/svg%3E'
+                            cover: cover
                         };
                         reproducirAudio(item);
                         closeArtista();
@@ -1637,6 +1469,198 @@
             if (modal) modal.style.display = 'none';
         }
 
+        // ==============================================================
+        // 10. TENDENCIAS - Adaptado por IP del usuario
+        // ==============================================================
+        async function cargarTendencias() {
+            const grid = $('trending-grid');
+            if (!grid) return;
+            grid.innerHTML = '<p style="color:var(--text-muted);">Cargando tendencias...</p>';
+            try {
+                // Obtener país del usuario por IP
+                let country = 'us'; // por defecto
+                try {
+                    const ipRes = await fetch('https://ipapi.co/json/');
+                    const ipData = await ipRes.json();
+                    if (ipData && ipData.country_code) {
+                        country = ipData.country_code.toLowerCase();
+                    }
+                } catch (e) {
+                    console.warn('No se pudo obtener ubicación por IP, usando US por defecto.');
+                }
+
+                // Buscar canciones populares en ese país (usando iTunes)
+                const res = await fetch(`https://itunes.apple.com/search?term=popular&entity=song&limit=12&country=${country}`);
+                const data = await res.json();
+                if (!data.results || data.results.length === 0) {
+                    grid.innerHTML = '<p style="color:var(--text-muted);">No hay tendencias disponibles.</p>';
+                    return;
+                }
+                grid.innerHTML = '';
+                data.results.forEach(track => {
+                    const div = document.createElement('div');
+                    div.className = 'trending-card';
+                    const img = track.artworkUrl100?.replace('100x100bb', '600x600bb') || 'https://via.placeholder.com/200';
+                    div.innerHTML = `
+                        <img src="${img}" alt="${track.trackName}">
+                        <h4>${track.trackName}</h4>
+                        <p>${track.artistName}</p>
+                    `;
+                    div.addEventListener('click', () => {
+                        const item = {
+                            url: track.previewUrl,
+                            titulo: track.trackName,
+                            artista: track.artistName,
+                            cover: img
+                        };
+                        reproducirAudio(item);
+                    });
+                    grid.appendChild(div);
+                });
+            } catch (e) {
+                grid.innerHTML = '<p style="color:var(--text-muted);">Error al cargar tendencias.</p>';
+            }
+        }
+
+        // ==============================================================
+        // 11. BUSCADOR (TMDB + iTunes)
+        // ==============================================================
+        function configurarBuscador() {
+            const input = $('searchInput');
+            const secResultados = $('resultados-busqueda');
+            const contResultados = $('carousel-busqueda');
+            const contMusica = $('resultados-musica');
+            let timeoutId;
+            if (!input || !secResultados || !contResultados || !contMusica) return;
+
+            input.addEventListener('input', (e) => {
+                clearTimeout(timeoutId);
+                const query = e.target.value.trim();
+                if (query.length < 2) {
+                    secResultados.style.display = 'none';
+                    return;
+                }
+                timeoutId = setTimeout(async () => {
+                    secResultados.style.display = 'block';
+                    contResultados.innerHTML = '';
+                    contMusica.innerHTML = '<p style="color:var(--text-muted);">Buscando música...</p>';
+
+                    // TMDB
+                    try {
+                        const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=3fb36c15f2daa69df6bf8b07b1237183&language=es-ES&query=${encodeURIComponent(query)}`);
+                        const data = await res.json();
+                        const results = data.results.filter(item => item.media_type !== 'person');
+                        results.forEach(item => {
+                            const card = document.createElement('div');
+                            card.className = 'card card-video';
+                            card.setAttribute('tabindex', '0');
+                            const titulo = item.title || item.name || 'Sin título';
+                            const poster = item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Crect width='300' height='450' fill='%23111'/%3E%3Ctext x='150' y='225' font-family='Inter' font-size='20' fill='%23666' text-anchor='middle'%3ENo%20Image%3C/text%3E%3C/svg%3E`;
+                            card.innerHTML = `<img src="${poster}" alt="${titulo}"><div class="info"><h3>${titulo}</h3></div>`;
+                            card.addEventListener('click', () => {
+                                if (item.media_type === 'movie' || item.media_type === 'tv') {
+                                    buscarTrailer(item.id, item.media_type);
+                                }
+                            });
+                            card.addEventListener('keydown', (e) => { if (e.key === 'Enter') card.click(); });
+                            contResultados.appendChild(card);
+                        });
+                    } catch (e) { /* silencioso */ }
+
+                    // iTunes
+                    try {
+                        const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=10`);
+                        const data = await res.json();
+                        contMusica.innerHTML = '';
+                        if (data.results && data.results.length > 0) {
+                            data.results.forEach(track => {
+                                const div = document.createElement('div');
+                                div.className = 'resultado-musica';
+                                const cover = track.artworkUrl100?.replace('100x100bb', '600x600bb') || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23111%22/%3E%3Ctext x=%2230%22 y=%2235%22 font-family=%22Inter%22 font-size=%2216%22 fill=%22%23aaa%22 text-anchor=%22middle%22%3EUADAV%3C/text%3E%3C/svg%3E';
+                                div.innerHTML = `
+                                    <img src="${cover}" alt="${track.trackName}" style="width:50px;height:50px;border-radius:4px;object-fit:cover;margin-right:12px;">
+                                    <div class="info">
+                                        <span class="nombre">${track.trackName}</span>
+                                        <span class="artista">${track.artistName}</span>
+                                    </div>
+                                    <button class="btn-reproducir">Reproducir</button>
+                                `;
+                                const btn = div.querySelector('.btn-reproducir');
+                                btn.addEventListener('click', (e) => {
+                                    e.stopPropagation();
+                                    const item = {
+                                        url: track.previewUrl,
+                                        titulo: track.trackName,
+                                        artista: track.artistName,
+                                        cover: cover
+                                    };
+                                    reproducirAudio(item);
+                                    secResultados.style.display = 'none';
+                                    input.value = '';
+                                });
+                                div.addEventListener('click', () => btn.click());
+                                contMusica.appendChild(div);
+                            });
+                        } else {
+                            contMusica.innerHTML = '<p style="color:var(--text-muted);">No se encontraron canciones.</p>';
+                        }
+                    } catch (e) {
+                        contMusica.innerHTML = '<p style="color:var(--text-muted);">Error al buscar música.</p>';
+                    }
+
+                    if (contResultados.children.length === 0 && contMusica.children.length === 0) {
+                        contResultados.innerHTML = '<p style="color:var(--text-muted);padding:20px;">No se encontraron resultados.</p>';
+                    }
+                }, 400);
+            });
+        }
+
+        async function buscarTrailer(id, type) {
+            try {
+                const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}/videos?api_key=3fb36c15f2daa69df6bf8b07b1237183&language=es-ES`);
+                const data = await res.json();
+                const trailer = data.results.find(v => v.site === 'YouTube') || data.results[0];
+                if (trailer) {
+                    abrirVideo({ tipo: 'youtube', id: trailer.key, titulo: 'Tráiler' });
+                } else {
+                    alert('No se encontró tráiler.');
+                }
+            } catch (e) {
+                alert('Error al buscar tráiler.');
+            }
+        }
+
+        // ==============================================================
+        // 12. VIDEO (YouTube / OK.ru)
+        // ==============================================================
+        function abrirVideo(video) {
+            const modal = $('video-modal');
+            const container = $('video-container');
+            if (!modal || !container) return;
+            let iframeSrc = '';
+            if (video.tipo === 'youtube') {
+                iframeSrc = `https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`;
+            } else if (video.tipo === 'okru') {
+                iframeSrc = `https://ok.ru/videoembed/${video.id}?autoplay=1`;
+            }
+            container.innerHTML = `<iframe src="${iframeSrc}" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
+            modal.style.display = 'block';
+            if (audioEl && !audioEl.paused) {
+                audioEl.pause();
+                playIcon.className = 'fa-solid fa-circle-play';
+            }
+        }
+
+        function closeVideo() {
+            const modal = $('video-modal');
+            const container = $('video-container');
+            if (modal) modal.style.display = 'none';
+            if (container) container.innerHTML = '';
+        }
+
+        // ==============================================================
+        // 13. EPISODIOS DE SERIES
+        // ==============================================================
         function abrirEpisodios(serie) {
             const modal = $('episodios-modal');
             const titulo = $('episodios-titulo');
@@ -1671,9 +1695,81 @@
         }
 
         // ==============================================================
-        // 18. FIN
+        // 14. SUSCRIPCIÓN
         // ==============================================================
-        console.log('UADAV Stream cargado correctamente.');
+        function suscribirse(plan) {
+            usuarioSuscrito = true;
+            const modal = $('suscripcion-modal');
+            if (modal) modal.style.display = 'none';
+            alert(`¡Suscripción ${plan} activada! (Simulación)`);
+            if (pendingVideo) {
+                abrirVideo(pendingVideo);
+                pendingVideo = null;
+            }
+        }
+
+        function closeSuscripcion() {
+            const modal = $('suscripcion-modal');
+            if (modal) modal.style.display = 'none';
+            pendingVideo = null;
+        }
+
+        // ==============================================================
+        // 15. HERO
+        // ==============================================================
+        function cargarHeroPorDefecto() {
+            const padrino = peliculas.find(p => p.titulo.includes('Padrino'));
+            if (padrino) {
+                configurarHero(padrino.titulo, padrino.enlace);
+            }
+        }
+
+        function configurarHero(titulo, enlace) {
+            const hero = $('hero-banner');
+            const heroTitle = $('hero-title');
+            const heroDesc = $('hero-desc');
+            const heroPlay = $('hero-play');
+            if (!hero || !heroTitle || !heroDesc || !heroPlay) return;
+            hero.style.backgroundImage = `url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200')`;
+            heroTitle.textContent = titulo;
+            heroDesc.textContent = 'Película clásica recomendada. Haz clic en Reproducir para ver.';
+            heroPlay.onclick = () => {
+                const peli = peliculas.find(p => p.titulo.includes('Padrino'));
+                if (peli.premium && !usuarioSuscrito) {
+                    $('suscripcion-modal').style.display = 'block';
+                    pendingVideo = { tipo: 'okru', id: extraerId(enlace), titulo: titulo };
+                    return;
+                }
+                abrirVideo({ tipo: 'okru', id: extraerId(enlace), titulo: titulo });
+            };
+        }
+
+        // ==============================================================
+        // 16. UTILIDADES
+        // ==============================================================
+        function extraerId(url) {
+            const match = url.match(/(?:video|videoembed)\/(\d+)/);
+            if (match) return match[1];
+            const ytMatch = url.match(/(?:v=|embed\/)([a-zA-Z0-9_-]{11})/);
+            if (ytMatch) return ytMatch[1];
+            return url;
+        }
+
+        // Cerrar modales al hacer clic fuera
+        window.onclick = (e) => {
+            const modals = ['video-modal', 'suscripcion-modal', 'radio-modal', 'episodios-modal', 'artista-modal', 'queue-modal'];
+            modals.forEach(id => {
+                const modal = document.getElementById(id);
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    if (id === 'video-modal') {
+                        const container = document.getElementById('video-container');
+                        if (container) container.innerHTML = '';
+                    }
+                    if (id === 'suscripcion-modal') pendingVideo = null;
+                }
+            });
+        };
     </script>
 </body>
 </html>
