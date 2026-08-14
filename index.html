@@ -8,961 +8,200 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* ========== RESET & VARIABLES ========== */
-        :root {
-            --bg-base: #0a0a0a;
-            --bg-sidebar: #0d0d0d;
-            --bg-elevated: #181818;
-            --bg-card: #1f1f1f;
-            --bg-hover: #2a2a2a;
-            --text-main: #ffffff;
-            --text-muted: #b3b3b3;
-            --accent: #1DB954;
-            --accent-hover: #1ed760;
-            --premium-color: #ffd700;
-            --shadow-heavy: 0 30px 60px rgba(0,0,0,0.6);
-            --radius: 8px;
-            --transition: all 0.2s ease;
-            --sidebar-width: 240px;
-        }
+        /* ========== ESTILOS (mismo que antes) ========== */
+        :root { --bg-base: #0a0a0a; --bg-sidebar: #0d0d0d; --bg-elevated: #181818; --bg-card: #1f1f1f; --bg-hover: #2a2a2a; --text-main: #ffffff; --text-muted: #b3b3b3; --accent: #1DB954; --accent-hover: #1ed760; --premium-color: #ffd700; --shadow-heavy: 0 30px 60px rgba(0,0,0,0.6); --radius: 8px; --transition: all 0.2s ease; --sidebar-width: 240px; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body {
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #555; }
-
-        /* ========== SIDEBAR ========== */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: var(--bg-sidebar);
-            display: flex;
-            flex-direction: column;
-            padding: 20px 12px;
-            flex-shrink: 0;
-            height: 100vh;
-            overflow-y: auto;
-            position: sticky;
-            top: 0;
-            left: 0;
-            z-index: 100;
-            border-right: 1px solid #1a1a1a;
-        }
-        .sidebar .logo {
-            font-size: 26px;
-            font-weight: 900;
-            color: var(--accent);
-            letter-spacing: -0.5px;
-            padding: 0 8px 20px 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        body { background-color: var(--bg-base); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #555; }
+        .sidebar { width: var(--sidebar-width); background: var(--bg-sidebar); display: flex; flex-direction: column; padding: 20px 12px; flex-shrink: 0; height: 100vh; overflow-y: auto; position: sticky; top: 0; left: 0; z-index: 100; border-right: 1px solid #1a1a1a; }
+        .sidebar .logo { font-size: 26px; font-weight: 900; color: var(--accent); letter-spacing: -0.5px; padding: 0 8px 20px 8px; display: flex; align-items: center; gap: 8px; }
         .sidebar .logo span { color: white; }
-        .sidebar nav {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin-bottom: 20px;
-        }
-        .sidebar nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            padding: 10px 12px;
-            border-radius: var(--radius);
-            font-weight: 600;
-            font-size: 14px;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-        .sidebar nav a:hover, .sidebar nav a.active {
-            color: white;
-            background: var(--bg-hover);
-        }
+        .sidebar nav { display: flex; flex-direction: column; gap: 4px; margin-bottom: 20px; }
+        .sidebar nav a { color: var(--text-muted); text-decoration: none; padding: 10px 12px; border-radius: var(--radius); font-weight: 600; font-size: 14px; transition: var(--transition); display: flex; align-items: center; gap: 14px; }
+        .sidebar nav a:hover, .sidebar nav a.active { color: white; background: var(--bg-hover); }
         .sidebar nav a i { width: 20px; text-align: center; }
-        .sidebar .playlist-section {
-            flex: 1;
-            overflow-y: auto;
-            margin-top: 10px;
-            border-top: 1px solid #1a1a1a;
-            padding-top: 12px;
-        }
-        .sidebar .playlist-section .section-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 0 12px 8px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .sidebar .playlist-section .section-title button {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 14px;
-            transition: var(--transition);
-        }
-        .sidebar .playlist-section .section-title button:hover {
-            color: white;
-        }
-        .playlist-item {
-            padding: 8px 12px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 14px;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .playlist-item:hover {
-            color: white;
-            background: var(--bg-hover);
-        }
+        .sidebar .playlist-section { flex: 1; overflow-y: auto; margin-top: 10px; border-top: 1px solid #1a1a1a; padding-top: 12px; }
+        .sidebar .playlist-section .section-title { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; padding: 0 12px 8px 12px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar .playlist-section .section-title button { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; transition: var(--transition); }
+        .sidebar .playlist-section .section-title button:hover { color: white; }
+        .playlist-item { padding: 8px 12px; border-radius: var(--radius); cursor: pointer; transition: var(--transition); font-size: 14px; color: var(--text-muted); display: flex; align-items: center; gap: 10px; }
+        .playlist-item:hover { color: white; background: var(--bg-hover); }
         .playlist-item i { font-size: 12px; color: var(--text-muted); }
 
-        /* ========== MAIN CONTENT ========== */
-        .main-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 0 30px 30px 30px;
-            background: var(--bg-base);
-            height: 100vh;
-            padding-bottom: 110px;
-        }
-        .main-header {
-            position: sticky;
-            top: 0;
-            background: rgba(10,10,10,0.85);
-            backdrop-filter: blur(10px);
-            padding: 16px 0 12px 0;
-            z-index: 10;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .main-header h1 {
-            font-size: 28px;
-            font-weight: 800;
-        }
-        .main-header .search-box {
-            display: flex;
-            align-items: center;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid #333;
-            border-radius: 50px;
-            padding: 6px 16px;
-            transition: var(--transition);
-            max-width: 300px;
-            width: 100%;
-        }
-        .main-header .search-box:focus-within {
-            border-color: var(--accent);
-            background: rgba(255,255,255,0.12);
-        }
+        .main-content { flex: 1; overflow-y: auto; padding: 0 30px 30px 30px; background: var(--bg-base); height: 100vh; padding-bottom: 110px; }
+        .main-header { position: sticky; top: 0; background: rgba(10,10,10,0.85); backdrop-filter: blur(10px); padding: 16px 0 12px 0; z-index: 10; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .main-header h1 { font-size: 28px; font-weight: 800; }
+        .main-header .search-box { display: flex; align-items: center; background: rgba(255,255,255,0.08); border: 1px solid #333; border-radius: 50px; padding: 6px 16px; transition: var(--transition); max-width: 300px; width: 100%; }
+        .main-header .search-box:focus-within { border-color: var(--accent); background: rgba(255,255,255,0.12); }
         .main-header .search-box i { color: var(--text-muted); margin-right: 10px; }
-        .main-header .search-box input {
-            background: transparent;
-            border: none;
-            color: white;
-            outline: none;
-            width: 100%;
-            font-size: 14px;
-        }
+        .main-header .search-box input { background: transparent; border: none; color: white; outline: none; width: 100%; font-size: 14px; }
         .main-header .search-box input::placeholder { color: var(--text-muted); }
 
-        /* Secciones */
-        .content-section {
-            margin-bottom: 30px;
-        }
-        .content-section h2 {
-            font-size: 22px;
-            font-weight: 800;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .content-section { margin-bottom: 30px; }
+        .content-section h2 { font-size: 22px; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
         .content-section h2 i { color: var(--accent); }
-        .carousel {
-            display: flex;
-            gap: 18px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            scroll-behavior: smooth;
-        }
+        .carousel { display: flex; gap: 18px; overflow-x: auto; padding-bottom: 10px; scroll-behavior: smooth; }
         .carousel::-webkit-scrollbar { height: 6px; }
         .carousel::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
 
-        /* Tarjetas */
-        .card {
-            min-width: 180px;
-            width: 180px;
-            position: relative;
-            cursor: pointer;
-            border-radius: var(--radius);
-            overflow: hidden;
-            transition: var(--transition);
-            background: var(--bg-card);
-        }
-        .card:hover, .card:focus-visible {
-            transform: scale(1.04);
-            z-index: 5;
-            border: 2px solid var(--accent);
-        }
+        .card { min-width: 180px; width: 180px; position: relative; cursor: pointer; border-radius: var(--radius); overflow: hidden; transition: var(--transition); background: var(--bg-card); }
+        .card:hover, .card:focus-visible { transform: scale(1.04); z-index: 5; border: 2px solid var(--accent); }
         .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
         .card img { width: 100%; display: block; background: #222; }
-        .card .info {
-            padding: 10px 12px;
-            background: rgba(0,0,0,0.85);
-        }
-        .card .info h3 {
-            font-size: 14px;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .card .info p {
-            font-size: 12px;
-            color: var(--text-muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-top: 2px;
-        }
-        .premium-badge {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: var(--premium-color);
-            color: #000;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
+        .card .info { padding: 10px 12px; background: rgba(0,0,0,0.85); }
+        .card .info h3 { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card .info p { font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+        .premium-badge { position: absolute; top: 8px; right: 8px; background: var(--premium-color); color: #000; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 50px; display: flex; align-items: center; gap: 4px; }
         .card-video { min-width: 180px; width: 180px; }
         .card-video img { aspect-ratio: 2/3; object-fit: cover; }
         .card-teatro { min-width: 240px; width: 240px; }
         .card-teatro img { aspect-ratio: 16/9; object-fit: cover; }
-        .card-artista {
-            min-width: 160px;
-            width: 160px;
-            border-radius: var(--radius);
-            background: var(--bg-card);
-            text-align: center;
-        }
-        .card-artista img {
-            aspect-ratio: 1/1;
-            object-fit: cover;
-            border-radius: 50%;
-            padding: 12px;
-            background: var(--bg-card);
-        }
+        .card-artista { min-width: 160px; width: 160px; border-radius: var(--radius); background: var(--bg-card); text-align: center; }
+        .card-artista img { aspect-ratio: 1/1; object-fit: cover; border-radius: 50%; padding: 12px; background: var(--bg-card); }
         .card-artista .info { background: var(--bg-card); padding: 0 12px 12px 12px; text-align: center; }
         .card-artista .info h3 { font-size: 15px; font-weight: 600; }
         .card-artista .info p { font-size: 12px; color: var(--text-muted); }
 
-        /* Grid para radios */
-        .grid-radios {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 16px;
-        }
-        .card-radio {
-            background: var(--bg-card);
-            border: 1px solid #2a2a2a;
-            padding: 16px;
-            border-radius: var(--radius);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .card-radio:hover, .card-radio:focus-visible {
-            background: var(--bg-hover);
-            border-color: var(--accent);
-        }
-        .card-radio img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #333;
-            margin-bottom: 10px;
-        }
+        .grid-radios { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+        .card-radio { background: var(--bg-card); border: 1px solid #2a2a2a; padding: 16px; border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; transition: var(--transition); }
+        .card-radio:hover, .card-radio:focus-visible { background: var(--bg-hover); border-color: var(--accent); }
+        .card-radio img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #333; margin-bottom: 10px; }
         .card-radio .radio-info h3 { font-size: 16px; }
         .card-radio .radio-info p { font-size: 13px; color: var(--text-muted); }
 
-        /* Grid de tendencias (cuadrada) */
-        .trending-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 16px;
-        }
-        .trending-card {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            aspect-ratio: 1/1;
-            justify-content: center;
-        }
-        .trending-card:hover {
-            background: var(--bg-hover);
-            transform: scale(1.02);
-        }
-        .trending-card img {
-            width: 100%;
-            aspect-ratio: 1/1;
-            object-fit: cover;
-            border-radius: var(--radius);
-            margin-bottom: 10px;
-        }
+        .trending-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
+        .trending-card { background: var(--bg-card); border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; transition: var(--transition); aspect-ratio: 1/1; justify-content: center; }
+        .trending-card:hover { background: var(--bg-hover); transform: scale(1.02); }
+        .trending-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: var(--radius); margin-bottom: 10px; }
         .trending-card h4 { font-size: 14px; font-weight: 600; }
         .trending-card p { font-size: 12px; color: var(--text-muted); }
 
-        /* Biblioteca */
-        .biblioteca-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .biblioteca-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 10px 16px;
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: var(--transition);
-        }
+        .biblioteca-grid { display: flex; flex-direction: column; gap: 12px; }
+        .biblioteca-item { display: flex; align-items: center; gap: 16px; padding: 10px 16px; background: var(--bg-card); border-radius: var(--radius); cursor: pointer; transition: var(--transition); }
         .biblioteca-item:hover { background: var(--bg-hover); }
-        .biblioteca-item img {
-            width: 50px;
-            height: 50px;
-            border-radius: var(--radius);
-            object-fit: cover;
-        }
+        .biblioteca-item img { width: 50px; height: 50px; border-radius: var(--radius); object-fit: cover; }
         .biblioteca-item .info { flex: 1; }
         .biblioteca-item .info h4 { font-size: 15px; font-weight: 600; }
         .biblioteca-item .info p { font-size: 13px; color: var(--text-muted); }
-        .biblioteca-item .btn-eliminar {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 16px;
-        }
+        .biblioteca-item .btn-eliminar { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 16px; }
         .biblioteca-item .btn-eliminar:hover { color: var(--accent); }
 
-        /* ========== REPRODUCTOR ========== */
-        .player-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: #080808;
-            border-top: 1px solid #1f1f1f;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            z-index: 2000;
-            box-shadow: 0 -10px 25px rgba(0,0,0,0.8);
-        }
-        .player-left {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            width: 25%;
-            min-width: 180px;
-        }
-        .cover-wrapper {
-            position: relative;
-            width: 56px;
-            height: 56px;
-            border-radius: 6px;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
+        .player-bar { position: fixed; bottom: 0; left: 0; right: 0; height: 100px; background: #080808; border-top: 1px solid #1f1f1f; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 2000; box-shadow: 0 -10px 25px rgba(0,0,0,0.8); }
+        .player-left { display: flex; align-items: center; gap: 14px; width: 25%; min-width: 180px; }
+        .cover-wrapper { position: relative; width: 56px; height: 56px; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
         .cover-wrapper img { width: 100%; height: 100%; object-fit: cover; background: #222; }
-        .live-pulse {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            width: 12px;
-            height: 12px;
-            background: var(--accent);
-            border-radius: 50%;
-            display: none;
-            box-shadow: 0 0 10px var(--accent);
-        }
+        .live-pulse { position: absolute; top: -4px; right: -4px; width: 12px; height: 12px; background: var(--accent); border-radius: 50%; display: none; box-shadow: 0 0 10px var(--accent); }
         .live-pulse.active { display: block; animation: pulseRed 1.5s infinite; }
-        @keyframes pulseRed {
-            0% { box-shadow: 0 0 0 0 rgba(29,185,84,0.7); }
-            70% { box-shadow: 0 0 0 8px rgba(29,185,84,0); }
-        }
+        @keyframes pulseRed { 0% { box-shadow: 0 0 0 0 rgba(29,185,84,0.7); } 70% { box-shadow: 0 0 0 8px rgba(29,185,84,0); } }
         .track-info { overflow: hidden; }
-        #currentSong {
-            font-size: 14px;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        #currentArtist {
-            font-size: 12px;
-            color: var(--text-muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .player-center {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            max-width: 600px;
-            margin: 0 20px;
-        }
-        .player-controls {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-        .control-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 18px;
-            cursor: pointer;
-            transition: var(--transition);
-            padding: 4px;
-        }
-        .control-btn:hover, .control-btn:focus-visible {
-            color: var(--text-main);
-        }
+        #currentSong { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #currentArtist { font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .player-center { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; max-width: 600px; margin: 0 20px; }
+        .player-controls { display: flex; align-items: center; gap: 14px; }
+        .control-btn { background: none; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer; transition: var(--transition); padding: 4px; }
+        .control-btn:hover, .control-btn:focus-visible { color: var(--text-main); }
         .control-btn:focus-visible { outline: 2px solid var(--accent); }
         .play-pause-btn { font-size: 38px; color: var(--text-main); }
         .play-pause-btn:hover { color: #ddd; }
-        .progress-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-        }
-        .progress-container span {
-            font-size: 11px;
-            color: var(--text-muted);
-            min-width: 36px;
-        }
-        #progress-slider {
-            flex: 1;
-            -webkit-appearance: none;
-            background: transparent;
-            height: 4px;
-            background: #333;
-            border-radius: 2px;
-            outline: none;
-        }
-        #progress-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--accent);
-            cursor: pointer;
-        }
-        #progress-slider::-moz-range-thumb {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--accent);
-            cursor: pointer;
-        }
-
-        .player-right {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            width: 25%;
-            justify-content: flex-end;
-            min-width: 150px;
-        }
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        #volume-slider {
-            width: 80px;
-            -webkit-appearance: none;
-            background: transparent;
-            height: 4px;
-            background: #333;
-            border-radius: 2px;
-            outline: none;
-        }
-        #volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #fff;
-            cursor: pointer;
-        }
-        #volume-slider::-moz-range-thumb {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #fff;
-            cursor: pointer;
-        }
-
-        #history-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            justify-content: center;
-            width: 100%;
-        }
-        #history-container .hist-item {
-            background: rgba(255,255,255,0.06);
-            padding: 2px 12px;
-            border-radius: 50px;
-            font-size: 11px;
-            color: var(--text-muted);
-        }
+        .progress-container { display: flex; align-items: center; gap: 12px; width: 100%; }
+        .progress-container span { font-size: 11px; color: var(--text-muted); min-width: 36px; }
+        #progress-slider { flex: 1; -webkit-appearance: none; background: transparent; height: 4px; background: #333; border-radius: 2px; outline: none; }
+        #progress-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); cursor: pointer; }
+        #progress-slider::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); cursor: pointer; }
+        .player-right { display: flex; align-items: center; gap: 14px; width: 25%; justify-content: flex-end; min-width: 150px; }
+        .volume-control { display: flex; align-items: center; gap: 8px; }
+        #volume-slider { width: 80px; -webkit-appearance: none; background: transparent; height: 4px; background: #333; border-radius: 2px; outline: none; }
+        #volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 10px; border-radius: 50%; background: #fff; cursor: pointer; }
+        #volume-slider::-moz-range-thumb { width: 10px; height: 10px; border-radius: 50%; background: #fff; cursor: pointer; }
+        #history-container { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; width: 100%; }
+        #history-container .hist-item { background: rgba(255,255,255,0.06); padding: 2px 12px; border-radius: 50px; font-size: 11px; color: var(--text-muted); }
         #history-container .hist-item strong { color: var(--text-main); }
 
-        /* ========== MODALES ========== */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 3000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            overflow-y: auto;
-            padding: 20px;
-        }
+        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); overflow-y: auto; padding: 20px; }
         .modal.active { display: flex; align-items: center; justify-content: center; }
-        .modal-content {
-            background: var(--bg-elevated);
-            border-radius: var(--radius);
-            max-width: 800px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 30px;
-            position: relative;
-        }
-        .modal-content .close-btn {
-            position: sticky;
-            top: 0;
-            float: right;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 30px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
+        .modal-content { background: var(--bg-elevated); border-radius: var(--radius); max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 30px; position: relative; }
+        .modal-content .close-btn { position: sticky; top: 0; float: right; background: none; border: none; color: white; font-size: 30px; cursor: pointer; transition: var(--transition); }
         .modal-content .close-btn:hover { transform: scale(1.1); }
 
-        /* ===== Perfil artista / radio ===== */
-        .artista-header, .radio-header {
-            display: flex;
-            gap: 24px;
-            align-items: flex-end;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #333;
-        }
-        .artista-header img, .radio-header img {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--accent);
-            box-shadow: var(--shadow-heavy);
-        }
+        .artista-header, .radio-header { display: flex; gap: 24px; align-items: flex-end; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #333; }
+        .artista-header img, .radio-header img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); box-shadow: var(--shadow-heavy); }
         .artista-header .info, .radio-header .info { flex: 1; }
-        .artista-header .info h2, .radio-header .info h2 {
-            font-size: 32px;
-            font-weight: 800;
-        }
-        .artista-header .info .stats, .radio-header .info .stats {
-            display: flex;
-            gap: 20px;
-            margin-top: 6px;
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-        .artista-header .info .stats span, .radio-header .info .stats span {
-            font-weight: 600;
-            color: white;
-        }
-        .artista-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-        }
-        .btn-follow {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 8px 22px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: var(--transition);
-        }
+        .artista-header .info h2, .radio-header .info h2 { font-size: 32px; font-weight: 800; }
+        .artista-header .info .stats, .radio-header .info .stats { display: flex; gap: 20px; margin-top: 6px; color: var(--text-muted); font-size: 14px; }
+        .artista-header .info .stats span, .radio-header .info .stats span { font-weight: 600; color: white; }
+        .artista-actions { display: flex; gap: 10px; margin-top: 12px; }
+        .btn-follow { background: var(--accent); color: white; border: none; padding: 8px 22px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: var(--transition); }
         .btn-follow:hover { background: var(--accent-hover); }
         .btn-follow.following { background: #333; color: white; }
         .btn-follow.following:hover { background: #555; }
-        .btn-radio {
-            background: transparent;
-            border: 1px solid var(--text-muted);
-            color: var(--text-main);
-            padding: 8px 22px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: var(--transition);
-        }
+        .btn-radio { background: transparent; border: 1px solid var(--text-muted); color: var(--text-main); padding: 8px 22px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: var(--transition); }
         .btn-radio:hover { border-color: var(--accent); color: var(--accent); }
-
-        .artista-bio, .radio-bio {
-            margin-bottom: 20px;
-            line-height: 1.6;
-            color: #ccc;
-        }
-        .cancion-item {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #222;
-            cursor: pointer;
-            transition: var(--transition);
-            gap: 12px;
-        }
+        .artista-bio, .radio-bio { margin-bottom: 20px; line-height: 1.6; color: #ccc; }
+        .cancion-item { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #222; cursor: pointer; transition: var(--transition); gap: 12px; }
         .cancion-item:hover { background: #1a1a1a; }
-        .cancion-item img {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+        .cancion-item img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
         .cancion-item .nombre { flex: 1; font-weight: 500; }
         .cancion-item .duracion { color: var(--text-muted); font-size: 13px; margin: 0 10px; }
-        .cancion-item .btn-reproducir {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 4px 14px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: var(--transition);
-        }
+        .cancion-item .btn-reproducir { background: var(--accent); color: white; border: none; padding: 4px 14px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: var(--transition); }
         .cancion-item .btn-reproducir:hover { background: var(--accent-hover); }
-        .cancion-item .btn-favorito {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 16px;
-        }
+        .cancion-item .btn-favorito { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 16px; }
         .cancion-item .btn-favorito:hover { color: var(--accent); }
         .cancion-item .btn-favorito.favorito { color: var(--accent); }
-
-        .fans-grid {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
-        .fan-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-card);
-            padding: 6px 14px 6px 6px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
+        .fans-grid { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+        .fan-item { display: flex; align-items: center; gap: 8px; background: var(--bg-card); padding: 6px 14px 6px 6px; border-radius: 50px; cursor: pointer; transition: var(--transition); }
         .fan-item:hover { background: var(--bg-hover); }
-        .fan-item img {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+        .fan-item img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
         .fan-item span { font-size: 13px; font-weight: 500; }
 
-        /* ===== Modal de series estilo Netflix ===== */
-        .serie-modal-content {
-            max-width: 900px;
-        }
-        .serie-header {
-            position: relative;
-            padding-bottom: 30px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #333;
-        }
-        .serie-header .serie-backdrop {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: var(--radius);
-            margin-bottom: 16px;
-        }
-        .serie-header .serie-title {
-            font-size: 32px;
-            font-weight: 800;
-        }
-        .serie-header .serie-meta {
-            display: flex;
-            gap: 16px;
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-top: 6px;
-        }
-        .serie-header .serie-overview {
-            margin-top: 12px;
-            line-height: 1.6;
-            color: #ccc;
-        }
-        .serie-temporadas {
-            margin-top: 20px;
-        }
-        .serie-temporadas h3 {
-            font-size: 18px;
-            margin-bottom: 12px;
-        }
-        .serie-temporada {
-            margin-bottom: 16px;
-        }
-        .serie-temporada .temp-titulo {
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--accent);
-        }
-        .serie-episodios {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .serie-episodio {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 14px;
-            background: #1a1a1a;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: var(--transition);
-        }
+        .serie-modal-content { max-width: 900px; }
+        .serie-header { position: relative; padding-bottom: 30px; margin-bottom: 20px; border-bottom: 1px solid #333; }
+        .serie-header .serie-backdrop { width: 100%; height: 250px; object-fit: cover; border-radius: var(--radius); margin-bottom: 16px; }
+        .serie-header .serie-title { font-size: 32px; font-weight: 800; }
+        .serie-header .serie-meta { display: flex; gap: 16px; color: var(--text-muted); font-size: 14px; margin-top: 6px; }
+        .serie-header .serie-overview { margin-top: 12px; line-height: 1.6; color: #ccc; }
+        .serie-temporadas { margin-top: 20px; }
+        .serie-temporadas h3 { font-size: 18px; margin-bottom: 12px; }
+        .serie-temporada { margin-bottom: 16px; }
+        .serie-temporada .temp-titulo { font-weight: 700; margin-bottom: 8px; color: var(--accent); }
+        .serie-episodios { display: flex; flex-direction: column; gap: 8px; }
+        .serie-episodio { display: flex; justify-content: space-between; align-items: center; padding: 8px 14px; background: #1a1a1a; border-radius: var(--radius); cursor: pointer; transition: var(--transition); }
         .serie-episodio:hover { background: #252525; }
         .serie-episodio .ep-numero { font-weight: 800; color: var(--accent); margin-right: 14px; }
         .serie-episodio .ep-titulo { flex: 1; }
         .serie-episodio .ep-duracion { color: var(--text-muted); font-size: 13px; margin: 0 10px; }
-        .serie-episodio .btn-reproducir-ep {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 4px 14px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+        .serie-episodio .btn-reproducir-ep { background: var(--accent); color: white; border: none; padding: 4px 14px; border-radius: 50px; font-weight: bold; cursor: pointer; }
         .serie-episodio .btn-reproducir-ep:hover { background: var(--accent-hover); }
 
-        /* ===== Hero slider ===== */
-        .hero-slider {
-            position: relative;
-            height: 320px;
-            border-radius: var(--radius);
-            overflow: hidden;
-            margin-bottom: 30px;
-            background: #111;
-        }
-        .hero-slider .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: flex-end;
-            padding: 30px;
-        }
-        .hero-slider .slide.active {
-            opacity: 1;
-        }
-        .hero-slider .slide .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
-        }
-        .hero-slider .slide .content {
-            position: relative;
-            z-index: 2;
-            max-width: 600px;
-        }
-        .hero-slider .slide .content .badge {
-            background: var(--accent);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-        .hero-slider .slide .content h2 {
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 6px;
-        }
-        .hero-slider .slide .content p {
-            color: #ddd;
-            font-size: 14px;
-            margin-bottom: 12px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .hero-slider .slide .content .btn-play-slide {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+        .hero-slider { position: relative; height: 320px; border-radius: var(--radius); overflow: hidden; margin-bottom: 30px; background: #111; }
+        .hero-slider .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s ease; background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 30px; }
+        .hero-slider .slide.active { opacity: 1; }
+        .hero-slider .slide .overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%); }
+        .hero-slider .slide .content { position: relative; z-index: 2; max-width: 600px; }
+        .hero-slider .slide .content .badge { background: var(--accent); color: white; padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 600; display: inline-block; margin-bottom: 8px; }
+        .hero-slider .slide .content h2 { font-size: 28px; font-weight: 800; margin-bottom: 6px; }
+        .hero-slider .slide .content p { color: #ddd; font-size: 14px; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .hero-slider .slide .content .btn-play-slide { background: var(--accent); color: white; border: none; padding: 8px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; }
         .hero-slider .slide .content .btn-play-slide:hover { background: var(--accent-hover); }
-        .hero-slider .dots {
-            position: absolute;
-            bottom: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-            z-index: 3;
-        }
-        .hero-slider .dots .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .hero-slider .dots .dot.active {
-            background: var(--accent);
-            transform: scale(1.2);
-        }
+        .hero-slider .dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 3; }
+        .hero-slider .dots .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: var(--transition); }
+        .hero-slider .dots .dot.active { background: var(--accent); transform: scale(1.2); }
 
-        /* ===== Video modal ===== */
-        .video-container {
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: var(--radius);
-            background: #000;
-            position: relative;
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+        .video-container { padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--radius); background: #000; position: relative; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        /* ===== Suscripción ===== */
         .suscripcion-content { max-width: 500px; text-align: center; }
         .suscripcion-content h2 { font-size: 26px; color: var(--premium-color); margin-bottom: 10px; }
-        .planes {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 20px 0;
-        }
-        .plan {
-            background: #1a1a1a;
-            padding: 20px 30px;
-            border-radius: var(--radius);
-            border: 1px solid #333;
-            flex: 1 1 160px;
-        }
+        .planes { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 20px 0; }
+        .plan { background: #1a1a1a; padding: 20px 30px; border-radius: var(--radius); border: 1px solid #333; flex: 1 1 160px; }
         .plan h3 { font-size: 20px; }
         .precio { font-size: 18px; font-weight: 800; color: var(--premium-color); margin: 10px 0; }
-        .btn-suscribirse {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 10px 28px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: var(--transition);
-        }
+        .btn-suscribirse { background: var(--accent); color: white; border: none; padding: 10px 28px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: var(--transition); }
         .btn-suscribirse:hover { background: var(--accent-hover); }
         .nota { font-size: 12px; color: #666; margin-top: 12px; }
 
-        /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
             .sidebar { width: 60px; padding: 12px 6px; }
-            .sidebar .logo span, .sidebar nav a span, .sidebar .playlist-section .section-title,
-            .sidebar .playlist-item span { display: none; }
+            .sidebar .logo span, .sidebar nav a span, .sidebar .playlist-section .section-title, .sidebar .playlist-item span { display: none; }
             .sidebar .logo { font-size: 20px; justify-content: center; padding-bottom: 12px; }
             .sidebar nav a { justify-content: center; padding: 10px; }
             .sidebar .playlist-item { justify-content: center; padding: 8px; }
@@ -1032,42 +271,35 @@
         <div id="page-content">
             <!-- PÁGINA INICIO -->
             <div id="pagina-inicio">
-                <!-- Hero slider -->
                 <div class="hero-slider" id="hero-slider">
                     <div class="dots" id="hero-dots"></div>
                 </div>
 
-                <!-- Cine -->
                 <section class="content-section" id="cine">
                     <h2><i class="fa-solid fa-film"></i> Cine de Culto</h2>
                     <div class="carousel" id="carousel-cine"></div>
                 </section>
 
-                <!-- Series -->
                 <section class="content-section" id="series">
                     <h2><i class="fa-solid fa-tv"></i> Series Aclamadas</h2>
                     <div class="carousel" id="carousel-series"></div>
                 </section>
 
-                <!-- Teatro -->
                 <section class="content-section" id="teatro">
                     <h2><i class="fa-solid fa-masks-theater"></i> Teatro & Conciertos</h2>
                     <div class="carousel" id="carousel-teatro"></div>
                 </section>
 
-                <!-- Radios -->
                 <section class="content-section" id="radios">
                     <h2><i class="fa-solid fa-radio"></i> Radios Colaboradoras</h2>
                     <div class="grid-radios" id="contenedor-radios"></div>
                 </section>
 
-                <!-- Artistas Destacados -->
                 <section class="content-section" id="artistas">
                     <h2><i class="fa-solid fa-user-group"></i> Artistas Destacados</h2>
                     <div class="carousel" id="carousel-artistas"></div>
                 </section>
 
-                <!-- En Tendencia -->
                 <section class="content-section" id="tendencias">
                     <h2><i class="fa-solid fa-fire"></i> En Tendencia</h2>
                     <div class="trending-grid" id="trending-grid"></div>
@@ -1208,12 +440,14 @@
         const IMG_URL = 'https://image.tmdb.org/t/p/w500';
         const BACKDROP_URL = 'https://image.tmdb.org/t/p/original';
 
-        // Datos estáticos (PELIS.TXT + teatro + radios + series base)
+        // ==============================================================
+        // DATOS ESTÁTICOS (PELIS.TXT + TEATRO + RADIOS)
+        // ==============================================================
         const peliculas = [
             { titulo: "Drive", enlace: "https://ok.ru/video/8829831350907", premium: true },
             { titulo: "Mentiroso Mentiroso", enlace: "https://ok.ru/video/7737292818997", premium: false },
             { titulo: "Terminator 2", enlace: "https://ok.ru/video/9651656198793", premium: true },
-            { titulo: "El ciudadano kane", enlace: "https://ok.ru/video/5074727144170", premium: false },
+            { titulo: "El ciudadano", enlace: "https://ok.ru/video/5074727144170", premium: false },
             { titulo: "Casablanca", enlace: "https://ok.ru/video/3655395052121", premium: false },
             { titulo: "El Padrino", enlace: "https://ok.ru/video/7253473561307", premium: true },
             { titulo: "2001: Odisea del espacio", enlace: "https://ok.ru/video/1720768268881", premium: false },
@@ -1223,14 +457,112 @@
         ];
 
         const seriesData = [
-            { titulo: "Los Simuladores", episodios: [ ... ] },  // Se rellenan abajo
-            { titulo: "Okupas", episodios: [ ... ] }
+            {
+                titulo: "Los Simuladores",
+                episodios: [
+                    { numero: 1, titulo: "Tarjeta de Navidad", enlace: "https://ok.ru/video/7286191491722" },
+                    { numero: 2, titulo: "Diagnóstico rectoscópico", enlace: "https://ok.ru/video/7286191884938" },
+                    { numero: 3, titulo: "Seguro de desempleo", enlace: "https://ok.ru/video/7286192802442" },
+                    { numero: 4, titulo: "El testigo español", enlace: "https://ok.ru/video/7286192605834" },
+                    { numero: 5, titulo: "El joven simulador", enlace: "https://ok.ru/video/7286192671370" },
+                    { numero: 6, titulo: "El pequeño problema del gran hombre", enlace: "https://ok.ru/video/7286193064586" },
+                    { numero: 7, titulo: "Fuera de cálculo", enlace: "https://ok.ru/video/7289262049930" },
+                    { numero: 8, titulo: "El pacto Copérnico", enlace: "https://ok.ru/video/7286192933514" },
+                    { numero: 9, titulo: "El último héroe", enlace: "https://ok.ru/video/7286192540298" },
+                    { numero: 10, titulo: "Los impresentables", enlace: "https://ok.ru/video/7286192867978" },
+                    { numero: 11, titulo: "El colaborador foráneo", enlace: "https://ok.ru/video/7286192474762" },
+                    { numero: 12, titulo: "Marcela & Pau", enlace: "https://ok.ru/video/7286193130122" },
+                    { numero: 13, titulo: "Un trabajo involuntario", enlace: "https://ok.ru/video/7286192999050" }
+                ],
+                episodiosT2: [
+                    { numero: 14, titulo: "Los cuatro Notables", enlace: "https://ok.ru/video/7289262312074" },
+                    { numero: 15, titulo: "Z-9000", enlace: "https://ok.ru/video/7289262639754" },
+                    { numero: 16, titulo: "La gargantilla de las cuatro estaciones", enlace: "https://ok.ru/video/7289262377610" },
+                    { numero: 17, titulo: "El clan Motul", enlace: "https://ok.ru/video/7289262181002" },
+                    { numero: 18, titulo: "El vengador infantil", enlace: "https://ok.ru/video/7289262443146" },
+                    { numero: 19, titulo: "El matrimonio mixto", enlace: "https://ok.ru/video/7289262246538" },
+                    { numero: 20, titulo: "La Brigada B", enlace: "https://ok.ru/video/7289262049930" },
+                    { numero: 21, titulo: "Fin de semana de descanso", enlace: "https://ok.ru/video/7289262508682" },
+                    { numero: 22, titulo: "El debilitador social", enlace: "https://ok.ru/video/7289262115466" },
+                    { numero: 23, titulo: "El anillo de Salomón", enlace: "https://ok.ru/video/7289262705290" },
+                    { numero: 24, titulo: "Episodio final", enlace: "https://ok.ru/video/7289262574218" }
+                ]
+            },
+            {
+                titulo: "Okupas",
+                episodios: [
+                    { numero: 1, titulo: "Los cinco mandamientos", enlace: "https://ok.ru/video/15530211936906" },
+                    { numero: 2, titulo: "Bienvenidos al tren", enlace: "https://ok.ru/video/15530272623242" },
+                    { numero: 3, titulo: "El ojo blindado", enlace: "https://ok.ru/video/15530272426634" },
+                    { numero: 4, titulo: "El beso de Judas", enlace: "https://ok.ru/video/15530272492170" },
+                    { numero: 5, titulo: "El mascapito", enlace: "https://ok.ru/video/15530272688778" },
+                    { numero: 6, titulo: "Los mantenidos", enlace: "https://ok.ru/video/15530273147530" },
+                    { numero: 7, titulo: "Paranoia", enlace: "https://ok.ru/video/15530272754314" },
+                    { numero: 8, titulo: "El pollo de Troya", enlace: "https://ok.ru/video/15530273016458" },
+                    { numero: 9, titulo: "El guardian", enlace: "https://ok.ru/video/15530272950922" },
+                    { numero: 10, titulo: "Miguel", enlace: "https://ok.ru/video/15530272557706" },
+                    { numero: 11, titulo: "Adios y buena suerte", enlace: "https://ok.ru/video/15530272885386" }
+                ]
+            }
         ];
-        // Rellenar episodios para no sobrecargar este bloque (mantenemos los datos originales)
-        // ... (los episodios se definen en el script igual que antes)
 
-        const teatroData = [ ... ]; // igual que antes
-        const radiosData = [ ... ]; // igual que antes
+        const teatroData = [
+            { titulo: "Cirque du Soleil - Kurios", enlace: "https://www.youtube.com/watch?v=o8Yc-v_2k-8", tipo: "youtube", imagen: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500" },
+            { titulo: "Drácula, el musical", enlace: "https://ok.ru/video/7253473561307", tipo: "okru", imagen: "https://images.unsplash.com/photo-1507676184212-d0330a15233c?w=500" },
+            { titulo: "Lo Mejor Del Antro 2020", enlace: "https://ok.ru/video/4066351057488", tipo: "okru", imagen: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=500" },
+            { titulo: "Padre Guilherme (DJ Set)", enlace: "https://www.youtube.com/watch?v=Cp61jtJ9Pgk", tipo: "youtube", imagen: "https://images.unsplash.com/photo-1571266028243-e4733b0f0fb8?w=500" },
+            { titulo: "Michael Jackson - Dangerous Tour", enlace: "https://ok.ru/video/4703389181", tipo: "okru", imagen: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=500" },
+            { titulo: "TEATRO 'La muerte de un viajante'", enlace: "https://www.youtube.com/watch?v=gmriK9_h0lc", tipo: "youtube", imagen: "https://images.unsplash.com/photo-1503095396549-8071a2ebd31a?w=500" },
+            { titulo: "TEATRO 'La casa de Bernarda Alba'", enlace: "https://www.youtube.com/watch?v=pO-K_c0CTCY", tipo: "youtube", imagen: "https://images.unsplash.com/photo-1507676184212-d0330a15233c?w=500" },
+            { titulo: "Edipo el rey (Sófocles)", enlace: "https://www.youtube.com/watch?v=VQbbkGWQdCY", tipo: "youtube", imagen: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500" },
+            { titulo: "Cirque du Soleil - ALEGRÍA, BAZZAR, ECHO", enlace: "https://www.youtube.com/watch?v=o8Yc-v_2k-8", tipo: "youtube", imagen: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500" },
+            { titulo: "Circo Rodas", enlace: "https://www.youtube.com/watch?v=gWs-PNSAj1c", tipo: "youtube", imagen: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500" }
+        ];
+
+        const radiosData = [
+            {
+                id: "beat",
+                nombre: "Beat Digital Radio",
+                frecuencia: "Urbano / Hits",
+                logo: "https://beatdigital.com.ar/img/cover.png",
+                streamUrl: "https://stream.zeno.fm/9s7nnwmknkhvv",
+                zenoUrl: "https://api.zeno.fm/mounts/metadata/subscribe/9s7nnwmknkhvv",
+                seguidores: "12.4K",
+                biografia: "Beat Digital Radio es la emisora líder en música urbana y hits actuales...",
+                equipo: ["DJ Micky", "Luciana Flow", "El Gordo Salsa", "Natalia Beats"],
+                programacion: [
+                    { dia: "Lunes a Viernes", horario: "08:00 - 12:00", programa: "Morning Beats" },
+                    { dia: "Lunes a Viernes", horario: "14:00 - 18:00", programa: "Urban Hour" },
+                    { dia: "Sábados", horario: "20:00 - 00:00", programa: "Fiesta Digital" }
+                ],
+                podcasts: [
+                    { titulo: "Entrevista a Duki", enlace: "https://example.com/podcast1.mp3" },
+                    { titulo: "Especial Reggaetón", enlace: "https://example.com/podcast2.mp3" },
+                    { titulo: "Top 10 Semanal", enlace: "https://example.com/podcast3.mp3" }
+                ]
+            },
+            {
+                id: "uadav",
+                nombre: "UADAV Radio",
+                frecuencia: "Noticias y Cultura",
+                logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Crect width='150' height='150' fill='%23e50914'/%3E%3Ctext x='75' y='85' font-family='Inter' font-size='28' fill='white' text-anchor='middle' font-weight='800'%3EUADAV%3C/text%3E%3C/svg%3E",
+                streamUrl: "https://stream.zeno.fm/f3wvbb1802quv",
+                zenoUrl: "https://api.zeno.fm/mounts/metadata/subscribe/f3wvbb1802quv",
+                seguidores: "8.7K",
+                biografia: "UADAV Radio es la voz institucional de la Unión de Artistas y Difusores Audiovisuales...",
+                equipo: ["Marcos Guido Di Nella", "Laura Paredes", "Carlos Saavedra", "Elena Martínez"],
+                programacion: [
+                    { dia: "Lunes a Viernes", horario: "07:00 - 09:00", programa: "Info AM" },
+                    { dia: "Lunes a Viernes", horario: "13:00 - 15:00", programa: "Diálogo Abierto" },
+                    { dia: "Domingos", horario: "19:00 - 21:00", programa: "Cultura sin Fronteras" }
+                ],
+                podcasts: [
+                    { titulo: "Entrevista a Mario Vargas Llosa", enlace: "https://example.com/podcast-uadav1.mp3" },
+                    { titulo: "Análisis de la Ley de Medios", enlace: "https://example.com/podcast-uadav2.mp3" },
+                    { titulo: "Mesa redonda: Futuro del Cine Argentino", enlace: "https://example.com/podcast-uadav3.mp3" }
+                ]
+            }
+        ];
 
         // ==============================================================
         // ESTADO GLOBAL
@@ -1277,7 +609,7 @@
         });
 
         // ==============================================================
-        // CATÁLOGO (CINE, SERIES CON TMDB POR NOMBRE, TEATRO)
+        // CATÁLOGO
         // ==============================================================
         async function inicializarCatalogo() {
             // Cine
@@ -1291,7 +623,7 @@
                 }
             }
 
-            // Series: buscar en TMDB por nombre
+            // Series (con búsqueda en TMDB por nombre)
             const contSeries = $('carousel-series');
             if (contSeries) {
                 contSeries.innerHTML = '';
@@ -1312,13 +644,11 @@
                     } catch (e) {
                         console.warn('Error buscando serie en TMDB:', e);
                     }
-
                     const poster = tmdbData?.poster_path ? IMG_URL + tmdbData.poster_path :
-                                  (serie.poster || `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Crect width='300' height='450' fill='%23111'/%3E%3Ctext x='150' y='225' font-family='Inter' font-size='20' fill='%23666' text-anchor='middle'%3E${encodeURIComponent(serie.titulo)}%3C/text%3E%3C/svg%3E`);
+                                  `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Crect width='300' height='450' fill='%23111'/%3E%3Ctext x='150' y='225' font-family='Inter' font-size='20' fill='%23666' text-anchor='middle'%3E${encodeURIComponent(serie.titulo)}%3C/text%3E%3C/svg%3E`;
                     const nombre = tmdbData?.name || serie.titulo;
                     const year = tmdbData?.first_air_date ? tmdbData.first_air_date.substring(0,4) : '';
                     const seasons = tmdbData?.number_of_seasons || '?';
-
                     const card = document.createElement('div');
                     card.className = 'card card-video';
                     card.setAttribute('tabindex', '0');
@@ -1396,7 +726,7 @@
             if (!modal || !detalle) return;
 
             const backdrop = tmdbData?.backdrop_path ? BACKDROP_URL + tmdbData.backdrop_path :
-                             (tmdbData?.poster_path ? IMG_URL + tmdbData.poster_path : serie.poster);
+                             (tmdbData?.poster_path ? IMG_URL + tmdbData.poster_path : '');
             const nombre = tmdbData?.name || serie.titulo;
             const year = tmdbData?.first_air_date ? tmdbData.first_air_date.substring(0,4) : '';
             const overview = tmdbData?.overview || 'Sin sinopsis disponible.';
@@ -1404,7 +734,7 @@
 
             let html = `
                 <div class="serie-header">
-                    <img class="serie-backdrop" src="${backdrop}" alt="${nombre}">
+                    ${backdrop ? `<img class="serie-backdrop" src="${backdrop}" alt="${nombre}">` : ''}
                     <div class="serie-title">${nombre}</div>
                     <div class="serie-meta">
                         <span>${year}</span>
@@ -1475,7 +805,7 @@
         }
 
         // ==============================================================
-        // ARTISTAS DESTACADOS (SEGÚN IP)
+        // ARTISTAS DESTACADOS
         // ==============================================================
         async function renderizarArtistas() {
             const cont = $('carousel-artistas');
@@ -1645,7 +975,7 @@
         }
 
         // ==============================================================
-        // TENDENCIAS (CUADRÍCULA CUADRADA, SIN DUPLICADOS)
+        // TENDENCIAS
         // ==============================================================
         async function cargarTendencias() {
             if (tendenciasCargadas) return;
@@ -1687,7 +1017,7 @@
         }
 
         // ==============================================================
-        // RADIOS (REDONDAS)
+        // RADIOS
         // ==============================================================
         function renderizarRadios() {
             const cont = $('contenedor-radios');
@@ -2464,7 +1794,7 @@
             }
         });
 
-        // Inicializar página
+        // Iniciar en la página de inicio
         cambiarPagina('inicio');
     </script>
 </body>
