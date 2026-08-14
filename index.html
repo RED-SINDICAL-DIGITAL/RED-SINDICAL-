@@ -284,7 +284,7 @@
         /* Grid para radios */
         .grid-radios {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 16px;
         }
         .card-radio {
@@ -293,8 +293,9 @@
             padding: 16px;
             border-radius: var(--radius);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 14px;
+            text-align: center;
             cursor: pointer;
             transition: var(--transition);
         }
@@ -303,16 +304,17 @@
             border-color: var(--accent);
         }
         .card-radio img {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #333;
+            margin-bottom: 10px;
         }
         .card-radio .radio-info h3 { font-size: 16px; }
         .card-radio .radio-info p { font-size: 13px; color: var(--text-muted); }
 
-        /* Grid de tendencias */
+        /* Grid de tendencias (cuadrada) */
         .trending-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -328,6 +330,8 @@
             text-align: center;
             cursor: pointer;
             transition: var(--transition);
+            aspect-ratio: 1/1;
+            justify-content: center;
         }
         .trending-card:hover {
             background: var(--bg-hover);
@@ -378,7 +382,7 @@
         }
         .biblioteca-item .btn-eliminar:hover { color: var(--accent); }
 
-        /* ========== REPRODUCTOR (Spotify style) ========== */
+        /* ========== REPRODUCTOR ========== */
         .player-bar {
             position: fixed;
             bottom: 0;
@@ -545,7 +549,6 @@
             cursor: pointer;
         }
 
-        /* Historial / cola mini */
         #history-container {
             display: flex;
             flex-wrap: wrap;
@@ -600,7 +603,7 @@
         }
         .modal-content .close-btn:hover { transform: scale(1.1); }
 
-        /* Perfil artista / radio */
+        /* ===== Perfil artista / radio ===== */
         .artista-header, .radio-header {
             display: flex;
             gap: 24px;
@@ -732,53 +735,180 @@
         }
         .fan-item span { font-size: 13px; font-weight: 500; }
 
-        /* Episodios */
-        .episodio-item {
+        /* ===== Modal de series estilo Netflix ===== */
+        .serie-modal-content {
+            max-width: 900px;
+        }
+        .serie-header {
+            position: relative;
+            padding-bottom: 30px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+        .serie-header .serie-backdrop {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+        }
+        .serie-header .serie-title {
+            font-size: 32px;
+            font-weight: 800;
+        }
+        .serie-header .serie-meta {
+            display: flex;
+            gap: 16px;
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 6px;
+        }
+        .serie-header .serie-overview {
+            margin-top: 12px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+        .serie-temporadas {
+            margin-top: 20px;
+        }
+        .serie-temporadas h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        .serie-temporada {
+            margin-bottom: 16px;
+        }
+        .serie-temporada .temp-titulo {
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--accent);
+        }
+        .serie-episodios {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .serie-episodio {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 14px;
+            padding: 8px 14px;
             background: #1a1a1a;
             border-radius: var(--radius);
-            margin-bottom: 8px;
             cursor: pointer;
             transition: var(--transition);
         }
-        .episodio-item:hover { background: #252525; }
-        .episodio-item .ep-numero { font-weight: 800; color: var(--accent); margin-right: 14px; }
-        .episodio-item .ep-titulo { flex: 1; }
-        .episodio-item .btn-reproducir-ep {
-            background: white;
-            color: black;
+        .serie-episodio:hover { background: #252525; }
+        .serie-episodio .ep-numero { font-weight: 800; color: var(--accent); margin-right: 14px; }
+        .serie-episodio .ep-titulo { flex: 1; }
+        .serie-episodio .ep-duracion { color: var(--text-muted); font-size: 13px; margin: 0 10px; }
+        .serie-episodio .btn-reproducir-ep {
+            background: var(--accent);
+            color: white;
             border: none;
             padding: 4px 14px;
             border-radius: 50px;
             font-weight: bold;
             cursor: pointer;
         }
-        .episodio-item .btn-reproducir-ep:hover { background: #ddd; }
+        .serie-episodio .btn-reproducir-ep:hover { background: var(--accent-hover); }
 
-        /* Queue modal */
-        .queue-item {
+        /* ===== Hero slider ===== */
+        .hero-slider {
+            position: relative;
+            height: 320px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 30px;
+            background: #111;
+        }
+        .hero-slider .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            background-size: cover;
+            background-position: center;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #222;
-            cursor: pointer;
+            align-items: flex-end;
+            padding: 30px;
         }
-        .queue-item:hover { background: #1a1a1a; }
-        .queue-item .q-titulo { flex: 1; }
-        .queue-item .q-artista { color: var(--text-muted); font-size: 13px; margin-left: 10px; }
-        .queue-item .q-eliminar {
-            background: none;
+        .hero-slider .slide.active {
+            opacity: 1;
+        }
+        .hero-slider .slide .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+        }
+        .hero-slider .slide .content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+        .hero-slider .slide .content .badge {
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        .hero-slider .slide .content h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .hero-slider .slide .content p {
+            color: #ddd;
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .hero-slider .slide .content .btn-play-slide {
+            background: var(--accent);
+            color: white;
             border: none;
-            color: #666;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: bold;
             cursor: pointer;
         }
-        .queue-item .q-eliminar:hover { color: var(--accent); }
+        .hero-slider .slide .content .btn-play-slide:hover { background: var(--accent-hover); }
+        .hero-slider .dots {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 3;
+        }
+        .hero-slider .dots .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .hero-slider .dots .dot.active {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
 
-        /* Video */
+        /* ===== Video modal ===== */
         .video-container {
             padding-bottom: 56.25%;
             height: 0;
@@ -796,7 +926,7 @@
             border: none;
         }
 
-        /* Suscripción */
+        /* ===== Suscripción ===== */
         .suscripcion-content { max-width: 500px; text-align: center; }
         .suscripcion-content h2 { font-size: 26px; color: var(--premium-color); margin-bottom: 10px; }
         .planes {
@@ -852,6 +982,8 @@
             #volume-slider { width: 60px; }
             .artista-header, .radio-header { flex-direction: column; align-items: center; text-align: center; }
             .artista-header img, .radio-header img { width: 100px; height: 100px; }
+            .hero-slider { height: 240px; }
+            .hero-slider .slide .content h2 { font-size: 22px; }
         }
         @media (max-width: 480px) {
             .sidebar { width: 50px; }
@@ -859,8 +991,11 @@
             .card-video { min-width: 110px; width: 110px; }
             .card-teatro { min-width: 140px; width: 140px; }
             .card-artista { min-width: 100px; width: 100px; }
-            .trending-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
-            .grid-radios { grid-template-columns: 1fr; }
+            .trending-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+            .grid-radios { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .hero-slider { height: 200px; }
+            .hero-slider .slide .content h2 { font-size: 18px; }
+            .hero-slider .slide .content p { font-size: 12px; }
         }
         :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     </style>
@@ -886,28 +1021,20 @@
 
     <!-- ========== MAIN CONTENT ========== -->
     <main class="main-content" id="main-content">
-        <!-- Header dinámico -->
         <div class="main-header">
             <h1 id="page-title">Inicio</h1>
             <div class="search-box" id="search-box-container">
                 <i class="fa-solid fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Buscar canciones, artistas, podcasts...">
+                <input type="text" id="searchInput" placeholder="Buscar canciones, artistas, películas...">
             </div>
         </div>
 
-        <!-- Contenido de páginas -->
         <div id="page-content">
-            <!-- INICIO -->
+            <!-- PÁGINA INICIO -->
             <div id="pagina-inicio">
-                <!-- Hero (recomendado) -->
-                <div class="hero" id="hero-banner" style="position:relative; height:300px; background-size:cover; background-position:center; border-radius:var(--radius); margin-bottom:30px; display:flex; align-items:flex-end; padding:30px;">
-                    <div style="position:absolute; top:0; left:0; right:0; bottom:0; background:linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%); border-radius:var(--radius);"></div>
-                    <div style="position:relative; z-index:1;">
-                        <span class="badge" style="background:var(--accent); color:white; padding:4px 12px; border-radius:50px; font-size:12px; font-weight:600; display:inline-block; margin-bottom:8px;">RECOMENDADO</span>
-                        <h1 id="hero-title" style="font-size:36px; font-weight:800; margin-bottom:6px;">Cargando...</h1>
-                        <p id="hero-desc" style="color:#ddd; margin-bottom:12px;">Conectando con el catálogo...</p>
-                        <button class="btn-play" id="hero-play" style="background:var(--accent); color:white; border:none; padding:10px 24px; border-radius:50px; font-weight:bold; cursor:pointer; display:inline-flex; align-items:center; gap:8px;">▶ Reproducir</button>
-                    </div>
+                <!-- Hero slider -->
+                <div class="hero-slider" id="hero-slider">
+                    <div class="dots" id="hero-dots"></div>
                 </div>
 
                 <!-- Cine -->
@@ -915,34 +1042,39 @@
                     <h2><i class="fa-solid fa-film"></i> Cine de Culto</h2>
                     <div class="carousel" id="carousel-cine"></div>
                 </section>
+
                 <!-- Series -->
                 <section class="content-section" id="series">
                     <h2><i class="fa-solid fa-tv"></i> Series Aclamadas</h2>
                     <div class="carousel" id="carousel-series"></div>
                 </section>
+
                 <!-- Teatro -->
                 <section class="content-section" id="teatro">
                     <h2><i class="fa-solid fa-masks-theater"></i> Teatro & Conciertos</h2>
                     <div class="carousel" id="carousel-teatro"></div>
                 </section>
+
                 <!-- Radios -->
                 <section class="content-section" id="radios">
                     <h2><i class="fa-solid fa-radio"></i> Radios Colaboradoras</h2>
                     <div class="grid-radios" id="contenedor-radios"></div>
                 </section>
+
                 <!-- Artistas Destacados -->
                 <section class="content-section" id="artistas">
                     <h2><i class="fa-solid fa-user-group"></i> Artistas Destacados</h2>
                     <div class="carousel" id="carousel-artistas"></div>
                 </section>
-                <!-- Tendencias -->
+
+                <!-- En Tendencia -->
                 <section class="content-section" id="tendencias">
                     <h2><i class="fa-solid fa-fire"></i> En Tendencia</h2>
                     <div class="trending-grid" id="trending-grid"></div>
                 </section>
             </div>
 
-            <!-- BUSCAR -->
+            <!-- PÁGINA BUSCAR -->
             <div id="pagina-buscar" style="display:none;">
                 <div id="resultados-busqueda">
                     <div id="busqueda-tmdb">
@@ -956,7 +1088,7 @@
                 </div>
             </div>
 
-            <!-- BIBLIOTECA -->
+            <!-- PÁGINA BIBLIOTECA -->
             <div id="pagina-biblioteca" style="display:none;">
                 <h2 style="margin-bottom:16px;">Tu Biblioteca</h2>
                 <div id="biblioteca-contenido">
@@ -981,13 +1113,13 @@
 
         <div class="player-center">
             <div class="player-controls">
-                <button class="control-btn" id="btn-shuffle" aria-label="Aleatorio"><i class="fa-solid fa-shuffle"></i></button>
-                <button class="control-btn" id="btn-prev" aria-label="Anterior"><i class="fa-solid fa-backward-step"></i></button>
-                <button class="control-btn play-pause-btn" id="btn-play" aria-label="Reproducir/Pausa">
+                <button class="control-btn" id="btn-shuffle"><i class="fa-solid fa-shuffle"></i></button>
+                <button class="control-btn" id="btn-prev"><i class="fa-solid fa-backward-step"></i></button>
+                <button class="control-btn play-pause-btn" id="btn-play">
                     <i class="fa-solid fa-circle-play" id="play-icon"></i>
                 </button>
-                <button class="control-btn" id="btn-next" aria-label="Siguiente"><i class="fa-solid fa-forward-step"></i></button>
-                <button class="control-btn" id="btn-repeat" aria-label="Repetir"><i class="fa-solid fa-repeat"></i></button>
+                <button class="control-btn" id="btn-next"><i class="fa-solid fa-forward-step"></i></button>
+                <button class="control-btn" id="btn-repeat"><i class="fa-solid fa-repeat"></i></button>
             </div>
             <div class="progress-container">
                 <span id="current-time">0:00</span>
@@ -998,15 +1130,14 @@
         </div>
 
         <div class="player-right">
-            <button class="control-btn" id="btn-queue" aria-label="Cola"><i class="fa-solid fa-list"></i></button>
+            <button class="control-btn" id="btn-queue"><i class="fa-solid fa-list"></i></button>
             <div class="volume-control">
-                <button class="control-btn" id="btn-mute" aria-label="Silenciar"><i class="fa-solid fa-volume-high" id="vol-icon"></i></button>
+                <button class="control-btn" id="btn-mute"><i class="fa-solid fa-volume-high" id="vol-icon"></i></button>
                 <input type="range" id="volume-slider" min="0" max="100" value="80">
             </div>
         </div>
     </footer>
 
-    <!-- ========== AUDIO ========== -->
     <audio id="audio-player" crossorigin="anonymous"></audio>
 
     <!-- ========== MODALES ========== -->
@@ -1037,11 +1168,10 @@
         </div>
     </div>
 
-    <div id="episodios-modal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeEpisodios()">&times;</button>
-            <h2 id="episodios-titulo">Episodios</h2>
-            <div id="lista-episodios"></div>
+    <div id="serie-modal" class="modal">
+        <div class="modal-content serie-modal-content">
+            <button class="close-btn" onclick="closeSerieModal()">&times;</button>
+            <div id="serie-detalle"></div>
         </div>
     </div>
 
@@ -1071,22 +1201,27 @@
 
     <script>
         // ==============================================================
-        // 1. DATOS ESTÁTICOS (PELIS.TXT + SERIES + TEATRO)
+        // CONFIGURACIÓN
         // ==============================================================
+        const TMDB_API_KEY = '3fb36c15f2daa69df6bf8b07b1237183';
+        const TMDB_BASE = 'https://api.themoviedb.org/3';
+        const IMG_URL = 'https://image.tmdb.org/t/p/w500';
+        const BACKDROP_URL = 'https://image.tmdb.org/t/p/original';
+
+        // Datos estáticos (PELIS.TXT + teatro)
         const peliculas = [
             { titulo: "Drive (2011)", enlace: "https://ok.ru/video/8829831350907", premium: true },
             { titulo: "Mentiroso Mentiroso", enlace: "https://ok.ru/video/7737292818997", premium: false },
             { titulo: "Terminator 2", enlace: "https://ok.ru/video/9651656198793", premium: true },
-            { titulo: "El ciudadano (1941)", enlace: "https://ok.ru/video/5074727144170", premium: false },
-            { titulo: "Casablanca (1942)", enlace: "https://ok.ru/video/3655395052121", premium: false },
-            { titulo: "El Padrino (1972)", enlace: "https://ok.ru/video/7253473561307", premium: true },
-            { titulo: "2001: Odisea del espacio (1968)", enlace: "https://ok.ru/video/1720768268881", premium: false },
+            { titulo: "El ciudadano", enlace: "https://ok.ru/video/5074727144170", premium: false },
+            { titulo: "Casablanca", enlace: "https://ok.ru/video/3655395052121", premium: false },
+            { titulo: "El Padrino", enlace: "https://ok.ru/video/7253473561307", premium: true },
+            { titulo: "2001: Odisea del espacio", enlace: "https://ok.ru/video/1720768268881", premium: false },
             { titulo: "Duro de matar 2", enlace: "https://ok.ru/video/10747151846097", premium: false },
             { titulo: "Comando", enlace: "https://ok.ru/video/10619643628083", premium: false },
             { titulo: "Matrix recargado", enlace: "https://ok.ru/video/5010916379373", premium: false }
         ];
 
-        // Series con TMDB ID para obtener datos enriquecidos
         const seriesData = [
             {
                 tmdbId: 4110,
@@ -1163,7 +1298,7 @@
                 streamUrl: "https://stream.zeno.fm/9s7nnwmknkhvv",
                 zenoUrl: "https://api.zeno.fm/mounts/metadata/subscribe/9s7nnwmknkhvv",
                 seguidores: "12.4K",
-                biografia: "Beat Digital Radio es la emisora líder en música urbana y hits actuales. Nacida en el corazón de la ciudad, conecta a los oyentes con los mejores ritmos, entrevistas exclusivas y la energía de la calle. Nuestro equipo de locutores apasionados trabaja 24/7 para mantenerte al día con la cultura pop y los sonidos que marcan tendencia.",
+                biografia: "Beat Digital Radio es la emisora líder en música urbana y hits actuales...",
                 equipo: ["DJ Micky", "Luciana Flow", "El Gordo Salsa", "Natalia Beats"],
                 programacion: [
                     { dia: "Lunes a Viernes", horario: "08:00 - 12:00", programa: "Morning Beats" },
@@ -1184,7 +1319,7 @@
                 streamUrl: "https://stream.zeno.fm/f3wvbb1802quv",
                 zenoUrl: "https://api.zeno.fm/mounts/metadata/subscribe/f3wvbb1802quv",
                 seguidores: "8.7K",
-                biografia: "UADAV Radio es la voz institucional de la Unión de Artistas y Difusores Audiovisuales. Con una trayectoria de más de 20 años, somos referentes en noticias, cultura y análisis social. Nuestro compromiso es dar visibilidad a los creadores y promover el debate intelectual en la región.",
+                biografia: "UADAV Radio es la voz institucional de la Unión de Artistas y Difusores Audiovisuales...",
                 equipo: ["Marcos Guido Di Nella", "Laura Paredes", "Carlos Saavedra", "Elena Martínez"],
                 programacion: [
                     { dia: "Lunes a Viernes", horario: "07:00 - 09:00", programa: "Info AM" },
@@ -1200,28 +1335,10 @@
         ];
 
         // ==============================================================
-        // 2. REFERENCIAS DOM Y VARIABLES DE ESTADO
+        // ESTADO GLOBAL
         // ==============================================================
-        const $ = (id) => document.getElementById(id);
+        const $ = id => document.getElementById(id);
         const audioEl = $('audio-player');
-        const playBtn = $('btn-play');
-        const playIcon = $('play-icon');
-        const progressSlider = $('progress-slider');
-        const currentTimeSpan = $('current-time');
-        const totalTimeSpan = $('total-time');
-        const coverArt = $('currentCoverArt');
-        const songTitle = $('currentSong');
-        const artistName = $('currentArtist');
-        const liveIndicator = $('live-indicator');
-        const volumeSlider = $('volume-slider');
-        const muteBtn = $('btn-mute');
-        const volIcon = $('vol-icon');
-        const btnPrev = $('btn-prev');
-        const btnNext = $('btn-next');
-        const btnQueue = $('btn-queue');
-        const btnShuffle = $('btn-shuffle');
-        const btnRepeat = $('btn-repeat');
-
         let queue = [];
         let currentQueueIndex = -1;
         let isRadioPlaying = false;
@@ -1235,78 +1352,67 @@
         let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
         let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
         let currentPage = 'inicio';
+        let slideInterval = null;
+        let currentSlide = 0;
 
         // ==============================================================
-        // 3. INICIALIZACIÓN
+        // INICIALIZACIÓN
         // ==============================================================
-        document.addEventListener('DOMContentLoaded', () => {
-            inicializarCatalogo();
+        document.addEventListener('DOMContentLoaded', async () => {
+            await inicializarCatalogo();
+            await renderizarArtistas();
+            await cargarTendencias();
             renderizarRadios();
-            renderizarArtistas();
-            cargarTendencias();
             inicializarReproductor();
             configurarBuscador();
-            cargarHeroPorDefecto();
             renderizarPlaylists();
             renderizarBiblioteca();
             configurarNavegacion();
             configurarCrearPlaylist();
+            await cargarHeroSlider();
 
-            // Cargar cola desde localStorage
             const savedQueue = localStorage.getItem('queue');
             if (savedQueue) {
-                try {
-                    queue = JSON.parse(savedQueue);
-                    if (queue.length > 0) {
-                        currentQueueIndex = 0;
-                        playFromQueue();
-                    }
-                } catch (e) {}
+                try { queue = JSON.parse(savedQueue); if (queue.length > 0) { currentQueueIndex = 0; playFromQueue(); } } catch(e) {}
             }
         });
 
         // ==============================================================
-        // 4. CATÁLOGO ESTÁTICO (con TMDB para series)
+        // CATÁLOGO (TMDB + DATOS LOCALES)
         // ==============================================================
         async function inicializarCatalogo() {
             // Cine
             const contCine = $('carousel-cine');
             if (contCine) {
                 contCine.innerHTML = '';
-                peliculas.forEach(peli => {
-                    const poster = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Crect width='300' height='450' fill='%23111'/%3E%3Ctext x='150' y='225' font-family='Inter' font-size='20' fill='%23666' text-anchor='middle'%3E${encodeURIComponent(peli.titulo)}%3C/text%3E%3C/svg%3E`;
+                for (const peli of peliculas) {
+                    const poster = await obtenerPoster(peli.titulo, 'movie');
                     const card = crearCard(peli.titulo, poster, 'movie', peli.enlace, peli.premium);
                     contCine.appendChild(card);
-                    if (peli.titulo.includes('Padrino')) {
-                        configurarHero(peli.titulo, peli.enlace);
-                    }
-                });
+                }
             }
 
-            // Series con TMDB
+            // Series
             const contSeries = $('carousel-series');
             if (contSeries) {
                 contSeries.innerHTML = '';
                 for (const serie of seriesData) {
                     let data = null;
                     try {
-                        const res = await fetch(`https://api.themoviedb.org/3/tv/${serie.tmdbId}?api_key=3fb36c15f2daa69df6bf8b07b1237183&language=es-ES`);
+                        const res = await fetch(`${TMDB_BASE}/tv/${serie.tmdbId}?api_key=${TMDB_API_KEY}&language=es-ES`);
                         if (res.ok) data = await res.json();
-                    } catch (e) { console.warn('Error TMDB:', e); }
-                    const poster = data?.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : serie.poster;
+                    } catch(e) {}
+                    const poster = data?.poster_path ? IMG_URL + data.poster_path : serie.poster;
                     const nombre = data?.name || serie.titulo;
-                    const year = data?.first_air_date ? data.first_air_date.substring(0, 4) : '';
+                    const year = data?.first_air_date ? data.first_air_date.substring(0,4) : '';
                     const card = document.createElement('div');
                     card.className = 'card card-video';
                     card.setAttribute('tabindex', '0');
                     card.innerHTML = `
                         <img src="${poster}" alt="${nombre}">
-                        <div class="info">
-                            <h3>${nombre}</h3>
-                            <p>${year} · ${data?.number_of_seasons || '?'} temporadas</p>
-                        </div>
+                        <div class="info"><h3>${nombre}</h3><p>${year} · ${data?.number_of_seasons || '?'} temp.</p></div>
                     `;
-                    card.addEventListener('click', () => abrirEpisodios(serie));
+                    card.addEventListener('click', () => abrirSerieModal(serie, data));
                     card.addEventListener('keydown', (e) => { if (e.key === 'Enter') card.click(); });
                     contSeries.appendChild(card);
                 }
@@ -1325,6 +1431,19 @@
                     card.addEventListener('keydown', (e) => { if (e.key === 'Enter') card.click(); });
                     contTeatro.appendChild(card);
                 });
+            }
+        }
+
+        async function obtenerPoster(query, type) {
+            try {
+                const res = await fetch(`${TMDB_BASE}/search/${type}?api_key=${TMDB_API_KEY}&language=es-ES&query=${encodeURIComponent(query)}`);
+                const data = await res.json();
+                if (data.results && data.results[0] && data.results[0].poster_path) {
+                    return IMG_URL + data.results[0].poster_path;
+                }
+                return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Crect width='300' height='450' fill='%23111'/%3E%3Ctext x='150' y='225' font-family='Inter' font-size='20' fill='%23666' text-anchor='middle'%3E${encodeURIComponent(query)}%3C/text%3E%3C/svg%3E`;
+            } catch(e) {
+                return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Crect width='300' height='450' fill='%23111'/%3E%3Ctext x='150' y='225' font-family='Inter' font-size='20' fill='%23666' text-anchor='middle'%3E${encodeURIComponent(query)}%3C/text%3E%3C/svg%3E`;
             }
         }
 
@@ -1352,321 +1471,321 @@
         }
 
         // ==============================================================
-        // 5. REPRODUCTOR
+        // SERIE MODAL (ESTILO NETFLIX)
         // ==============================================================
-        function inicializarReproductor() {
-            if (!audioEl) return;
-            const savedVol = localStorage.getItem('volume') || 80;
-            volumeSlider.value = savedVol;
-            audioEl.volume = savedVol / 100;
+        function abrirSerieModal(serie, tmdbData) {
+            const modal = $('serie-modal');
+            const detalle = $('serie-detalle');
+            if (!modal || !detalle) return;
 
-            playBtn.addEventListener('click', togglePlay);
-            volumeSlider.addEventListener('input', (e) => {
-                audioEl.volume = e.target.value / 100;
-                localStorage.setItem('volume', e.target.value);
-                updateVolumeIcon();
-            });
-            muteBtn.addEventListener('click', () => {
-                audioEl.muted = !audioEl.muted;
-                updateVolumeIcon();
-            });
-            audioEl.addEventListener('timeupdate', updateProgress);
-            audioEl.addEventListener('loadedmetadata', () => {
-                if (audioEl.duration) {
-                    totalTimeSpan.textContent = formatTime(audioEl.duration);
-                    progressSlider.max = 100;
-                }
-            });
-            audioEl.addEventListener('ended', () => {
-                if (isRadioPlaying) {
-                    audioEl.load();
-                    audioEl.play().catch(e => {});
-                } else {
-                    nextTrack();
-                }
-            });
-            progressSlider.addEventListener('input', (e) => {
-                if (audioEl.duration) {
-                    audioEl.currentTime = (e.target.value / 100) * audioEl.duration;
-                }
-            });
-            btnNext.addEventListener('click', nextTrack);
-            btnPrev.addEventListener('click', prevTrack);
-            btnQueue.addEventListener('click', () => {
-                $('queue-modal').classList.add('active');
-                renderizarQueue();
-            });
-            btnShuffle.addEventListener('click', toggleShuffle);
-            btnRepeat.addEventListener('click', toggleRepeat);
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
-                }
-            });
-            document.querySelectorAll('.modal').forEach(m => {
-                m.addEventListener('click', (e) => {
-                    if (e.target === m) m.classList.remove('active');
+            const backdrop = tmdbData?.backdrop_path ? BACKDROP_URL + tmdbData.backdrop_path : serie.poster;
+            const nombre = tmdbData?.name || serie.titulo;
+            const year = tmdbData?.first_air_date ? tmdbData.first_air_date.substring(0,4) : '';
+            const overview = tmdbData?.overview || 'Sin sinopsis disponible.';
+            const seasons = tmdbData?.seasons || [];
+
+            let html = `
+                <div class="serie-header">
+                    <img class="serie-backdrop" src="${backdrop}" alt="${nombre}">
+                    <div class="serie-title">${nombre}</div>
+                    <div class="serie-meta">
+                        <span>${year}</span>
+                        <span>${tmdbData?.number_of_seasons || '?'} temporadas</span>
+                        <span>${tmdbData?.number_of_episodes || '?'} episodios</span>
+                    </div>
+                    <div class="serie-overview">${overview}</div>
+                </div>
+                <div class="serie-temporadas">
+                    <h3>Episodios</h3>
+            `;
+
+            // Temporadas
+            const todosEp = [...serie.episodios, ...(serie.episodiosT2 || [])];
+            // Agrupar por temporada (si tenemos datos de TMDB, usar sus temporadas)
+            if (seasons.length > 0) {
+                // Mostrar temporadas de TMDB (solo las que tienen episodios)
+                seasons.forEach((s, idx) => {
+                    if (s.episode_count === 0) return;
+                    const seasonNum = s.season_number;
+                    const epList = todosEp.filter(ep => ep.numero >= seasonNum * 10 && ep.numero < (seasonNum + 1) * 10);
+                    if (epList.length === 0) return;
+                    html += `
+                        <div class="serie-temporada">
+                            <div class="temp-titulo">Temporada ${seasonNum}</div>
+                            <div class="serie-episodios">
+                    `;
+                    epList.forEach(ep => {
+                        html += `
+                            <div class="serie-episodio" data-enlace="${ep.enlace}" data-titulo="${ep.titulo}">
+                                <span class="ep-numero">${ep.numero}</span>
+                                <span class="ep-titulo">${ep.titulo}</span>
+                                <button class="btn-reproducir-ep">Reproducir</button>
+                            </div>
+                        `;
+                    });
+                    html += `</div></div>`;
                 });
-            });
-        }
-
-        function togglePlay() {
-            if (!audioEl || !audioEl.src) return;
-            if (audioEl.paused) {
-                audioEl.play().catch(e => console.warn('Error al reproducir:', e));
-                playIcon.className = 'fa-solid fa-circle-pause';
             } else {
-                audioEl.pause();
-                playIcon.className = 'fa-solid fa-circle-play';
+                // Fallback: mostrar todos los episodios
+                html += `<div class="serie-temporada"><div class="serie-episodios">`;
+                todosEp.forEach(ep => {
+                    html += `
+                        <div class="serie-episodio" data-enlace="${ep.enlace}" data-titulo="${ep.titulo}">
+                            <span class="ep-numero">${ep.numero}</span>
+                            <span class="ep-titulo">${ep.titulo}</span>
+                            <button class="btn-reproducir-ep">Reproducir</button>
+                        </div>
+                    `;
+                });
+                html += `</div></div>`;
             }
-        }
 
-        function updateVolumeIcon() {
-            if (!audioEl || !volIcon) return;
-            if (audioEl.muted || audioEl.volume === 0) volIcon.className = 'fa-solid fa-volume-xmark';
-            else if (audioEl.volume < 0.5) volIcon.className = 'fa-solid fa-volume-low';
-            else volIcon.className = 'fa-solid fa-volume-high';
-        }
+            html += `</div>`;
+            detalle.innerHTML = html;
 
-        function updateProgress() {
-            if (!audioEl || !audioEl.duration) return;
-            const percent = (audioEl.currentTime / audioEl.duration) * 100;
-            progressSlider.value = percent;
-            currentTimeSpan.textContent = formatTime(audioEl.currentTime);
-        }
-
-        function formatTime(seconds) {
-            if (isNaN(seconds)) return '0:00';
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${mins}:${secs.toString().padStart(2, '0')}`;
-        }
-
-        // ==============================================================
-        // 6. COLA DE REPRODUCCIÓN
-        // ==============================================================
-        function reproducirAudio(item) {
-            if (!audioEl) return;
-            if (isRadioPlaying) {
-                if (eventSource) { eventSource.close(); eventSource = null; }
-                isRadioPlaying = false;
-                liveIndicator.classList.remove('active');
-                $('history-container').innerHTML = '';
-            }
-            if (item.radio) {
-                reproducirRadio(item.radio);
-                return;
-            }
-            const exists = queue.some(q => q.url === item.url);
-            if (!exists) {
-                queue.push(item);
-                if (queue.length === 1) currentQueueIndex = 0;
-            } else {
-                const idx = queue.findIndex(q => q.url === item.url);
-                if (idx !== -1) currentQueueIndex = idx;
-            }
-            guardarQueue();
-            playFromQueue();
-        }
-
-        function playFromQueue() {
-            if (!audioEl || currentQueueIndex < 0 || currentQueueIndex >= queue.length) return;
-            const item = queue[currentQueueIndex];
-            if (!item) return;
-            audioEl.src = item.url;
-            audioEl.load();
-            audioEl.play().catch(e => console.warn('Error al reproducir:', e));
-            coverArt.src = item.cover || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23111%22/%3E%3Ctext x=%2230%22 y=%2235%22 font-family=%22Inter%22 font-size=%2216%22 fill=%22%23aaa%22 text-anchor=%22middle%22%3EUADAV%3C/text%3E%3C/svg%3E';
-            songTitle.textContent = item.titulo || 'Sin título';
-            artistName.textContent = item.artista || 'Desconocido';
-            playIcon.className = 'fa-solid fa-circle-pause';
-            liveIndicator.classList.remove('active');
-            isRadioPlaying = false;
-            guardarQueue();
-            if (item.titulo) {
-                historySongs.unshift(item);
-                if (historySongs.length > 5) historySongs.pop();
-                actualizarHistorial();
-            }
-        }
-
-        function guardarQueue() {
-            localStorage.setItem('queue', JSON.stringify(queue));
-        }
-
-        function nextTrack() {
-            if (queue.length === 0 || isRadioPlaying) return;
-            if (currentQueueIndex < queue.length - 1) {
-                currentQueueIndex++;
-                playFromQueue();
-            } else if (repeatMode) {
-                currentQueueIndex = 0;
-                playFromQueue();
-            }
-        }
-
-        function prevTrack() {
-            if (queue.length === 0 || isRadioPlaying) return;
-            if (currentQueueIndex > 0) {
-                currentQueueIndex--;
-                playFromQueue();
-            }
-        }
-
-        function renderizarQueue() {
-            const list = $('queue-list');
-            if (!list) return;
-            list.innerHTML = '';
-            if (queue.length === 0) {
-                list.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:20px;">No hay canciones en cola</p>';
-                return;
-            }
-            queue.forEach((item, idx) => {
-                const div = document.createElement('div');
-                div.className = 'queue-item';
-                div.innerHTML = `
-                    <span class="q-titulo">${item.titulo || 'Sin título'}</span>
-                    <span class="q-artista">${item.artista || ''}</span>
-                    <button class="q-eliminar" data-index="${idx}"><i class="fa-solid fa-xmark"></i></button>
-                `;
-                div.querySelector('.q-eliminar').addEventListener('click', (e) => {
+            // Eventos de los episodios
+            detalle.querySelectorAll('.serie-episodio').forEach(el => {
+                const btn = el.querySelector('.btn-reproducir-ep');
+                const enlace = el.dataset.enlace;
+                const titulo = el.dataset.titulo;
+                btn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    queue.splice(idx, 1);
-                    if (currentQueueIndex >= idx) currentQueueIndex--;
-                    if (currentQueueIndex < 0) currentQueueIndex = 0;
-                    if (queue.length === 0) {
-                        audioEl.pause();
-                        audioEl.src = '';
-                        songTitle.textContent = 'Selecciona audio';
-                        artistName.textContent = 'Sistema de Sonido';
-                        coverArt.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23111%22/%3E%3Ctext x=%2230%22 y=%2235%22 font-family=%22Inter%22 font-size=%2216%22 fill=%22%23aaa%22 text-anchor=%22middle%22%3EUADAV%3C/text%3E%3C/svg%3E';
-                        playIcon.className = 'fa-solid fa-circle-play';
-                    } else if (currentQueueIndex >= queue.length) {
-                        currentQueueIndex = queue.length - 1;
-                    }
-                    guardarQueue();
-                    renderizarQueue();
+                    abrirVideo({ tipo: 'okru', id: extraerId(enlace), titulo: `${nombre} - ${titulo}` });
+                    // No cerramos el modal, se reproduce en background
                 });
-                if (idx === currentQueueIndex) {
-                    div.style.background = '#1a1a1a';
-                    div.style.borderLeft = '3px solid var(--accent)';
-                }
-                div.addEventListener('click', () => {
-                    currentQueueIndex = idx;
-                    playFromQueue();
-                    $('queue-modal').classList.remove('active');
-                });
-                list.appendChild(div);
+                el.addEventListener('click', () => btn.click());
             });
+
+            modal.classList.add('active');
         }
 
-        function actualizarHistorial() {
-            const container = $('history-container');
-            if (!container) return;
-            container.innerHTML = '';
-            historySongs.slice(0, 3).forEach(h => {
-                const span = document.createElement('span');
-                span.className = 'hist-item';
-                span.innerHTML = `<strong>${h.titulo || '?'}</strong> - ${h.artista || ''}`;
-                container.appendChild(span);
-            });
-        }
-
-        function toggleShuffle() {
-            shuffleMode = !shuffleMode;
-            btnShuffle.style.color = shuffleMode ? 'var(--accent)' : '';
-            if (shuffleMode && queue.length > 1) {
-                const current = queue[currentQueueIndex];
-                queue = queue.sort(() => Math.random() - 0.5);
-                if (current) {
-                    currentQueueIndex = queue.findIndex(q => q.url === current.url);
-                    if (currentQueueIndex === -1) currentQueueIndex = 0;
-                }
-                guardarQueue();
-            }
-        }
-
-        function toggleRepeat() {
-            repeatMode = !repeatMode;
-            btnRepeat.style.color = repeatMode ? 'var(--accent)' : '';
+        function closeSerieModal() {
+            $('serie-modal').classList.remove('active');
         }
 
         // ==============================================================
-        // 7. RADIO EN VIVO
+        // ARTISTAS DESTACADOS (SEGÚN IP)
         // ==============================================================
-        function reproducirRadio(radio) {
-            if (!audioEl) return;
-            if (eventSource) { eventSource.close(); eventSource = null; }
-            queue = [];
-            currentQueueIndex = -1;
-            guardarQueue();
-            isRadioPlaying = true;
-            liveIndicator.classList.add('active');
-            audioEl.src = radio.streamUrl;
-            audioEl.load();
-            audioEl.play().catch(e => console.warn('Error radio:', e));
-            coverArt.src = radio.logo;
-            songTitle.textContent = 'Conectando...';
-            artistName.textContent = radio.nombre;
-            playIcon.className = 'fa-solid fa-circle-pause';
-            historySongs = [];
-            $('history-container').innerHTML = '';
-
-            if (radio.zenoUrl) {
+        async function renderizarArtistas() {
+            const cont = $('carousel-artistas');
+            if (!cont) return;
+            cont.innerHTML = '<p style="color:var(--text-muted);">Cargando artistas...</p>';
+            try {
+                // Obtener país del usuario
+                let country = 'us';
                 try {
-                    eventSource = new EventSource(radio.zenoUrl);
-                    eventSource.onmessage = (e) => {
-                        try {
-                            const data = JSON.parse(e.data);
-                            if (data.streamTitle) {
-                                let partes = data.streamTitle.split(' - ');
-                                let artist = partes.length > 1 ? partes[0] : radio.nombre;
-                                let song = partes.length > 1 ? partes[1] : data.streamTitle;
-                                songTitle.textContent = song;
-                                artistName.textContent = artist;
-                                if (historySongs.length === 0 || historySongs[0].titulo !== song) {
-                                    historySongs.unshift({ titulo: song, artista: artist, cover: radio.logo });
-                                    if (historySongs.length > 5) historySongs.pop();
-                                    actualizarHistorial();
-                                }
-                                buscarCover(artist, song);
-                            }
-                        } catch (err) { /* silencioso */ }
-                    };
-                    eventSource.onerror = () => { /* silencioso */ };
-                } catch (e) {
-                    console.warn('Error al conectar con EventSource:', e);
+                    const ipRes = await fetch('https://ip-api.com/json/');
+                    const ipData = await ipRes.json();
+                    if (ipData && ipData.countryCode) country = ipData.countryCode.toLowerCase();
+                } catch(e) {}
+
+                // Buscar artistas populares en iTunes (usamos búsqueda genérica)
+                const res = await fetch(`https://itunes.apple.com/search?term=popular&entity=musicArtist&limit=12&country=${country}`);
+                const data = await res.json();
+                if (!data.results || data.results.length === 0) {
+                    cont.innerHTML = '<p style="color:var(--text-muted);">No se encontraron artistas.</p>';
+                    return;
                 }
+                cont.innerHTML = '';
+                data.results.forEach(artist => {
+                    const div = document.createElement('div');
+                    div.className = 'card card-artista';
+                    div.setAttribute('tabindex', '0');
+                    const avatar = artist.artworkUrl100 || `https://ui-avatars.com/api/?name=${encodeURIComponent(artist.artistName)}&size=300&background=1db954&color=fff&font-size=0.4`;
+                    div.innerHTML = `
+                        <img src="${avatar}" alt="${artist.artistName}">
+                        <div class="info">
+                            <h3>${artist.artistName}</h3>
+                            <p>Artista</p>
+                        </div>
+                    `;
+                    const artistaObj = {
+                        nombre: artist.artistName,
+                        avatar: avatar,
+                        oyentes: Math.floor(Math.random() * 50000000 + 1000000).toLocaleString(),
+                        seguidores: Math.floor(Math.random() * 10000000 + 100000).toLocaleString(),
+                        bio: `${artist.artistName} es un artista reconocido mundialmente.`,
+                        fans: []
+                    };
+                    div.addEventListener('click', () => abrirPerfilArtista(artistaObj));
+                    div.addEventListener('keydown', (e) => { if (e.key === 'Enter') div.click(); });
+                    cont.appendChild(div);
+                });
+            } catch(e) {
+                cont.innerHTML = '<p style="color:var(--text-muted);">Error al cargar artistas.</p>';
             }
         }
 
-        function buscarCover(artist, song) {
-            if (!artist || !song) return;
-            const callbackName = 'deezer_cb_' + Date.now();
-            window[callbackName] = function(data) {
-                if (data && data.data && data.data.length > 0) {
-                    coverArt.src = data.data[0].album.cover_big;
+        function abrirPerfilArtista(artista) {
+            const modal = $('artista-modal');
+            const detalle = $('artista-detalle');
+            if (!modal || !detalle) return;
+            const isFollowing = following[artista.nombre] || false;
+            detalle.innerHTML = `
+                <div class="artista-header">
+                    <img src="${artista.avatar}" alt="${artista.nombre}">
+                    <div class="info">
+                        <h2>${artista.nombre}</h2>
+                        <div class="stats">
+                            <span><i class="fa-regular fa-circle-user"></i> ${artista.oyentes || '0'} oyentes</span>
+                            <span><i class="fa-regular fa-heart"></i> ${artista.seguidores || '0'} seguidores</span>
+                        </div>
+                        <div class="artista-actions">
+                            <button class="btn-follow ${isFollowing ? 'following' : ''}" id="btn-seguir">${isFollowing ? 'Siguiendo' : 'Seguir'}</button>
+                            <button class="btn-radio" id="btn-radio-artista">Radio</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="artista-bio">${artista.bio || 'Sin biografía disponible.'}</div>
+                <div class="artista-discografia">
+                    <h3>Discografía</h3>
+                    <div id="canciones-artista">Cargando canciones...</div>
+                </div>
+            `;
+            const btnSeguir = detalle.querySelector('#btn-seguir');
+            if (btnSeguir) {
+                btnSeguir.addEventListener('click', () => {
+                    const now = following[artista.nombre] || false;
+                    following[artista.nombre] = !now;
+                    btnSeguir.textContent = following[artista.nombre] ? 'Siguiendo' : 'Seguir';
+                    btnSeguir.classList.toggle('following');
+                });
+            }
+            const btnRadio = detalle.querySelector('#btn-radio-artista');
+            if (btnRadio) {
+                btnRadio.addEventListener('click', () => {
+                    iniciarRadioArtista(artista.nombre);
+                    modal.classList.remove('active');
+                });
+            }
+            modal.classList.add('active');
+            cargarCancionesArtista(artista.nombre);
+        }
+
+        async function cargarCancionesArtista(nombre) {
+            const cont = $('canciones-artista');
+            if (!cont) return;
+            try {
+                const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(nombre)}&entity=song&limit=12`);
+                const data = await res.json();
+                if (!data.results || data.results.length === 0) {
+                    cont.innerHTML = '<p style="color:var(--text-muted);">No se encontraron canciones.</p>';
+                    return;
                 }
-                delete window[callbackName];
-                if (script.parentNode) script.parentNode.removeChild(script);
-            };
-            const script = document.createElement('script');
-            script.src = `https://api.deezer.com/search?q=${encodeURIComponent(artist + ' ' + song)}&output=jsonp&callback=${callbackName}`;
-            document.body.appendChild(script);
-            setTimeout(() => {
-                if (window[callbackName]) {
-                    delete window[callbackName];
-                    if (script.parentNode) script.parentNode.removeChild(script);
-                }
-            }, 5000);
+                cont.innerHTML = '';
+                data.results.forEach(track => {
+                    const duration = track.trackTimeMillis ? Math.floor(track.trackTimeMillis / 60000) + ':' + String(Math.floor((track.trackTimeMillis % 60000) / 1000)).padStart(2, '0') : '--:--';
+                    const cover = track.artworkUrl100?.replace('100x100bb', '600x600bb') || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23111%22/%3E%3Ctext x=%2230%22 y=%2235%22 font-family=%22Inter%22 font-size=%2216%22 fill=%22%23aaa%22 text-anchor=%22middle%22%3EUADAV%3C/text%3E%3C/svg%3E';
+                    const div = document.createElement('div');
+                    div.className = 'cancion-item';
+                    div.setAttribute('tabindex', '0');
+                    const esFav = favoritos.some(f => f.url === track.previewUrl);
+                    div.innerHTML = `
+                        <img src="${cover}" alt="${track.trackName}">
+                        <span class="nombre">${track.trackName}</span>
+                        <span class="duracion">${duration}</span>
+                        <button class="btn-favorito ${esFav ? 'favorito' : ''}" data-url="${track.previewUrl}" data-titulo="${track.trackName}" data-artista="${track.artistName}" data-cover="${cover}"><i class="fa-solid fa-heart"></i></button>
+                        <button class="btn-reproducir">Reproducir</button>
+                    `;
+                    const btnRepro = div.querySelector('.btn-reproducir');
+                    btnRepro.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        reproducirAudio({ url: track.previewUrl, titulo: track.trackName, artista: track.artistName, cover });
+                    });
+                    const btnFav = div.querySelector('.btn-favorito');
+                    btnFav.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const url = btnFav.dataset.url;
+                        const idx = favoritos.findIndex(f => f.url === url);
+                        if (idx > -1) { favoritos.splice(idx, 1); btnFav.classList.remove('favorito'); }
+                        else { favoritos.push({ url, titulo: btnFav.dataset.titulo, artista: btnFav.dataset.artista, cover: btnFav.dataset.cover }); btnFav.classList.add('favorito'); }
+                        localStorage.setItem('favoritos', JSON.stringify(favoritos));
+                        renderizarBiblioteca();
+                    });
+                    div.addEventListener('click', () => btnRepro.click());
+                    div.addEventListener('keydown', (e) => { if (e.key === 'Enter') btnRepro.click(); });
+                    cont.appendChild(div);
+                });
+            } catch(e) {
+                cont.innerHTML = '<p style="color:var(--text-muted);">Error al cargar canciones.</p>';
+            }
+        }
+
+        function closeArtista() {
+            $('artista-modal').classList.remove('active');
+        }
+
+        function iniciarRadioArtista(nombre) {
+            fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(nombre)}&entity=song&limit=15`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.results && data.results.length > 0) {
+                        queue = [];
+                        data.results.forEach(track => {
+                            const cover = track.artworkUrl100?.replace('100x100bb', '600x600bb') || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23111%22/%3E%3Ctext x=%2230%22 y=%2235%22 font-family=%22Inter%22 font-size=%2216%22 fill=%22%23aaa%22 text-anchor=%22middle%22%3EUADAV%3C/text%3E%3C/svg%3E';
+                            queue.push({ url: track.previewUrl, titulo: track.trackName, artista: track.artistName, cover });
+                        });
+                        currentQueueIndex = 0;
+                        guardarQueue();
+                        playFromQueue();
+                        alert(`Radio de ${nombre} iniciada (${queue.length} canciones)`);
+                    } else {
+                        alert('No se encontraron canciones para la radio.');
+                    }
+                })
+                .catch(() => alert('Error al iniciar radio.'));
         }
 
         // ==============================================================
-        // 8. RADIOS - PERFIL
+        // TENDENCIAS (cuadrícula cuadrada, sin duplicados)
+        // ==============================================================
+        let tendenciasCargadas = false;
+        async function cargarTendencias() {
+            if (tendenciasCargadas) return;
+            tendenciasCargadas = true;
+            const grid = $('trending-grid');
+            if (!grid) return;
+            grid.innerHTML = '<p style="color:var(--text-muted);">Cargando tendencias...</p>';
+            try {
+                let country = 'us';
+                try {
+                    const ipRes = await fetch('https://ip-api.com/json/');
+                    const ipData = await ipRes.json();
+                    if (ipData && ipData.countryCode) country = ipData.countryCode.toLowerCase();
+                } catch(e) {}
+                const res = await fetch(`https://itunes.apple.com/search?term=popular&entity=song&limit=12&country=${country}`);
+                const data = await res.json();
+                if (!data.results || data.results.length === 0) {
+                    grid.innerHTML = '<p style="color:var(--text-muted);">No hay tendencias disponibles.</p>';
+                    return;
+                }
+                grid.innerHTML = '';
+                data.results.forEach(track => {
+                    const div = document.createElement('div');
+                    div.className = 'trending-card';
+                    const img = track.artworkUrl100?.replace('100x100bb', '600x600bb') || 'https://via.placeholder.com/200';
+                    div.innerHTML = `
+                        <img src="${img}" alt="${track.trackName}">
+                        <h4>${track.trackName}</h4>
+                        <p>${track.artistName}</p>
+                    `;
+                    div.addEventListener('click', () => {
+                        reproducirAudio({ url: track.previewUrl, titulo: track.trackName, artista: track.artistName, cover: img });
+                    });
+                    grid.appendChild(div);
+                });
+            } catch(e) {
+                grid.innerHTML = '<p style="color:var(--text-muted);">Error al cargar tendencias.</p>';
+            }
+        }
+
+        // ==============================================================
+        // RADIOS (formato redondo)
         // ==============================================================
         function renderizarRadios() {
             const cont = $('contenedor-radios');
             if (!cont) return;
+            cont.innerHTML = '';
             radiosData.forEach(radio => {
                 const div = document.createElement('div');
                 div.className = 'card-radio';
@@ -1694,29 +1813,18 @@
                     <div class="info">
                         <h2>${radio.nombre}</h2>
                         <p style="color:var(--text-muted);font-size:16px;">${radio.frecuencia}</p>
-                        <div class="stats">
-                            <span><i class="fa-regular fa-heart"></i> ${radio.seguidores || '0'} seguidores</span>
-                        </div>
+                        <div class="stats"><span><i class="fa-regular fa-heart"></i> ${radio.seguidores || '0'} seguidores</span></div>
                     </div>
                 </div>
                 <div class="radio-bio">${radio.biografia}</div>
-                <div style="margin:16px 0;">
-                    <h3>Equipo</h3>
-                    <ul>${radio.equipo.map(n => `<li>🎙️ ${n}</li>`).join('')}</ul>
-                </div>
-                <div style="margin:16px 0;">
-                    <h3>Programación</h3>
-                    <ul>${radio.programacion.map(p => `<li><span style="color:var(--accent);font-weight:600;">${p.dia}</span> ${p.horario} - ${p.programa}</li>`).join('')}</ul>
-                </div>
-                <div style="margin:16px 0;">
-                    <h3>Podcasts</h3>
-                    ${radio.podcasts.map(pod => `
-                        <div style="background:#1a1a1a;padding:10px 14px;border-radius:8px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">
-                            <span>🎧 ${pod.titulo}</span>
-                            <button class="btn-escuchar-podcast" data-enlace="${pod.enlace}" style="background:var(--accent);color:white;border:none;padding:4px 16px;border-radius:50px;cursor:pointer;">Escuchar</button>
-                        </div>
-                    `).join('')}
-                </div>
+                <div style="margin:16px 0;"><h3>Equipo</h3><ul>${radio.equipo.map(n => `<li>🎙️ ${n}</li>`).join('')}</ul></div>
+                <div style="margin:16px 0;"><h3>Programación</h3><ul>${radio.programacion.map(p => `<li><span style="color:var(--accent);font-weight:600;">${p.dia}</span> ${p.horario} - ${p.programa}</li>`).join('')}</ul></div>
+                <div style="margin:16px 0;"><h3>Podcasts</h3>${radio.podcasts.map(pod => `
+                    <div style="background:#1a1a1a;padding:10px 14px;border-radius:8px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">
+                        <span>🎧 ${pod.titulo}</span>
+                        <button class="btn-escuchar-podcast" data-enlace="${pod.enlace}" style="background:var(--accent);color:white;border:none;padding:4px 16px;border-radius:50px;cursor:pointer;">Escuchar</button>
+                    </div>
+                `).join('')}</div>
                 <button class="btn-escuchar-radio" style="background:var(--accent);color:white;border:none;padding:10px 24px;border-radius:50px;font-weight:bold;cursor:pointer;margin-top:10px;">🎵 Escuchar en vivo</button>
             `;
             detalle.querySelector('.btn-escuchar-radio').addEventListener('click', () => {
@@ -1740,250 +1848,283 @@
         }
 
         // ==============================================================
-        // 9. ARTISTAS - OBTENIDOS DESDE iTunes (con carátulas redondas)
+        // REPRODUCTOR
         // ==============================================================
-        async function renderizarArtistas() {
-            const cont = $('carousel-artistas');
-            if (!cont) return;
-            cont.innerHTML = '<p style="color:var(--text-muted);">Cargando artistas...</p>';
-            try {
-                const nombres = ["Coldplay", "Gustavo Cerati", "Dua Lipa", "Charly Garcia", "The Weeknd", "Bad Bunny", "Rauw Alejandro", "Karol G"];
-                const artistas = [];
-                for (const nombre of nombres) {
-                    const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(nombre)}&entity=musicArtist&limit=1`);
-                    const data = await res.json();
-                    if (data.results && data.results.length > 0) {
-                        const info = data.results[0];
-                        artistas.push({
-                            nombre: info.artistName,
-                            avatar: info.artworkUrl100 || `https://ui-avatars.com/api/?name=${encodeURIComponent(info.artistName)}&size=300&background=1db954&color=fff&font-size=0.4`,
-                            oyentes: Math.floor(Math.random() * 50000000 + 1000000).toLocaleString(),
-                            seguidores: Math.floor(Math.random() * 10000000 + 100000).toLocaleString(),
-                            bio: `${info.artistName} es un artista reconocido mundialmente. Su música ha trascendido fronteras y ha conquistado a millones de fans.`,
-                            fans: ["Artista 1", "Artista 2", "Artista 3"]
-                        });
-                    }
-                }
-                cont.innerHTML = '';
-                artistas.forEach(artista => {
-                    const div = document.createElement('div');
-                    div.className = 'card card-artista';
-                    div.setAttribute('tabindex', '0');
-                    div.innerHTML = `
-                        <img src="${artista.avatar}" alt="${artista.nombre}">
-                        <div class="info">
-                            <h3>${artista.nombre}</h3>
-                            <p>Artista</p>
-                        </div>
-                    `;
-                    div.addEventListener('click', () => abrirPerfilArtista(artista));
-                    div.addEventListener('keydown', (e) => { if (e.key === 'Enter') div.click(); });
-                    cont.appendChild(div);
-                });
-            } catch (e) {
-                cont.innerHTML = '<p style="color:var(--text-muted);">Error al cargar artistas.</p>';
-            }
-        }
+        function inicializarReproductor() {
+            if (!audioEl) return;
+            const savedVol = localStorage.getItem('volume') || 80;
+            $('volume-slider').value = savedVol;
+            audioEl.volume = savedVol / 100;
 
-        function abrirPerfilArtista(artista) {
-            const modal = $('artista-modal');
-            const detalle = $('artista-detalle');
-            if (!modal || !detalle) return;
-            const isFollowing = following[artista.nombre] || false;
-            detalle.innerHTML = `
-                <div class="artista-header">
-                    <img src="${artista.avatar}" alt="${artista.nombre}">
-                    <div class="info">
-                        <h2>${artista.nombre}</h2>
-                        <div class="stats">
-                            <span><i class="fa-regular fa-circle-user"></i> ${artista.oyentes || '0'} oyentes mensuales</span>
-                            <span><i class="fa-regular fa-heart"></i> ${artista.seguidores || '0'} seguidores</span>
-                        </div>
-                        <div class="artista-actions">
-                            <button class="btn-follow ${isFollowing ? 'following' : ''}" id="btn-seguir">${isFollowing ? 'Siguiendo' : 'Seguir'}</button>
-                            <button class="btn-radio" id="btn-radio-artista">Radio</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="artista-bio">${artista.bio || 'Sin biografía disponible.'}</div>
-                <div class="artista-discografia">
-                    <h3>Discografía</h3>
-                    <div id="canciones-artista">Cargando canciones...</div>
-                </div>
-                <div class="fans-tambien">
-                    <h3>Fans también escuchan</h3>
-                    <div class="fans-grid" id="fans-grid">
-                        ${artista.fans ? artista.fans.map(f => `
-                            <div class="fan-item" data-nombre="${f}">
-                                <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(f)}&size=80&background=1db954&color=fff&font-size=0.3" alt="${f}">
-                                <span>${f}</span>
-                            </div>
-                        `).join('') : '<p style="color:var(--text-muted);">No hay sugerencias.</p>'}
-                    </div>
-                </div>
-            `;
-            // Seguir
-            const btnSeguir = detalle.querySelector('#btn-seguir');
-            if (btnSeguir) {
-                btnSeguir.addEventListener('click', () => {
-                    const isNowFollowing = following[artista.nombre] || false;
-                    following[artista.nombre] = !isNowFollowing;
-                    btnSeguir.textContent = following[artista.nombre] ? 'Siguiendo' : 'Seguir';
-                    btnSeguir.classList.toggle('following');
-                });
-            }
-            // Radio del artista
-            const btnRadio = detalle.querySelector('#btn-radio-artista');
-            if (btnRadio) {
-                btnRadio.addEventListener('click', () => {
-                    iniciarRadioArtista(artista.nombre);
-                    modal.classList.remove('active');
-                });
-            }
-            // Fans
-            detalle.querySelectorAll('.fan-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    const nombre = item.dataset.nombre;
-                    const fake = { nombre, avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(nombre)}&size=300&background=1db954&color=fff&font-size=0.4`, oyentes: '0', seguidores: '0', bio: `Perfil de ${nombre} (simulado)`, fans: [] };
-                    abrirPerfilArtista(fake);
-                });
+            $('btn-play').addEventListener('click', togglePlay);
+            $('volume-slider').addEventListener('input', (e) => {
+                audioEl.volume = e.target.value / 100;
+                localStorage.setItem('volume', e.target.value);
+                updateVolumeIcon();
             });
-            modal.classList.add('active');
-            cargarCancionesArtista(artista.nombre);
+            $('btn-mute').addEventListener('click', () => {
+                audioEl.muted = !audioEl.muted;
+                updateVolumeIcon();
+            });
+            audioEl.addEventListener('timeupdate', updateProgress);
+            audioEl.addEventListener('loadedmetadata', () => {
+                if (audioEl.duration) {
+                    $('total-time').textContent = formatTime(audioEl.duration);
+                    $('progress-slider').max = 100;
+                }
+            });
+            audioEl.addEventListener('ended', () => {
+                if (isRadioPlaying) { audioEl.load(); audioEl.play().catch(e=>{}); }
+                else nextTrack();
+            });
+            $('progress-slider').addEventListener('input', (e) => {
+                if (audioEl.duration) audioEl.currentTime = (e.target.value / 100) * audioEl.duration;
+            });
+            $('btn-next').addEventListener('click', nextTrack);
+            $('btn-prev').addEventListener('click', prevTrack);
+            $('btn-queue').addEventListener('click', () => { $('queue-modal').classList.add('active'); renderizarQueue(); });
+            $('btn-shuffle').addEventListener('click', toggleShuffle);
+            $('btn-repeat').addEventListener('click', toggleRepeat);
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active')); });
+            document.querySelectorAll('.modal').forEach(m => {
+                m.addEventListener('click', (e) => { if (e.target === m) m.classList.remove('active'); });
+            });
         }
 
-        async function cargarCancionesArtista(nombre) {
-            const cont = $('canciones-artista');
-            if (!cont) return;
-            try {
-                // Obtener canciones
-                const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(nombre)}&entity=song&limit=12`);
-                const data = await res.json();
-                if (!data.results || data.results.length === 0) {
-                    cont.innerHTML = '<p style="color:var(--text-muted);">No se encontraron canciones.</p>';
-                    return;
-                }
-                cont.innerHTML = '';
-                data.results.forEach(track => {
-                    const duration = track.trackTimeMillis ? Math.floor(track.trackTimeMillis / 60000) + ':' + String(Math.floor((track.trackTimeMillis % 60000) / 1000)).padStart(2, '0') : '--:--';
-                    const cover = track.artworkUrl100?.replace('100x100bb', '600x600bb') || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23111%22/%3E%3Ctext x=%2230%22 y=%2235%22 font-family=%22Inter%22 font-size=%2216%22 fill=%22%23aaa%22 text-anchor=%22middle%22%3EUADAV%3C/text%3E%3C/svg%3E';
-                    const div = document.createElement('div');
-                    div.className = 'cancion-item';
-                    div.setAttribute('tabindex', '0');
-                    const esFavorito = favoritos.some(f => f.url === track.previewUrl);
-                    div.innerHTML = `
-                        <img src="${cover}" alt="${track.trackName}">
-                        <span class="nombre">${track.trackName}</span>
-                        <span class="duracion">${duration}</span>
-                        <button class="btn-favorito ${esFavorito ? 'favorito' : ''}" data-url="${track.previewUrl}" data-titulo="${track.trackName}" data-artista="${track.artistName}" data-cover="${cover}"><i class="fa-solid fa-heart"></i></button>
-                        <button class="btn-reproducir">Reproducir</button>
-                    `;
-                    const btnRepro = div.querySelector('.btn-reproducir');
-                    btnRepro.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        const item = { url: track.previewUrl, titulo: track.trackName, artista: track.artistName, cover: cover };
-                        reproducirAudio(item);
-                    });
-                    const btnFav = div.querySelector('.btn-favorito');
-                    btnFav.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        const url = btnFav.dataset.url;
-                        const idx = favoritos.findIndex(f => f.url === url);
-                        if (idx > -1) {
-                            favoritos.splice(idx, 1);
-                            btnFav.classList.remove('favorito');
-                        } else {
-                            favoritos.push({ url, titulo: btnFav.dataset.titulo, artista: btnFav.dataset.artista, cover: btnFav.dataset.cover });
-                            btnFav.classList.add('favorito');
-                        }
-                        localStorage.setItem('favoritos', JSON.stringify(favoritos));
-                        renderizarBiblioteca();
-                    });
-                    div.addEventListener('click', () => btnRepro.click());
-                    div.addEventListener('keydown', (e) => { if (e.key === 'Enter') btnRepro.click(); });
-                    cont.appendChild(div);
-                });
-            } catch (e) {
-                cont.innerHTML = '<p style="color:var(--text-muted);">Error al cargar canciones.</p>';
+        function togglePlay() {
+            if (!audioEl || !audioEl.src) return;
+            if (audioEl.paused) { audioEl.play().catch(e=>{}); $('play-icon').className = 'fa-solid fa-circle-pause'; }
+            else { audioEl.pause(); $('play-icon').className = 'fa-solid fa-circle-play'; }
+        }
+
+        function updateVolumeIcon() {
+            const icon = $('vol-icon');
+            if (!icon) return;
+            if (audioEl.muted || audioEl.volume === 0) icon.className = 'fa-solid fa-volume-xmark';
+            else if (audioEl.volume < 0.5) icon.className = 'fa-solid fa-volume-low';
+            else icon.className = 'fa-solid fa-volume-high';
+        }
+
+        function updateProgress() {
+            if (!audioEl || !audioEl.duration) return;
+            const percent = (audioEl.currentTime / audioEl.duration) * 100;
+            $('progress-slider').value = percent;
+            $('current-time').textContent = formatTime(audioEl.currentTime);
+        }
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // ==============================================================
+        // COLA DE REPRODUCCIÓN
+        // ==============================================================
+        function reproducirAudio(item) {
+            if (!audioEl) return;
+            if (isRadioPlaying) {
+                if (eventSource) { eventSource.close(); eventSource = null; }
+                isRadioPlaying = false;
+                $('live-indicator').classList.remove('active');
+                $('history-container').innerHTML = '';
+            }
+            if (item.radio) { reproducirRadio(item.radio); return; }
+            const exists = queue.some(q => q.url === item.url);
+            if (!exists) { queue.push(item); if (queue.length === 1) currentQueueIndex = 0; }
+            else { const idx = queue.findIndex(q => q.url === item.url); if (idx !== -1) currentQueueIndex = idx; }
+            guardarQueue();
+            playFromQueue();
+        }
+
+        function playFromQueue() {
+            if (!audioEl || currentQueueIndex < 0 || currentQueueIndex >= queue.length) return;
+            const item = queue[currentQueueIndex];
+            if (!item) return;
+            audioEl.src = item.url;
+            audioEl.load();
+            audioEl.play().catch(e=>{});
+            $('currentCoverArt').src = item.cover || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23111%22/%3E%3Ctext x=%2230%22 y=%2235%22 font-family=%22Inter%22 font-size=%2216%22 fill=%22%23aaa%22 text-anchor=%22middle%22%3EUADAV%3C/text%3E%3C/svg%3E';
+            $('currentSong').textContent = item.titulo || 'Sin título';
+            $('currentArtist').textContent = item.artista || 'Desconocido';
+            $('play-icon').className = 'fa-solid fa-circle-pause';
+            $('live-indicator').classList.remove('active');
+            isRadioPlaying = false;
+            guardarQueue();
+            if (item.titulo) {
+                historySongs.unshift(item);
+                if (historySongs.length > 5) historySongs.pop();
+                actualizarHistorial();
             }
         }
 
-        function closeArtista() {
-            $('artista-modal').classList.remove('active');
+        function guardarQueue() { localStorage.setItem('queue', JSON.stringify(queue)); }
+
+        function nextTrack() {
+            if (queue.length === 0 || isRadioPlaying) return;
+            if (currentQueueIndex < queue.length - 1) { currentQueueIndex++; playFromQueue(); }
+            else if (repeatMode) { currentQueueIndex = 0; playFromQueue(); }
+        }
+
+        function prevTrack() {
+            if (queue.length === 0 || isRadioPlaying) return;
+            if (currentQueueIndex > 0) { currentQueueIndex--; playFromQueue(); }
+        }
+
+        function renderizarQueue() {
+            const list = $('queue-list');
+            if (!list) return;
+            list.innerHTML = '';
+            if (queue.length === 0) { list.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:20px;">No hay canciones en cola</p>'; return; }
+            queue.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'queue-item';
+                div.innerHTML = `
+                    <span class="q-titulo">${item.titulo || 'Sin título'}</span>
+                    <span class="q-artista">${item.artista || ''}</span>
+                    <button class="q-eliminar" data-index="${idx}"><i class="fa-solid fa-xmark"></i></button>
+                `;
+                div.querySelector('.q-eliminar').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    queue.splice(idx, 1);
+                    if (currentQueueIndex >= idx) currentQueueIndex--;
+                    if (currentQueueIndex < 0) currentQueueIndex = 0;
+                    if (queue.length === 0) {
+                        audioEl.pause();
+                        audioEl.src = '';
+                        $('currentSong').textContent = 'Selecciona audio';
+                        $('currentArtist').textContent = 'Sistema de Sonido';
+                        $('currentCoverArt').src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23111%22/%3E%3Ctext x=%2230%22 y=%2235%22 font-family=%22Inter%22 font-size=%2216%22 fill=%22%23aaa%22 text-anchor=%22middle%22%3EUADAV%3C/text%3E%3C/svg%3E';
+                        $('play-icon').className = 'fa-solid fa-circle-play';
+                    } else if (currentQueueIndex >= queue.length) { currentQueueIndex = queue.length - 1; }
+                    guardarQueue();
+                    renderizarQueue();
+                });
+                if (idx === currentQueueIndex) { div.style.background = '#1a1a1a'; div.style.borderLeft = '3px solid var(--accent)'; }
+                div.addEventListener('click', () => { currentQueueIndex = idx; playFromQueue(); $('queue-modal').classList.remove('active'); });
+                list.appendChild(div);
+            });
+        }
+
+        function actualizarHistorial() {
+            const container = $('history-container');
+            if (!container) return;
+            container.innerHTML = '';
+            historySongs.slice(0, 3).forEach(h => {
+                const span = document.createElement('span');
+                span.className = 'hist-item';
+                span.innerHTML = `<strong>${h.titulo || '?'}</strong> - ${h.artista || ''}`;
+                container.appendChild(span);
+            });
+        }
+
+        function toggleShuffle() {
+            shuffleMode = !shuffleMode;
+            $('btn-shuffle').style.color = shuffleMode ? 'var(--accent)' : '';
+            if (shuffleMode && queue.length > 1) {
+                const current = queue[currentQueueIndex];
+                queue = queue.sort(() => Math.random() - 0.5);
+                if (current) { currentQueueIndex = queue.findIndex(q => q.url === current.url); if (currentQueueIndex === -1) currentQueueIndex = 0; }
+                guardarQueue();
+            }
+        }
+
+        function toggleRepeat() {
+            repeatMode = !repeatMode;
+            $('btn-repeat').style.color = repeatMode ? 'var(--accent)' : '';
         }
 
         // ==============================================================
-        // 10. RADIO DEL ARTISTA
+        // RADIO EN VIVO
         // ==============================================================
-        function iniciarRadioArtista(nombre) {
-            fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(nombre)}&entity=song&limit=15`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.results && data.results.length > 0) {
-                        queue = [];
-                        data.results.forEach(track => {
-                            const cover = track.artworkUrl100?.replace('100x100bb', '600x600bb') || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23111%22/%3E%3Ctext x=%2230%22 y=%2235%22 font-family=%22Inter%22 font-size=%2216%22 fill=%22%23aaa%22 text-anchor=%22middle%22%3EUADAV%3C/text%3E%3C/svg%3E';
-                            queue.push({ url: track.previewUrl, titulo: track.trackName, artista: track.artistName, cover: cover });
-                        });
-                        currentQueueIndex = 0;
-                        guardarQueue();
-                        playFromQueue();
-                        alert(`Radio de ${nombre} iniciada (${queue.length} canciones)`);
-                    } else {
-                        alert('No se encontraron canciones para la radio.');
-                    }
-                })
-                .catch(() => alert('Error al iniciar radio.'));
-        }
-
-        // ==============================================================
-        // 11. TENDENCIAS (con IP usando ip-api.com)
-        // ==============================================================
-        async function cargarTendencias() {
-            const grid = $('trending-grid');
-            if (!grid) return;
-            grid.innerHTML = '<p style="color:var(--text-muted);">Cargando tendencias...</p>';
-            try {
-                let country = 'us';
+        function reproducirRadio(radio) {
+            if (!audioEl) return;
+            if (eventSource) { eventSource.close(); eventSource = null; }
+            queue = []; currentQueueIndex = -1; guardarQueue();
+            isRadioPlaying = true;
+            $('live-indicator').classList.add('active');
+            audioEl.src = radio.streamUrl;
+            audioEl.load();
+            audioEl.play().catch(e=>{});
+            $('currentCoverArt').src = radio.logo;
+            $('currentSong').textContent = 'Conectando...';
+            $('currentArtist').textContent = radio.nombre;
+            $('play-icon').className = 'fa-solid fa-circle-pause';
+            historySongs = [];
+            $('history-container').innerHTML = '';
+            if (radio.zenoUrl) {
                 try {
-                    // Usamos ip-api.com que permite CORS
-                    const ipRes = await fetch('https://ip-api.com/json/');
-                    const ipData = await ipRes.json();
-                    if (ipData && ipData.countryCode) {
-                        country = ipData.countryCode.toLowerCase();
-                    }
-                } catch (e) {
-                    console.warn('No se pudo obtener ubicación, usando US.');
-                }
-                const res = await fetch(`https://itunes.apple.com/search?term=popular&entity=song&limit=12&country=${country}`);
-                const data = await res.json();
-                if (!data.results || data.results.length === 0) {
-                    grid.innerHTML = '<p style="color:var(--text-muted);">No hay tendencias disponibles.</p>';
-                    return;
-                }
-                grid.innerHTML = '';
-                data.results.forEach(track => {
-                    const div = document.createElement('div');
-                    div.className = 'trending-card';
-                    const img = track.artworkUrl100?.replace('100x100bb', '600x600bb') || 'https://via.placeholder.com/200';
-                    div.innerHTML = `
-                        <img src="${img}" alt="${track.trackName}">
-                        <h4>${track.trackName}</h4>
-                        <p>${track.artistName}</p>
-                    `;
-                    div.addEventListener('click', () => {
-                        const item = { url: track.previewUrl, titulo: track.trackName, artista: track.artistName, cover: img };
-                        reproducirAudio(item);
-                    });
-                    grid.appendChild(div);
-                });
-            } catch (e) {
-                grid.innerHTML = '<p style="color:var(--text-muted);">Error al cargar tendencias.</p>';
+                    eventSource = new EventSource(radio.zenoUrl);
+                    eventSource.onmessage = (e) => {
+                        try {
+                            const data = JSON.parse(e.data);
+                            if (data.streamTitle) {
+                                let partes = data.streamTitle.split(' - ');
+                                let artist = partes.length > 1 ? partes[0] : radio.nombre;
+                                let song = partes.length > 1 ? partes[1] : data.streamTitle;
+                                $('currentSong').textContent = song;
+                                $('currentArtist').textContent = artist;
+                                if (historySongs.length === 0 || historySongs[0].titulo !== song) {
+                                    historySongs.unshift({ titulo: song, artista: artist, cover: radio.logo });
+                                    if (historySongs.length > 5) historySongs.pop();
+                                    actualizarHistorial();
+                                }
+                                buscarCover(artist, song);
+                            }
+                        } catch(err) {}
+                    };
+                    eventSource.onerror = () => {};
+                } catch(e) { console.warn('EventSource error:', e); }
             }
         }
 
+        function buscarCover(artist, song) {
+            if (!artist || !song) return;
+            const callbackName = 'deezer_cb_' + Date.now();
+            window[callbackName] = function(data) {
+                if (data && data.data && data.data.length > 0) {
+                    $('currentCoverArt').src = data.data[0].album.cover_big;
+                }
+                delete window[callbackName];
+                if (script.parentNode) script.parentNode.removeChild(script);
+            };
+            const script = document.createElement('script');
+            script.src = `https://api.deezer.com/search?q=${encodeURIComponent(artist + ' ' + song)}&output=jsonp&callback=${callbackName}`;
+            document.body.appendChild(script);
+            setTimeout(() => {
+                if (window[callbackName]) {
+                    delete window[callbackName];
+                    if (script.parentNode) script.parentNode.removeChild(script);
+                }
+            }, 5000);
+        }
+
         // ==============================================================
-        // 12. BUSCADOR
+        // VIDEO
+        // ==============================================================
+        function abrirVideo(video) {
+            const modal = $('video-modal');
+            const container = $('video-container');
+            if (!modal || !container) return;
+            let iframeSrc = '';
+            if (video.tipo === 'youtube') {
+                iframeSrc = `https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`;
+            } else if (video.tipo === 'okru') {
+                iframeSrc = `https://ok.ru/videoembed/${video.id}?autoplay=1`;
+            }
+            container.innerHTML = `<iframe src="${iframeSrc}" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+            modal.classList.add('active');
+            if (audioEl && !audioEl.paused) { audioEl.pause(); $('play-icon').className = 'fa-solid fa-circle-play'; }
+        }
+
+        function closeVideo() {
+            $('video-modal').classList.remove('active');
+            $('video-container').innerHTML = '';
+        }
+
+        // ==============================================================
+        // BUSCADOR (con géneros y recomendaciones)
         // ==============================================================
         function configurarBuscador() {
             const input = $('searchInput');
@@ -2006,9 +2147,9 @@
                     contResultados.innerHTML = '';
                     contMusica.innerHTML = '<p style="color:var(--text-muted);">Buscando música...</p>';
 
-                    // TMDB
+                    // TMDB (películas y series)
                     try {
-                        const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=3fb36c15f2daa69df6bf8b07b1237183&language=es-ES&query=${encodeURIComponent(query)}`);
+                        const res = await fetch(`${TMDB_BASE}/search/multi?api_key=${TMDB_API_KEY}&language=es-ES&query=${encodeURIComponent(query)}`);
                         const data = await res.json();
                         const results = data.results.filter(item => item.media_type !== 'person');
                         results.forEach(item => {
@@ -2016,19 +2157,24 @@
                             card.className = 'card card-video';
                             card.setAttribute('tabindex', '0');
                             const titulo = item.title || item.name || 'Sin título';
-                            const poster = item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Crect width='300' height='450' fill='%23111'/%3E%3Ctext x='150' y='225' font-family='Inter' font-size='20' fill='%23666' text-anchor='middle'%3ENo%20Image%3C/text%3E%3C/svg%3E`;
+                            const poster = item.poster_path ? IMG_URL + item.poster_path : `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Crect width='300' height='450' fill='%23111'/%3E%3Ctext x='150' y='225' font-family='Inter' font-size='20' fill='%23666' text-anchor='middle'%3ENo%20Image%3C/text%3E%3C/svg%3E`;
                             card.innerHTML = `<img src="${poster}" alt="${titulo}"><div class="info"><h3>${titulo}</h3></div>`;
                             card.addEventListener('click', () => {
-                                if (item.media_type === 'movie' || item.media_type === 'tv') {
-                                    buscarTrailer(item.id, item.media_type);
+                                if (item.media_type === 'movie') {
+                                    buscarTrailer(item.id, 'movie');
+                                } else if (item.media_type === 'tv') {
+                                    // Buscar serie en nuestros datos o mostrar info
+                                    const serie = seriesData.find(s => s.tmdbId === item.id);
+                                    if (serie) abrirSerieModal(serie, item);
+                                    else alert('Serie no disponible en el catálogo.');
                                 }
                             });
                             card.addEventListener('keydown', (e) => { if (e.key === 'Enter') card.click(); });
                             contResultados.appendChild(card);
                         });
-                    } catch (e) {}
+                    } catch(e) {}
 
-                    // iTunes
+                    // iTunes (música)
                     try {
                         const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=10`);
                         const data = await res.json();
@@ -2038,19 +2184,19 @@
                                 const cover = track.artworkUrl100?.replace('100x100bb', '600x600bb') || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23111%22/%3E%3Ctext x=%2230%22 y=%2235%22 font-family=%22Inter%22 font-size=%2216%22 fill=%22%23aaa%22 text-anchor=%22middle%22%3EUADAV%3C/text%3E%3C/svg%3E';
                                 const div = document.createElement('div');
                                 div.className = 'resultado-musica';
+                                div.style.cssText = 'display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid #222;';
                                 div.innerHTML = `
-                                    <img src="${cover}" alt="${track.trackName}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;margin-right:12px;">
-                                    <div class="info">
-                                        <span class="nombre">${track.trackName}</span>
-                                        <span class="artista">${track.artistName}</span>
+                                    <img src="${cover}" alt="${track.trackName}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;">
+                                    <div style="flex:1;">
+                                        <div style="font-weight:600;">${track.trackName}</div>
+                                        <div style="color:var(--text-muted);font-size:13px;">${track.artistName}</div>
                                     </div>
-                                    <button class="btn-reproducir">Reproducir</button>
+                                    <button class="btn-reproducir" style="background:var(--accent);color:white;border:none;padding:4px 14px;border-radius:50px;cursor:pointer;">Reproducir</button>
                                 `;
                                 const btn = div.querySelector('.btn-reproducir');
                                 btn.addEventListener('click', (e) => {
                                     e.stopPropagation();
-                                    const item = { url: track.previewUrl, titulo: track.trackName, artista: track.artistName, cover: cover };
-                                    reproducirAudio(item);
+                                    reproducirAudio({ url: track.previewUrl, titulo: track.trackName, artista: track.artistName, cover });
                                     input.value = '';
                                     secResultados.style.display = 'none';
                                 });
@@ -2060,7 +2206,7 @@
                         } else {
                             contMusica.innerHTML = '<p style="color:var(--text-muted);">No se encontraron canciones.</p>';
                         }
-                    } catch (e) {
+                    } catch(e) {
                         contMusica.innerHTML = '<p style="color:var(--text-muted);">Error al buscar música.</p>';
                     }
                 }, 400);
@@ -2069,101 +2215,179 @@
 
         async function buscarTrailer(id, type) {
             try {
-                const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}/videos?api_key=3fb36c15f2daa69df6bf8b07b1237183&language=es-ES`);
+                const res = await fetch(`${TMDB_BASE}/${type}/${id}/videos?api_key=${TMDB_API_KEY}&language=es-ES`);
                 const data = await res.json();
                 const trailer = data.results.find(v => v.site === 'YouTube') || data.results[0];
                 if (trailer) {
                     abrirVideo({ tipo: 'youtube', id: trailer.key, titulo: 'Tráiler' });
                 } else {
-                    alert('No se encontró tráiler.');
+                    alert('No se encontró tráiler para este contenido.');
                 }
-            } catch (e) {
+            } catch(e) {
                 alert('Error al buscar tráiler.');
             }
         }
 
         // ==============================================================
-        // 13. VIDEO
+        // HERO SLIDER (recomendaciones)
         // ==============================================================
-        function abrirVideo(video) {
-            const modal = $('video-modal');
-            const container = $('video-container');
-            if (!modal || !container) return;
-            let iframeSrc = '';
-            if (video.tipo === 'youtube') {
-                iframeSrc = `https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`;
-            } else if (video.tipo === 'okru') {
-                iframeSrc = `https://ok.ru/videoembed/${video.id}?autoplay=1`;
-            }
-            // Usar solo el atributo 'allow' con las políticas correctas (sin allowfullscreen duplicado)
-            container.innerHTML = `<iframe src="${iframeSrc}" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
-            modal.classList.add('active');
-            if (audioEl && !audioEl.paused) {
-                audioEl.pause();
-                playIcon.className = 'fa-solid fa-circle-play';
-            }
-        }
+        async function cargarHeroSlider() {
+            const slider = $('hero-slider');
+            const dots = $('hero-dots');
+            if (!slider || !dots) return;
 
-        function closeVideo() {
-            $('video-modal').classList.remove('active');
-            $('video-container').innerHTML = '';
-        }
+            // Recomendaciones combinadas
+            const recomendaciones = [];
 
-        // ==============================================================
-        // 14. EPISODIOS DE SERIES
-        // ==============================================================
-        function abrirEpisodios(serie) {
-            const modal = $('episodios-modal');
-            const titulo = $('episodios-titulo');
-            const lista = $('lista-episodios');
-            if (!modal || !titulo || !lista) return;
-            titulo.textContent = `${serie.titulo} - Episodios`;
-            lista.innerHTML = '';
-            const todosEp = [...serie.episodios, ...(serie.episodiosT2 || [])];
-            todosEp.forEach(ep => {
-                const div = document.createElement('div');
-                div.className = 'episodio-item';
-                div.setAttribute('tabindex', '0');
-                div.innerHTML = `
-                    <span class="ep-numero">${ep.numero}</span>
-                    <span class="ep-titulo">${ep.titulo}</span>
-                    <button class="btn-reproducir-ep">Reproducir</button>
+            // Películas (de TMDB)
+            try {
+                const res = await fetch(`${TMDB_BASE}/movie/popular?api_key=${TMDB_API_KEY}&language=es-ES&page=1`);
+                const data = await res.json();
+                data.results.slice(0, 3).forEach(m => {
+                    recomendaciones.push({
+                        titulo: m.title,
+                        desc: m.overview || 'Película popular.',
+                        imagen: m.backdrop_path ? BACKDROP_URL + m.backdrop_path : '',
+                        tipo: 'movie',
+                        id: m.id,
+                        link: null
+                    });
+                });
+            } catch(e) {}
+
+            // Series
+            try {
+                const res = await fetch(`${TMDB_BASE}/tv/popular?api_key=${TMDB_API_KEY}&language=es-ES&page=1`);
+                const data = await res.json();
+                data.results.slice(0, 2).forEach(s => {
+                    recomendaciones.push({
+                        titulo: s.name,
+                        desc: s.overview || 'Serie popular.',
+                        imagen: s.backdrop_path ? BACKDROP_URL + s.backdrop_path : '',
+                        tipo: 'tv',
+                        id: s.id,
+                        link: null
+                    });
+                });
+            } catch(e) {}
+
+            // Artistas (de iTunes)
+            try {
+                const res = await fetch(`https://itunes.apple.com/search?term=popular&entity=musicArtist&limit=3`);
+                const data = await res.json();
+                data.results.forEach(a => {
+                    recomendaciones.push({
+                        titulo: a.artistName,
+                        desc: 'Artista destacado.',
+                        imagen: a.artworkUrl100 || '',
+                        tipo: 'artist',
+                        id: a.artistId,
+                        link: null
+                    });
+                });
+            } catch(e) {}
+
+            // Música (canciones populares)
+            try {
+                const res = await fetch(`https://itunes.apple.com/search?term=popular&entity=song&limit=3`);
+                const data = await res.json();
+                data.results.forEach(t => {
+                    recomendaciones.push({
+                        titulo: t.trackName,
+                        desc: `${t.artistName} · Canción popular.`,
+                        imagen: t.artworkUrl100?.replace('100x100bb', '600x600bb') || '',
+                        tipo: 'song',
+                        id: t.trackId,
+                        link: t.previewUrl
+                    });
+                });
+            } catch(e) {}
+
+            if (recomendaciones.length === 0) {
+                slider.innerHTML = '<div style="padding:20px;color:var(--text-muted);">No hay recomendaciones disponibles.</div>';
+                return;
+            }
+
+            // Crear slides
+            slider.innerHTML = '';
+            recomendaciones.forEach((item, idx) => {
+                const slide = document.createElement('div');
+                slide.className = `slide ${idx === 0 ? 'active' : ''}`;
+                slide.style.backgroundImage = `url('${item.imagen || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200'}')`;
+                slide.innerHTML = `
+                    <div class="overlay"></div>
+                    <div class="content">
+                        <span class="badge">${item.tipo === 'movie' ? 'Película' : item.tipo === 'tv' ? 'Serie' : item.tipo === 'artist' ? 'Artista' : 'Canción'}</span>
+                        <h2>${item.titulo}</h2>
+                        <p>${item.desc}</p>
+                        <button class="btn-play-slide" data-item='${JSON.stringify(item)}'>▶ Reproducir</button>
+                    </div>
                 `;
-                const btn = div.querySelector('.btn-reproducir-ep');
+                slider.appendChild(slide);
+            });
+
+            // Dots
+            dots.innerHTML = '';
+            recomendaciones.forEach((_, idx) => {
+                const dot = document.createElement('span');
+                dot.className = `dot ${idx === 0 ? 'active' : ''}`;
+                dot.addEventListener('click', () => goToSlide(idx));
+                dots.appendChild(dot);
+            });
+
+            // Eventos de los botones
+            slider.querySelectorAll('.btn-play-slide').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    abrirVideo({ tipo: 'okru', id: extraerId(ep.enlace), titulo: `${serie.titulo} - ${ep.titulo}` });
+                    const item = JSON.parse(btn.dataset.item);
+                    if (item.link) {
+                        reproducirAudio({ url: item.link, titulo: item.titulo, artista: item.desc.split('·')[0]?.trim() || 'Desconocido', cover: item.imagen });
+                    } else if (item.tipo === 'movie' || item.tipo === 'tv') {
+                        buscarTrailer(item.id, item.tipo);
+                    } else if (item.tipo === 'artist') {
+                        // Buscar artista en iTunes y mostrar perfil
+                        fetch(`https://itunes.apple.com/lookup?id=${item.id}`)
+                            .then(r => r.json())
+                            .then(data => {
+                                if (data.results && data.results.length > 0) {
+                                    const a = data.results[0];
+                                    const artistaObj = {
+                                        nombre: a.artistName,
+                                        avatar: a.artworkUrl100 || `https://ui-avatars.com/api/?name=${encodeURIComponent(a.artistName)}&size=300&background=1db954&color=fff&font-size=0.4`,
+                                        oyentes: Math.floor(Math.random() * 50000000 + 1000000).toLocaleString(),
+                                        seguidores: Math.floor(Math.random() * 10000000 + 100000).toLocaleString(),
+                                        bio: `${a.artistName} es un artista reconocido.`,
+                                        fans: []
+                                    };
+                                    abrirPerfilArtista(artistaObj);
+                                }
+                            })
+                            .catch(() => alert('No se pudo cargar el artista.'));
+                    } else {
+                        alert('Contenido no disponible para reproducción directa.');
+                    }
                 });
-                div.addEventListener('keydown', (e) => { if (e.key === 'Enter') btn.click(); });
-                lista.appendChild(div);
             });
-            modal.classList.add('active');
-        }
 
-        function closeEpisodios() {
-            $('episodios-modal').classList.remove('active');
-        }
+            // Autoplay
+            if (slideInterval) clearInterval(slideInterval);
+            slideInterval = setInterval(() => {
+                const next = (currentSlide + 1) % recomendaciones.length;
+                goToSlide(next);
+            }, 6000);
 
-        // ==============================================================
-        // 15. SUSCRIPCIÓN
-        // ==============================================================
-        function suscribirse(plan) {
-            usuarioSuscrito = true;
-            $('suscripcion-modal').classList.remove('active');
-            alert(`¡Suscripción ${plan} activada! (Simulación)`);
-            if (pendingVideo) {
-                abrirVideo(pendingVideo);
-                pendingVideo = null;
-            }
-        }
-
-        function closeSuscripcion() {
-            $('suscripcion-modal').classList.remove('active');
-            pendingVideo = null;
+            // Función para ir a slide
+            window.goToSlide = function(idx) {
+                currentSlide = idx;
+                const slides = slider.querySelectorAll('.slide');
+                const dotsEl = dots.querySelectorAll('.dot');
+                slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+                dotsEl.forEach((d, i) => d.classList.toggle('active', i === idx));
+            };
         }
 
         // ==============================================================
-        // 16. PLAYSLISTS
+        // PLAYLISTS Y BIBLIOTECA
         // ==============================================================
         function renderizarPlaylists() {
             const lista = $('playlist-lista');
@@ -2227,12 +2451,7 @@
             const pl = playlists[idx];
             if (!pl) return;
             if (!audioEl || !audioEl.src) return alert('No hay canción reproduciéndose.');
-            const cancion = {
-                titulo: songTitle.textContent,
-                artista: artistName.textContent,
-                cover: coverArt.src,
-                url: audioEl.src
-            };
+            const cancion = { titulo: $('currentSong').textContent, artista: $('currentArtist').textContent, cover: $('currentCoverArt').src, url: audioEl.src };
             pl.canciones.push(cancion);
             localStorage.setItem('playlists', JSON.stringify(playlists));
             renderizarPlaylists();
@@ -2251,9 +2470,6 @@
             }
         }
 
-        // ==============================================================
-        // 17. BIBLIOTECA
-        // ==============================================================
         function renderizarBiblioteca() {
             const grid = $('biblioteca-grid');
             if (!grid) return;
@@ -2277,18 +2493,17 @@
                         renderizarBiblioteca();
                     });
                     div.addEventListener('click', () => {
-                        const item = { url: fav.url, titulo: fav.titulo, artista: fav.artista, cover: fav.cover };
-                        reproducirAudio(item);
+                        reproducirAudio({ url: fav.url, titulo: fav.titulo, artista: fav.artista, cover: fav.cover });
                     });
                     grid.appendChild(div);
                 });
             } else {
-                grid.innerHTML = '<p style="color:var(--text-muted);">No tienes canciones guardadas.</p>';
+                grid.innerHTML = '<p style="color:var(--text-muted);">No tienes canciones guardadas. Haz clic en el corazón ❤️ para agregar.</p>';
             }
         }
 
         // ==============================================================
-        // 18. NAVEGACIÓN
+        // NAVEGACIÓN
         // ==============================================================
         function configurarNavegacion() {
             document.querySelectorAll('.sidebar nav a').forEach(link => {
@@ -2313,46 +2528,27 @@
             const titles = { inicio: 'Inicio', buscar: 'Buscar', biblioteca: 'Biblioteca' };
             $('page-title').textContent = titles[page] || 'Inicio';
             const searchBox = $('search-box-container');
-            if (page === 'buscar') {
-                searchBox.style.display = 'flex';
-                $('searchInput').focus();
-            } else {
-                searchBox.style.display = 'flex';
-            }
+            if (page === 'buscar') { searchBox.style.display = 'flex'; $('searchInput').focus(); }
+            else { searchBox.style.display = 'flex'; }
         }
 
         // ==============================================================
-        // 19. HERO
+        // SUSCRIPCIÓN
         // ==============================================================
-        function cargarHeroPorDefecto() {
-            const padrino = peliculas.find(p => p.titulo.includes('Padrino'));
-            if (padrino) {
-                configurarHero(padrino.titulo, padrino.enlace);
-            }
+        function suscribirse(plan) {
+            usuarioSuscrito = true;
+            $('suscripcion-modal').classList.remove('active');
+            alert(`¡Suscripción ${plan} activada! (Simulación)`);
+            if (pendingVideo) { abrirVideo(pendingVideo); pendingVideo = null; }
         }
 
-        function configurarHero(titulo, enlace) {
-            const hero = document.querySelector('.hero');
-            const heroTitle = $('hero-title');
-            const heroDesc = $('hero-desc');
-            const heroPlay = $('hero-play');
-            if (!hero || !heroTitle || !heroDesc || !heroPlay) return;
-            hero.style.backgroundImage = `url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200')`;
-            heroTitle.textContent = titulo;
-            heroDesc.textContent = 'Película clásica recomendada. Haz clic en Reproducir para ver.';
-            heroPlay.onclick = () => {
-                const peli = peliculas.find(p => p.titulo.includes('Padrino'));
-                if (peli.premium && !usuarioSuscrito) {
-                    $('suscripcion-modal').classList.add('active');
-                    pendingVideo = { tipo: 'okru', id: extraerId(enlace), titulo: titulo };
-                    return;
-                }
-                abrirVideo({ tipo: 'okru', id: extraerId(enlace), titulo: titulo });
-            };
+        function closeSuscripcion() {
+            $('suscripcion-modal').classList.remove('active');
+            pendingVideo = null;
         }
 
         // ==============================================================
-        // 20. UTILIDADES
+        // UTILIDADES
         // ==============================================================
         function extraerId(url) {
             const match = url.match(/(?:video|videoembed)\/(\d+)/);
@@ -2362,13 +2558,7 @@
             return url;
         }
 
-        // Cerrar modales con Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
-            }
-        });
-
+        // Inicializar página
         cambiarPagina('inicio');
     </script>
 </body>
