@@ -447,7 +447,7 @@
             { titulo: "Drive", enlace: "https://ok.ru/video/8829831350907", premium: true },
             { titulo: "Mentiroso Mentiroso", enlace: "https://ok.ru/video/7737292818997", premium: false },
             { titulo: "Terminator 2", enlace: "https://ok.ru/video/9651656198793", premium: true },
-            { titulo: "El ciudadano", enlace: "https://ok.ru/video/5074727144170", premium: false },
+            { titulo: "El ciudadano kane", enlace: "https://ok.ru/video/5074727144170", premium: false },
             { titulo: "Casablanca", enlace: "https://ok.ru/video/3655395052121", premium: false },
             { titulo: "El Padrino", enlace: "https://ok.ru/video/7253473561307", premium: true },
             { titulo: "2001: Odisea del espacio", enlace: "https://ok.ru/video/1720768268881", premium: false },
@@ -805,7 +805,7 @@
         }
 
         // ==============================================================
-        // ARTISTAS DESTACADOS
+        // ARTISTAS DESTACADOS (con fallback de IP)
         // ==============================================================
         async function renderizarArtistas() {
             const cont = $('carousel-artistas');
@@ -814,10 +814,18 @@
             try {
                 let country = 'us';
                 try {
-                    const ipRes = await fetch('https://ip-api.com/json/');
-                    const ipData = await ipRes.json();
-                    if (ipData && ipData.countryCode) country = ipData.countryCode.toLowerCase();
-                } catch(e) {}
+                    // Usar ipapi.co (permite CORS y es gratuito)
+                    const ipRes = await fetch('https://ipapi.co/json/');
+                    if (ipRes.ok) {
+                        const ipData = await ipRes.json();
+                        if (ipData && ipData.country_code) {
+                            country = ipData.country_code.toLowerCase();
+                        }
+                    }
+                } catch(e) {
+                    // Fallback a us
+                    console.warn('No se pudo obtener IP, usando US.');
+                }
                 const res = await fetch(`https://itunes.apple.com/search?term=popular&entity=musicArtist&limit=12&country=${country}`);
                 const data = await res.json();
                 if (!data.results || data.results.length === 0) {
@@ -975,7 +983,7 @@
         }
 
         // ==============================================================
-        // TENDENCIAS
+        // TENDENCIAS (con fallback IP)
         // ==============================================================
         async function cargarTendencias() {
             if (tendenciasCargadas) return;
@@ -986,10 +994,16 @@
             try {
                 let country = 'us';
                 try {
-                    const ipRes = await fetch('https://ip-api.com/json/');
-                    const ipData = await ipRes.json();
-                    if (ipData && ipData.countryCode) country = ipData.countryCode.toLowerCase();
-                } catch(e) {}
+                    const ipRes = await fetch('https://ipapi.co/json/');
+                    if (ipRes.ok) {
+                        const ipData = await ipRes.json();
+                        if (ipData && ipData.country_code) {
+                            country = ipData.country_code.toLowerCase();
+                        }
+                    }
+                } catch(e) {
+                    console.warn('No se pudo obtener IP, usando US.');
+                }
                 const res = await fetch(`https://itunes.apple.com/search?term=popular&entity=song&limit=12&country=${country}`);
                 const data = await res.json();
                 if (!data.results || data.results.length === 0) {
