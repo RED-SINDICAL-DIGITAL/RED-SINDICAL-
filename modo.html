@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MODO PEREGRINO - Plataforma de Contenido Católico & Magisterio</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Tipografía Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            vatican: {
+              gold: '#D4AF37',
+              goldHover: '#B59226',
+              dark: '#070A10',
+              card: '#111726',
+              border: '#1E293B'
+            }
+          },
+          fontFamily: {
+            serif: ['Cinzel', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #070A10; color: #E2E8F0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    /* Enfoque optimizado para Smart TV con Control Remoto */
+    *:focus-visible { outline: none; }
+    .tv-focusable:focus {
+      outline: 3px solid #D4AF37 !important;
+      outline-offset: 3px;
+      transform: scale(1.02);
+      z-index: 30;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-vatican-gold selection:text-black">
+
+  <!-- ENCABEZADO / NAVEGACIÓN PRINCIPAL -->
+  <header class="sticky top-0 z-40 bg-vatican-dark/95 backdrop-blur-md border-b border-vatican-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-4">
+      
+      <!-- LOGO -->
+      <div tabindex="0" onclick="filtrarCategoria('todas', this)" class="tv-focusable flex items-center gap-3 cursor-pointer rounded-xl p-1.5 transition-all">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-vatican-gold to-yellow-600 flex items-center justify-center text-slate-950 font-extrabold text-xl shadow-lg shadow-vatican-gold/20">
+          ✝
+        </div>
+        <div>
+          <span class="font-serif font-bold text-lg sm:text-xl tracking-wider text-white block leading-none">MODO PEREGRINO</span>
+          <span class="text-[9px] sm:text-[10px] tracking-widest text-vatican-gold uppercase font-semibold">Plataforma SaaS de Contenidos</span>
+        </div>
+      </div>
+
+      <!-- BUSCADOR -->
+      <div class="flex-1 max-w-md mx-2 hidden sm:block">
+        <div class="relative">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+          <input type="text" id="searchInput" oninput="buscarVideos()" placeholder="Buscar Ángelus, homilías, documentales, audios..." 
+            tabindex="0" class="tv-focusable w-full pl-10 pr-4 py-2 bg-slate-900 border border-vatican-border rounded-full text-xs sm:text-sm text-slate-200 placeholder-slate-400 focus:border-vatican-gold">
+        </div>
+      </div>
+
+      <!-- BOTONES DE ACCIÓN -->
+      <div class="flex items-center gap-2">
+        <button tabindex="0" onclick="abrirProbadorDirecto()" class="tv-focusable flex items-center gap-2 bg-vatican-gold/10 hover:bg-vatican-gold/20 border border-vatican-gold/40 text-vatican-gold px-3.5 py-2 rounded-full text-xs font-semibold">
+          <i class="fa-brands fa-youtube text-red-500"></i> Probador URL
+        </button>
+        <a href="#planes" tabindex="0" class="tv-focusable hidden md:inline-flex bg-vatican-gold hover:bg-vatican-goldHover text-slate-950 font-bold px-4 py-2 rounded-full text-xs shadow-md transition-all">
+          Servicio SaaS
+        </a>
+      </div>
+    </div>
+
+    <!-- BARRA MÓVIL DE BÚSQUEDA -->
+    <div class="px-4 pb-2.5 sm:hidden">
+      <div class="relative">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+        <input type="text" id="searchInputMobile" oninput="buscarVideosMobile()" placeholder="Buscar en Modo Peregrino..." 
+          tabindex="0" class="tv-focusable w-full pl-9 pr-3 py-1.5 bg-slate-900 border border-vatican-border rounded-full text-xs text-slate-200 placeholder-slate-400">
+      </div>
+    </div>
+
+    <!-- CATEGORÍAS DE CONTENIDO (CARROUSEL HORIZONTAL) -->
+    <nav class="border-t border-vatican-border bg-slate-950/80">
+      <div class="max-w-7xl mx-auto px-4 flex items-center gap-2 overflow-x-auto py-2.5 no-scrollbar text-xs">
+        <button tabindex="0" onclick="filtrarCategoria('todas', this)" class="tv-focusable cat-btn active-cat bg-vatican-gold text-slate-950 font-bold px-4 py-1.5 rounded-full whitespace-nowrap transition-all">Todas</button>
+        <button tabindex="0" onclick="filtrarCategoria('favoritos', this)" class="tv-focusable cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full whitespace-nowrap transition-all"><i class="fa-solid fa-star text-vatican-gold mr-1"></i> Mi Lista</button>
+        <button tabindex="0" onclick="filtrarCategoria('Magisterio', this)" class="tv-focusable cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full whitespace-nowrap transition-all">Magisterio y Papado</button>
+        <button tabindex="0" onclick="filtrarCategoria('Documentales', this)" class="tv-focusable cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full whitespace-nowrap transition-all">Documentales Vaticanos</button>
+        <button tabindex="0" onclick="filtrarCategoria('Liturgia', this)" class="tv-focusable cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full whitespace-nowrap transition-all">Liturgia y Eventos</button>
+        <button tabindex="0" onclick="filtrarCategoria('Reflexiones', this)" class="tv-focusable cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full whitespace-nowrap transition-all">Reflexión Diaria</button>
+        <button tabindex="0" onclick="filtrarCategoria('Audios', this)" class="tv-focusable cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full whitespace-nowrap transition-all"><i class="fa-solid fa-podcast text-vatican-gold mr-1"></i> Audios y Podcasts</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO BANNER / DESTACADO -->
+  <section class="relative bg-slate-950 border-b border-vatican-border overflow-hidden">
+    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1548625149-fc4a29cf7092?q=80&w=1600')] bg-cover bg-center opacity-25 filter blur-[1px]"></div>
+    <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-vatican-dark via-vatican-dark/90 to-transparent"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 md:py-20 flex flex-col items-start justify-center">
+      <span class="inline-flex items-center gap-1.5 bg-vatican-gold/20 text-vatican-gold border border-vatican-gold/30 px-3 py-1 rounded-full text-xs font-bold uppercase mb-3">
+        ✦ Transmisión Especial Vatican News
+      </span>
+      <h1 class="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white max-w-2xl leading-tight mb-3">
+        Ángelus y Bendición Apostólica - Papa Francisco
+      </h1>
+      <p class="text-slate-300 text-xs sm:text-sm max-w-xl mb-6 leading-relaxed">
+        Reflexión dominical del Santo Padre, intenciones de oración universal y bendición desde la Plaza de San Pedro.
+      </p>
+
+      <div class="flex flex-wrap gap-3">
+        <button tabindex="0" onclick="reproducirVideo('WJUQ8mHWsDk', 'Ángelus y Bendición Apostólica - Papa Francisco', 'Magisterio', 'Transmisión oficial del Ángelus dominical desde el Vaticano.')" 
+          class="tv-focusable bg-vatican-gold hover:bg-vatican-goldHover text-slate-950 px-6 py-3 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-vatican-gold/20 transition-all">
+          <i class="fa-solid fa-play"></i> Reproducir Ahora
+        </button>
+        <button tabindex="0" onclick="toggleFavoritoHero('WJUQ8mHWsDk')" id="btnHeroFav" class="tv-focusable bg-slate-800/80 hover:bg-slate-700 text-white border border-slate-700 px-5 py-3 rounded-xl font-semibold text-xs sm:text-sm flex items-center gap-2 transition-all">
+          <i class="fa-regular fa-star text-vatican-gold"></i> Guardar en Mi Lista
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO PRINCIPAL -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 id="tituloSeccion" class="font-serif text-xl sm:text-2xl font-bold text-white">Catálogo de Contenidos</h2>
+        <p class="text-xs text-slate-400 mt-0.5">Selecciona un video para reproducir o pulsa la estrella para añadir a Mi Lista</p>
+      </div>
+      <span id="contadorVideos" class="text-xs bg-slate-900 text-vatican-gold px-3.5 py-1 rounded-full border border-vatican-border font-medium">0 Contenidos</span>
+    </div>
+
+    <!-- GRILLA ADAPTATIVA -->
+    <div id="gridVideos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      <!-- Tarjetas insertadas por JavaScript -->
+    </div>
+  </main>
+
+  <!-- SECCIÓN INSTITUCIONAL / MODELO SAAS -->
+  <section id="planes" class="bg-slate-950 border-t border-vatican-border py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white mb-3">Servicio de Contenido SaaS para Instituciones</h2>
+        <p class="text-slate-400 text-xs sm:text-sm">Implementa MODO PEREGRINO en tu Parroquia, Colegio, Comunidad o Red de Medios.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- PLAN 1 -->
+        <div class="bg-vatican-card border border-vatican-border p-6 rounded-2xl flex flex-col justify-between">
+          <div>
+            <h3 class="font-serif font-bold text-lg text-white mb-2">Comunidad / Personal</h3>
+            <p class="text-xs text-slate-400 mb-6">Acceso a biblioteca y reflexiones diarias.</p>
+            <div class="text-3xl font-bold text-vatican-gold mb-6">Demo <span class="text-xs font-normal text-slate-400">/ acceso libre</span></div>
+            <ul class="text-xs text-slate-300 space-y-3 mb-8">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-vatican-gold"></i> Catálogo completo en HD/4K</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-vatican-gold"></i> Reproductor móvil y Smart TV</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-vatican-gold"></i> Guardado de Mi Lista</li>
+            </ul>
+          </div>
+          <button tabindex="0" onclick="contactarSaaS('Comunidad')" class="tv-focusable w-full bg-slate-800 hover:bg-slate-700 text-white py-2.5 rounded-xl font-semibold text-xs transition-colors">Probar Servicio</button>
+        </div>
+
+        <!-- PLAN 2 (DESTACADO) -->
+        <div class="bg-gradient-to-b from-slate-900 to-vatican-card border-2 border-vatican-gold p-6 rounded-2xl flex flex-col justify-between relative shadow-xl shadow-vatican-gold/10">
+          <span class="absolute -top-3 right-6 bg-vatican-gold text-slate-950 text-[10px] font-extrabold uppercase px-3 py-0.5 rounded-full">Licencia SaaS</span>
+          <div>
+            <h3 class="font-serif font-bold text-lg text-white mb-2">Parroquias y Colegios</h3>
+            <p class="text-xs text-slate-400 mb-6">Ideal para grupos de oracion, catequesis y formación.</p>
+            <div class="text-3xl font-bold text-vatican-gold mb-6">Institucional</div>
+            <ul class="text-xs text-slate-300 space-y-3 mb-8">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-vatican-gold"></i> Accesos multiusuario para feligreses</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-vatican-gold"></i> Materiales y guías de estudio</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-vatican-gold"></i> Dominio institucional personalizado</li>
+            </ul>
+          </div>
+          <button tabindex="0" onclick="contactarSaaS('Parroquia')" class="tv-focusable w-full bg-vatican-gold hover:bg-vatican-goldHover text-slate-950 py-2.5 rounded-xl font-bold text-xs transition-colors">Solicitar Demostración</button>
+        </div>
+
+        <!-- PLAN 3 -->
+        <div class="bg-vatican-card border border-vatican-border p-6 rounded-2xl flex flex-col justify-between">
+          <div>
+            <h3 class="font-serif font-bold text-lg text-white mb-2">Diócesis / Medios</h3>
+            <p class="text-xs text-slate-400 mb-6">Infraestructura dedicada de streaming católico.</p>
+            <div class="text-3xl font-bold text-vatican-gold mb-6">A Medida</div>
+            <ul class="text-xs text-slate-300 space-y-3 mb-8">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-vatican-gold"></i> Servidores dedicados CDN</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-vatican-gold"></i> Apps para iOS, Android y Smart TV</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-vatican-gold"></i> Integración con plataformas de pago</li>
+            </ul>
+          </div>
+          <button tabindex="0" onclick="contactarSaaS('Diocesis')" class="tv-focusable w-full bg-slate-800 hover:bg-slate-700 text-white py-2.5 rounded-xl font-semibold text-xs transition-colors">Consultar Plan</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-950 border-t border-vatican-border py-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-serif font-bold text-white">MODO PEREGRINO</span>
+        <span>— Contenidos Audiovisuales de Fe & Magisterio</span>
+      </div>
+      <p>Desarrollado para demostración SaaS alimentada con fuentes de Vatican News.</p>
+    </div>
+  </footer>
+
+  <!-- REPRODUCTOR MODAL COMPLETO -->
+  <div id="videoModal" onclick="cerrarModalBackdrop(event)" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md hidden flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-vatican-card border border-slate-700 w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl relative flex flex-col max-h-[95vh]" onclick="event.stopPropagation()">
+      
+      <!-- BOTÓN CERRAR -->
+      <button tabindex="0" onclick="cerrarModal()" class="tv-focusable absolute top-3 right-3 z-20 w-10 h-10 bg-slate-950/80 hover:bg-red-600 text-white rounded-full flex items-center justify-center border border-slate-700 transition-colors">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <!-- MARCO DEL REPRODUCTOR (IFRAME ANTI-BLOQUEO) -->
+      <div class="relative w-full aspect-video bg-black">
+        <iframe id="iframePlayer" class="w-full h-full" src="" title="Video Player" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <!-- DETALLES Y PROBADOR LIVE -->
+      <div class="p-4 sm:p-6 overflow-y-auto">
+        <div class="flex items-center justify-between gap-2 mb-2">
+          <div class="flex items-center gap-2">
+            <span id="modalCategoria" class="bg-vatican-gold/20 text-vatican-gold border border-vatican-gold/30 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase">Categoría</span>
+            <span class="text-xs text-slate-400"><i class="fa-solid fa-circle-check text-vatican-gold"></i> Vatican News Oficial</span>
+          </div>
+          <button id="btnModalFav" onclick="toggleFavoritoModal()" class="tv-focusable text-slate-300 hover:text-vatican-gold text-xs flex items-center gap-1.5 px-3 py-1 bg-slate-900 border border-slate-800 rounded-lg">
+            <i class="fa-regular fa-star text-vatican-gold"></i> Mi Lista
+          </button>
+        </div>
+
+        <h3 id="modalTitulo" class="font-serif text-lg sm:text-xl font-bold text-white mb-2">Título</h3>
+        <p id="modalDescripcion" class="text-slate-300 text-xs sm:text-sm mb-4 leading-relaxed">Descripción...</p>
+
+        <!-- CAMPO PROBADOR DE LINKS EN TIEMPO REAL -->
+        <div class="border-t border-vatican-border pt-4">
+          <label class="block text-[11px] font-semibold text-vatican-gold mb-1.5"><i class="fa-brands fa-youtube text-red-500 mr-1"></i> Probar cualquier video de YouTube aquí:</label>
+          <div class="flex flex-col sm:flex-row items-center gap-2">
+            <input type="text" id="customLinkInput" placeholder="Pega el enlace completo de YouTube (ej: https://www.youtube.com/watch?v=...)" 
+              tabindex="0" class="tv-focusable flex-1 w-full bg-slate-900 border border-vatican-border rounded-lg px-3 py-2 text-xs text-white placeholder-slate-500">
+            <button tabindex="0" onclick="cargarLinkPersonalizado()" class="tv-focusable w-full sm:w-auto bg-vatican-gold hover:bg-vatican-goldHover text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Cargar Video</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT PRINCIPAL -->
+  <script>
+    // BASE DE DATOS DE VIDEOS Y AUDIOS
+    const catalog = [
+      {
+        id: "WJUQ8mHWsDk",
+        titulo: "Ángelus y Bendición Apostólica - Papa Francisco",
+        categoria: "Magisterio",
+        descripcion: "Transmisión del Ángelus dominical con la reflexión sobre el Evangelio y la oración Mariana.",
+        duracion: "14 min",
+        tipo: "video"
+      },
+      {
+        id: "U0udzOsO7as",
+        titulo: "Audiencia General: Catequesis para los Fieles",
+        categoria: "Magisterio",
+        descripcion: "Mensaje semanal del Santo Padre transmitido desde la Plaza de San Pedro en Roma.",
+        duracion: "14 min",
+        tipo: "video"
+      },
+      {
+        id: "tkf2I5BlbAs",
+        titulo: "Homilía en Santa Marta: Los dos espíritus del mundo",
+        categoria: "Reflexiones",
+        descripcion: "Enseñanza matutina sobre el discernimiento entre el Espíritu de Dios y el espíritu del mundo.",
+        duracion: "1 min",
+        tipo: "video"
+      },
+      {
+        id: "aI7bQotscDE",
+        titulo: "Santa Misa y Homilía desde la Basílica Vaticana",
+        categoria: "Liturgia",
+        descripcion: "Celebración eucarística transmitida por los medios del Vaticano para la Iglesia Universal.",
+        duracion: "1 min",
+        tipo: "video"
+      },
+      {
+        id: "Wd2raJ32NsM",
+        titulo: "Especial Vaticano: Pecado y Corrupción en la Vida Cristiana",
+        categoria: "Documentales",
+        descripcion: "Documental y análisis teológico sobre las enseñanzas del Magisterio de la Santa Sede.",
+        duracion: "1 min",
+        tipo: "video"
+      },
+      {
+        id: "6x8Kpye8jwc",
+        titulo: "Documental: Historia y Tesoros de la Basílica de San Pedro",
+        categoria: "Documentales",
+        descripcion: "Recorrido histórico por el patrimonio sacro y arquitectónico del Vaticano.",
+        duracion: "12 min",
+        tipo: "video"
+      },
+      {
+        id: "M7lc1UVf-VE",
+        titulo: "Podcast Vatican Radio: Reflexión Espiritual Diaria",
+        categoria: "Audios",
+        descripcion: "Audio con el comentario al Evangelio del día y reflexiones de Radio Vaticana.",
+        duracion: "8 min",
+        tipo: "audio"
+      }
+    ];
+
+    let currentVideoId = null;
+    let favoritos = JSON.parse(localStorage.getItem('modo_peregrino_favs') || '[]');
+
+    // EXTRAER ID DE YOUTUBE ROBUSTO (Soporta shorts, enlaces cortos, embeds e IDs)
+    function extraerYouTubeId(url) {
+      if (!url) return null;
+      url = url.trim();
+      if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+      
+      const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/shorts\/)([^"&?\/\s]{11})/;
+      const match = url.match(regExp);
+      return (match && match[1]) ? match[1] : null;
+    }
+
+    // ARMAR URL EMBED DE YOUTUBE SIN COOKIES Y RESISTENTE A ERRORES 150/153
+    function construirEmbedUrl(id) {
+      return `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1`;
+    }
+
+    // RENDERIZAR CARDS DE VIDEOS
+    function renderizarVideos(lista) {
+      const grid = document.getElementById('gridVideos');
+      const contador = document.getElementById('contadorVideos');
+      grid.innerHTML = '';
+      contador.innerText = `${lista.length} Contenidos`;
+
+      if (lista.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full text-center py-16 text-slate-500">
+            <i class="fa-solid fa-folder-open text-4xl mb-3 block text-slate-600"></i>
+            No hay contenidos disponibles en esta categoría o búsqueda.
+          </div>
+        `;
+        return;
+      }
+
+      lista.forEach((item) => {
+        const isFav = favoritos.includes(item.id);
+        const card = document.createElement('div');
+        card.className = "tv-focusable bg-vatican-card border border-vatican-border hover:border-vatican-gold/50 rounded-xl overflow-hidden shadow-lg transition-all group cursor-pointer flex flex-col justify-between";
+        card.setAttribute('tabindex', '0');
+
+        const thumbnailUrl = `https://img.youtube.com/vi/${item.id}/hqdefault.jpg`;
+
+        card.innerHTML = `
+          <div>
+            <div class="relative aspect-video bg-slate-900 overflow-hidden" onclick="reproducirVideo('${item.id}', '${item.titulo.replace(/'/g, "\\'")}', '${item.categoria}', '${item.descripcion.replace(/'/g, "\\'")}')">
+              <img src="${thumbnailUrl}" alt="${item.titulo}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/20 transition-colors flex items-center justify-center">
+                <div class="w-11 h-11 bg-vatican-gold text-slate-950 rounded-full flex items-center justify-center font-bold shadow-lg transform group-hover:scale-110 transition-transform">
+                  <i class="fa-solid ${item.tipo === 'audio' ? 'fa-podcast' : 'fa-play'} text-sm pl-0.5"></i>
+                </div>
+              </div>
+              <span class="absolute bottom-2 right-2 bg-slate-950/90 text-white text-[10px] font-semibold px-2 py-0.5 rounded">${item.duracion}</span>
+              <span class="absolute top-2 left-2 bg-vatican-gold text-slate-950 font-extrabold text-[9px] uppercase px-2 py-0.5 rounded">${item.categoria}</span>
+            </div>
+            
+            <div class="p-4" onclick="reproducirVideo('${item.id}', '${item.titulo.replace(/'/g, "\\'")}', '${item.categoria}', '${item.descripcion.replace(/'/g, "\\'")}')">
+              <h3 class="font-bold text-xs sm:text-sm text-white group-hover:text-vatican-gold transition-colors line-clamp-2 mb-1.5">${item.titulo}</h3>
+              <p class="text-[11px] text-slate-400 line-clamp-2">${item.descripcion}</p>
+            </div>
+          </div>
+
+          <div class="px-4 pb-3 pt-2 border-t border-slate-800/60 flex items-center justify-between text-[11px]">
+            <span class="text-slate-400"><i class="fa-solid fa-circle-check text-vatican-gold mr-1"></i> Vatican News</span>
+            <button onclick="toggleFavoritoCard(event, '${item.id}')" class="text-slate-400 hover:text-vatican-gold p-1 transition-colors">
+              <i class="${isFav ? 'fa-solid text-vatican-gold' : 'fa-regular'} fa-star text-sm"></i>
+            </button>
+          </div>
+        `;
+
+        // Abrir con tecla Enter en Smart TV
+        card.onkeydown = (e) => {
+          if (e.key === 'Enter') {
+            reproducirVideo(item.id, item.titulo, item.categoria, item.descripcion);
+          }
+        };
+
+        grid.appendChild(card);
+      });
+    }
+
+    // REPRODUCIR VIDEO EN MODAL
+    function reproducirVideo(id, titulo, categoria, descripcion) {
+      currentVideoId = id;
+      const embedUrl = construirEmbedUrl(id);
+      
+      document.getElementById('iframePlayer').src = embedUrl;
+      document.getElementById('modalTitulo').innerText = titulo;
+      document.getElementById('modalCategoria').innerText = categoria;
+      document.getElementById('modalDescripcion').innerText = descripcion;
+      
+      actualizarBotonModalFav();
+      document.getElementById('videoModal').classList.remove('hidden');
+    }
+
+    // CERRAR MODAL
+    function cerrarModal() {
+      document.getElementById('iframePlayer').src = '';
+      document.getElementById('videoModal').classList.add('hidden');
+    }
+
+    function cerrarModalBackdrop(e) {
+      if (e.target.id === 'videoModal') cerrarModal();
+    }
+
+    // FILTRAR POR CATEGORÍA
+    function filtrarCategoria(cat, btnElement) {
+      if (btnElement) {
+        document.querySelectorAll('.cat-btn').forEach(b => {
+          b.classList.remove('bg-vatican-gold', 'text-slate-950', 'font-bold');
+          b.classList.add('bg-slate-800', 'text-slate-300');
+        });
+        btnElement.classList.remove('bg-slate-800', 'text-slate-300');
+        btnElement.classList.add('bg-vatican-gold', 'text-slate-950', 'font-bold');
+      }
+
+      document.getElementById('tituloSeccion').innerText = cat === 'todas' ? 'Catálogo de Contenidos' : (cat === 'favoritos' ? 'Mi Lista de Contenidos' : `Categoría: ${cat}`);
+
+      if (cat === 'todas') {
+        renderizarVideos(catalog);
+      } else if (cat === 'favoritos') {
+        renderizarVideos(catalog.filter(v => favoritos.includes(v.id)));
+      } else {
+        renderizarVideos(catalog.filter(v => v.categoria.toLowerCase() === cat.toLowerCase()));
+      }
+    }
+
+    // BUSCADORES
+    function buscarVideos() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      renderizarVideos(catalog.filter(v => v.titulo.toLowerCase().includes(q) || v.descripcion.toLowerCase().includes(q)));
+    }
+
+    function buscarVideosMobile() {
+      const q = document.getElementById('searchInputMobile').value.toLowerCase();
+      renderizarVideos(catalog.filter(v => v.titulo.toLowerCase().includes(q) || v.descripcion.toLowerCase().includes(q)));
+    }
+
+    // GESTIÓN DE FAVORITOS (LOCALSTORAGE)
+    function toggleFavoritoCard(e, id) {
+      e.stopPropagation();
+      if (favoritos.includes(id)) {
+        favoritos = favoritos.filter(item => item !== id);
+      } else {
+        favoritos.push(id);
+      }
+      localStorage.setItem('modo_peregrino_favs', JSON.stringify(favoritos));
+      renderizarVideos(catalog);
+    }
+
+    function toggleFavoritoModal() {
+      if (!currentVideoId) return;
+      if (favoritos.includes(currentVideoId)) {
+        favoritos = favoritos.filter(item => item !== currentVideoId);
+      } else {
+        favoritos.push(currentVideoId);
+      }
+      localStorage.setItem('modo_peregrino_favs', JSON.stringify(favoritos));
+      actualizarBotonModalFav();
+      renderizarVideos(catalog);
+    }
+
+    function toggleFavoritoHero(id) {
+      if (favoritos.includes(id)) {
+        favoritos = favoritos.filter(item => item !== id);
+      } else {
+        favoritos.push(id);
+      }
+      localStorage.setItem('modo_peregrino_favs', JSON.stringify(favoritos));
+      const btn = document.getElementById('btnHeroFav');
+      btn.innerHTML = favoritos.includes(id) ? '<i class="fa-solid fa-star text-vatican-gold"></i> En Mi Lista' : '<i class="fa-regular fa-star text-vatican-gold"></i> Guardar en Mi Lista';
+    }
+
+    function actualizarBotonModalFav() {
+      const btn = document.getElementById('btnModalFav');
+      if (currentVideoId && favoritos.includes(currentVideoId)) {
+        btn.innerHTML = '<i class="fa-solid fa-star text-vatican-gold"></i> En Mi Lista';
+      } else {
+        btn.innerHTML = '<i class="fa-regular fa-star text-vatican-gold"></i> Mi Lista';
+      }
+    }
+
+    // CARGAR LINK PERSONALIZADO
+    function abrirProbadorDirecto() {
+      reproducirVideo('WJUQ8mHWsDk', 'Probador de Enlaces YouTube', 'Prueba Live', 'Pega cualquier enlace de YouTube para verificar su reproducción en Modo Peregrino.');
+    }
+
+    function cargarLinkPersonalizado() {
+      const val = document.getElementById('customLinkInput').value;
+      const id = extraerYouTubeId(val);
+      if (id) {
+        reproducirVideo(id, 'Video Personalizado Cargado', 'Prueba Live', `Contenido reproducido desde el ID: ${id}`);
+        document.getElementById('customLinkInput').value = '';
+      } else {
+        alert('Por favor ingresa un enlace válido de YouTube.');
+      }
+    }
+
+    function contactarSaaS(plan) {
+      alert(`Has seleccionado el plan ${plan}. Esta función conectará con tu pasarela de pago o formulario de suscripción.`);
+    }
+
+    // NAVEGACIÓN TECLADO Y SMART TV
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        cerrarModal();
+      }
+    });
+
+    // INICIALIZACIÓN
+    window.onload = () => {
+      renderizarVideos(catalog);
+    };
+  </script>
+</body>
+</html>
