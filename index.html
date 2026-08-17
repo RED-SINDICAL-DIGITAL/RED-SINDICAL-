@@ -3,17 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MODO PEREGRINO - Streaming Católico & Magisterio del Papa León</title>
+  <title>MODO PEREGRINO - Streaming Católico & Vatican News Live</title>
   
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Tipografía Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- FontAwesome Iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <script>
@@ -65,87 +62,94 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-vatican-gold selection:text-black">
 
-  <!-- ENCABEZADO Y NAVEGACIÓN -->
   <header class="sticky top-0 z-40 bg-vatican-dark/95 backdrop-blur-md border-b border-vatican-border">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-4">
       
-      <!-- LOGO -->
       <div tabindex="0" onclick="resetearVista()" class="tv-focusable flex items-center gap-3 cursor-pointer rounded-xl p-1.5 transition-all">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-vatican-gold to-yellow-600 flex items-center justify-center text-slate-950 font-extrabold text-xl shadow-lg shadow-vatican-gold/20">
           ✝
         </div>
         <div>
           <span class="font-serif font-bold text-lg sm:text-xl tracking-wider text-white block leading-none">MODO PEREGRINO</span>
-          <span class="text-[9px] sm:text-[10px] tracking-widest text-vatican-gold uppercase font-semibold">Magisterio del Papa León</span>
+          <span class="text-[9px] sm:text-[10px] tracking-widest text-vatican-gold uppercase font-semibold">Vatican News & Magisterio</span>
         </div>
       </div>
 
-      <!-- BUSCADOR -->
       <div class="flex-1 max-w-md mx-2 hidden sm:block">
         <div class="relative">
           <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-          <input type="text" id="searchInput" oninput="buscarContenido()" placeholder="Buscar encíclicas, homilías del Papa León, audios..." 
+          <input type="text" id="searchInput" oninput="buscarContenido()" placeholder="Buscar en Vatican News, homilías, Shorts..." 
             tabindex="0" class="tv-focusable w-full pl-10 pr-4 py-2 bg-slate-900 border border-vatican-border rounded-full text-xs sm:text-sm text-slate-200 placeholder-slate-400 focus:border-vatican-gold">
         </div>
       </div>
 
-      <!-- BOTONES DE ACCIÓN -->
       <div class="flex items-center gap-2">
+        <button tabindex="0" onclick="reproducirVideo('5lfWxoaPGRg', 'Vatican Media Live - Señal Oficial en Vivo', 'Vatican Live', 'Transmisión continua de las actividades de la Santa Sede y eventos pontificios.')" 
+          class="tv-focusable flex items-center gap-2 bg-red-600/20 hover:bg-red-600/30 border border-red-500/50 text-red-400 px-3.5 py-2 rounded-full text-xs font-semibold animate-pulse">
+          <i class="fa-solid fa-circle text-[10px] text-red-500"></i> En Vivo
+        </button>
         <button tabindex="0" onclick="abrirProbadorDirecto()" class="tv-focusable flex items-center gap-2 bg-vatican-gold/10 hover:bg-vatican-gold/20 border border-vatican-gold/40 text-vatican-gold px-3.5 py-2 rounded-full text-xs font-semibold">
           <i class="fa-brands fa-youtube text-red-500"></i> Probador URL
         </button>
-        <a href="#planes" tabindex="0" class="tv-focusable hidden md:inline-flex bg-vatican-gold hover:bg-vatican-goldHover text-slate-950 font-bold px-4 py-2 rounded-full text-xs shadow-md transition-all">
-          Suscripción SaaS
-        </a>
       </div>
     </div>
 
-    <!-- CATEGORÍAS (ESTILO FORMED) -->
     <nav class="border-t border-vatican-border bg-slate-950/80">
       <div class="max-w-7xl mx-auto px-4 flex items-center gap-2 overflow-x-auto py-2.5 no-scrollbar text-xs">
         <button tabindex="0" onclick="filtrarCategoria('todas', this)" class="tv-focusable cat-btn active-cat bg-vatican-gold text-slate-950 font-bold px-4 py-1.5 rounded-full whitespace-nowrap transition-all">Inicio</button>
         <button tabindex="0" onclick="filtrarCategoria('favoritos', this)" class="tv-focusable cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full whitespace-nowrap transition-all"><i class="fa-solid fa-star text-vatican-gold mr-1"></i> Mi Lista</button>
+        <button tabindex="0" onclick="filtrarCategoria('Vatican Shorts', this)" class="tv-focusable cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full whitespace-nowrap transition-all"><i class="fa-solid fa-bolt text-vatican-gold mr-1"></i> Vatican Shorts</button>
         <button tabindex="0" onclick="filtrarCategoria('Papa León', this)" class="tv-focusable cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full whitespace-nowrap transition-all">Magisterio Papa León</button>
         <button tabindex="0" onclick="filtrarCategoria('Calendario', this)" class="tv-focusable cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full whitespace-nowrap transition-all"><i class="fa-solid fa-calendar-day text-vatican-gold mr-1"></i> Calendario Litúrgico</button>
         <button tabindex="0" onclick="filtrarCategoria('Documentales', this)" class="tv-focusable cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full whitespace-nowrap transition-all">Documentales</button>
         <button tabindex="0" onclick="filtrarCategoria('Audios', this)" class="tv-focusable cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full whitespace-nowrap transition-all"><i class="fa-solid fa-headphones text-vatican-gold mr-1"></i> Audios y Audiolibros</button>
-        <button tabindex="0" onclick="filtrarCategoria('Niños', this)" class="tv-focusable cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full whitespace-nowrap transition-all">Infantil & Catequesis</button>
       </div>
     </nav>
   </header>
 
-  <!-- BANNER DESTACADO (PAPA LEÓN) -->
   <section class="relative bg-slate-950 border-b border-vatican-border overflow-hidden">
     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1548625149-fc4a29cf7092?q=80&w=1600')] bg-cover bg-center opacity-20 filter blur-[1px]"></div>
     <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-vatican-dark via-vatican-dark/90 to-transparent"></div>
     
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 md:py-20 flex flex-col items-start justify-center">
-      <span class="inline-flex items-center gap-1.5 bg-vatican-gold/20 text-vatican-gold border border-vatican-gold/30 px-3 py-1 rounded-full text-xs font-bold uppercase mb-3">
-        ✦ Magisterio del Papa León
+      <span class="inline-flex items-center gap-2 bg-red-600/20 text-red-400 border border-red-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase mb-3">
+        <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span> Transmisión en Vivo - Vatican Media
       </span>
       <h1 class="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white max-w-2xl leading-tight mb-3">
-        Ángelus y Encíclica Sobre la Doctrina Social - Papa León
+        Señal Oficial en Vivo desde la Ciudad del Vaticano
       </h1>
       <p class="text-slate-300 text-xs sm:text-sm max-w-xl mb-6 leading-relaxed">
-        Exhortación apostólica, reflexiones sobre la fe, la justicia social y la bendición solemne desde la Ciudad del Vaticano.
+        Sigue en directo las ceremonias litúrgicas, Ángelus, audiencias generales y transmisiones oficiales de Vatican News en español.
       </p>
 
       <div class="flex flex-wrap gap-3">
-        <button tabindex="0" onclick="reproducirVideo('WJUQ8mHWsDk', 'Ángelus y Encíclica Sobre la Doctrina Social - Papa León', 'Papa León', 'Enseñanza solemne del Papa León sobre el Magisterio de la Iglesia.')" 
+        <button tabindex="0" onclick="reproducirVideo('5lfWxoaPGRg', 'Vatican Media Live - Español', 'Vatican Live', 'Señal continua en vivo del Vaticano en español.')" 
           class="tv-focusable bg-vatican-gold hover:bg-vatican-goldHover text-slate-950 px-6 py-3 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-vatican-gold/20 transition-all">
-          <i class="fa-solid fa-play"></i> Reproducir Ahora
+          <i class="fa-solid fa-play"></i> Sintonizar en Vivo
         </button>
-        <button tabindex="0" onclick="toggleFavoritoHero('WJUQ8mHWsDk')" id="btnHeroFav" class="tv-focusable bg-slate-800/80 hover:bg-slate-700 text-white border border-slate-700 px-5 py-3 rounded-xl font-semibold text-xs sm:text-sm flex items-center gap-2 transition-all">
+        <button tabindex="0" onclick="toggleFavoritoHero('5lfWxoaPGRg')" id="btnHeroFav" class="tv-focusable bg-slate-800/80 hover:bg-slate-700 text-white border border-slate-700 px-5 py-3 rounded-xl font-semibold text-xs sm:text-sm flex items-center gap-2 transition-all">
           <i class="fa-regular fa-star text-vatican-gold"></i> Guardar en Mi Lista
         </button>
       </div>
     </div>
   </section>
 
-  <!-- CONTENIDO PRINCIPAL ESTILO FORMED (CARRUSELES HORIZONTALES) -->
   <main id="mainContainer" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
 
-    <!-- SECCIÓN 1: CALENDARIO LITÚRGICO -->
+    <section>
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="font-serif text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-bolt text-vatican-gold"></i> Vatican Shorts (Mensajes Rápidos)
+          </h2>
+          <p class="text-xs text-slate-400">Reflexiones breves y cápsulas en formato vertical</p>
+        </div>
+        <span class="text-[10px] bg-slate-800 text-vatican-gold border border-vatican-gold/30 px-2.5 py-1 rounded-full">Actualización Diaria</span>
+      </div>
+      <div id="shortsRail" class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+        </div>
+    </section>
+
     <section>
       <div class="flex items-center justify-between mb-4">
         <div>
@@ -156,34 +160,29 @@
         </div>
       </div>
       <div id="liturgicalRail" class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
-        <!-- Tarjetas diarias -->
-      </div>
+        </div>
     </section>
 
-    <!-- SECCIÓN 2: LO MÁS VISTO / TOP 10 (ESTILO FORMED / NETFLIX) -->
     <section>
       <div class="flex items-center justify-between mb-4">
         <div>
           <h2 class="font-serif text-lg sm:text-xl font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-fire text-vatican-gold"></i> Top 10 Más Vistos de la Semana
+            <i class="fa-solid fa-fire text-vatican-gold"></i> Top 10 Mas Vistos de la Semana
           </h2>
           <p class="text-xs text-slate-400">Los contenidos más reproducidos en la comunidad</p>
         </div>
       </div>
       <div id="top10Rail" class="flex gap-6 overflow-x-auto pb-4 no-scrollbar">
-        <!-- Generado dinámicamente -->
-      </div>
+        </div>
     </section>
 
-    <!-- SECCIÓN 3: MAGISTERIO DEL PAPA LEÓN -->
     <section>
       <div class="flex items-center justify-between mb-4">
-        <h2 class="font-serif text-lg sm:text-xl font-bold text-white">Magisterio & Documentos de Papa León</h2>
+        <h2 class="font-serif text-lg sm:text-xl font-bold text-white">Magisterio & Últimos Videos de Papa León</h2>
       </div>
       <div id="papeLeonRail" class="flex gap-4 overflow-x-auto pb-4 no-scrollbar"></div>
     </section>
 
-    <!-- SECCIÓN 4: AUDIOS, PODCASTS Y AUDIOLIBROS -->
     <section>
       <div class="flex items-center justify-between mb-4">
         <h2 class="font-serif text-lg sm:text-xl font-bold text-white flex items-center gap-2">
@@ -193,7 +192,6 @@
       <div id="audiosRail" class="flex gap-4 overflow-x-auto pb-4 no-scrollbar"></div>
     </section>
 
-    <!-- SECCIÓN 5: CATEQUESIS E INFANTIL -->
     <section>
       <div class="flex items-center justify-between mb-4">
         <h2 class="font-serif text-lg sm:text-xl font-bold text-white">Niños & Catequesis Familiar</h2>
@@ -203,7 +201,6 @@
 
   </main>
 
-  <!-- VISTA DE BUSQUEDA / GRILLA FILTRADA (OCULTA POR DEFECTO) -->
   <section id="gridViewSection" class="hidden max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="flex items-center justify-between mb-6">
       <h2 id="gridTitle" class="font-serif text-xl sm:text-2xl font-bold text-white">Resultados</h2>
@@ -212,7 +209,6 @@
     <div id="gridContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"></div>
   </section>
 
-  <!-- MODELO SAAS INSTITUCIONAL -->
   <section id="planes" class="bg-slate-950 border-t border-vatican-border py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-2xl mx-auto mb-12">
@@ -252,18 +248,16 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="bg-slate-950 border-t border-vatican-border py-8 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2">
         <span class="font-serif font-bold text-white">MODO PEREGRINO</span>
-        <span>— Inspirado en Formed.org & Magisterio del Papa León</span>
+        <span>— Inspirado en Formed.org & Vatican News</span>
       </div>
       <p>Desarrollado para distribución y streaming de contenidos católicos.</p>
     </div>
   </footer>
 
-  <!-- REPRODUCTOR MODAL COMPLETO CON PROBADOR DE LINKS -->
   <div id="videoModal" onclick="cerrarModalBackdrop(event)" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md hidden flex items-center justify-center p-2 sm:p-4">
     <div class="bg-vatican-card border border-slate-700 w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl relative flex flex-col max-h-[95vh]" onclick="event.stopPropagation()">
       
@@ -291,11 +285,10 @@
         <h3 id="modalTitulo" class="font-serif text-lg sm:text-xl font-bold text-white mb-2">Título</h3>
         <p id="modalDescripcion" class="text-slate-300 text-xs sm:text-sm mb-4 leading-relaxed">Descripción...</p>
 
-        <!-- PROBADOR DIRECTO EN MODAL -->
         <div class="border-t border-vatican-border pt-4">
           <label class="block text-[11px] font-semibold text-vatican-gold mb-1.5"><i class="fa-brands fa-youtube text-red-500 mr-1"></i> Probador Universal de Enlaces de YouTube:</label>
           <div class="flex flex-col sm:flex-row items-center gap-2">
-            <input type="text" id="customLinkInput" placeholder="Pega un enlace de YouTube aquí..." 
+            <input type="text" id="customLinkInput" placeholder="Pega un enlace de YouTube o Short aquí..." 
               tabindex="0" class="tv-focusable flex-1 w-full bg-slate-900 border border-vatican-border rounded-lg px-3 py-2 text-xs text-white placeholder-slate-500">
             <button tabindex="0" onclick="cargarLinkPersonalizado()" class="tv-focusable w-full sm:w-auto bg-vatican-gold hover:bg-vatican-goldHover text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Cargar Video</button>
           </div>
@@ -304,37 +297,79 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT -->
   <script>
-    // BASE DE DATOS AMPLIADA (CON PAPA LEÓN Y FORMATO FORMED)
-    const catalog = [
+    // BASE DE DATOS LOCAL CON VATICAN NEWS Y SHORTS
+    let catalog = [
       {
-        id: "WJUQ8mHWsDk",
-        titulo: "Ángelus y Bendición Apostólica - Papa León",
-        categoria: "Papa León",
-        descripcion: "Mensaje especial del Papa León sobre la esperanza, la doctrina social y la bendición solemne.",
-        duracion: "15 min",
+        id: "5lfWxoaPGRg",
+        titulo: "Vatican Media Live - Transmisión en Vivo",
+        categoria: "Vatican Live",
+        descripcion: "Señal oficial e ininterrumpida en español desde el Vaticano.",
+        duracion: "EN VIVO",
         tipo: "video",
         top: 1
       },
       {
-        id: "U0udzOsO7as",
-        titulo: "Encíclica Solemne: La Fe y la Verdad - Papa León",
+        id: "pT_jmrBVafs",
+        titulo: "Angelus - Papa León XIV",
         categoria: "Papa León",
-        descripcion: "Catequesis doctrinal profunda sobre los desafíos del cristiano en el mundo contemporáneo.",
-        duracion: "22 min",
+        descripcion: "Oración mariana del Ángelus y bendición desde la Plaza de San Pedro.",
+        duracion: "19 min",
         tipo: "video",
         top: 2
       },
       {
-        id: "tkf2I5BlbAs",
-        titulo: "Homilía en la Basílica de San Pedro - Papa León",
+        id: "B_NXnHU04u4",
+        titulo: "Solemnidad de la Asunción - Santa Misa",
         categoria: "Papa León",
-        descripcion: "Reflexión del Santo Padre sobre el Evangelio y el discernimiento espiritual.",
-        duracion: "18 min",
+        descripcion: "Celebración eucarística presidida por el Papa León XIV.",
+        duracion: "1h 16m",
         tipo: "video",
         top: 3
       },
+      {
+        id: "5ob7ZyXpsvU",
+        titulo: "Ángelus y Reflexión Dominical",
+        categoria: "Papa León",
+        descripcion: "Reflexión sobre el Evangelio y saludos a los peregrinos.",
+        duracion: "17 min",
+        tipo: "video",
+        top: 4
+      },
+      // SHORTS DE VATICAN NEWS
+      {
+        id: "rG_gmLYcMdw",
+        titulo: "Sean cercanos a su grey - Papa León XIV",
+        categoria: "Vatican Shorts",
+        descripcion: "Mensaje breve a los pastores e iglesias locales.",
+        duracion: "0:50",
+        tipo: "short"
+      },
+      {
+        id: "5rI21aZHe_E",
+        titulo: "El poder de transformar nuestras actitudes",
+        categoria: "Vatican Shorts",
+        descripcion: "Reflexión espiritual sobre la oración en la vida diaria.",
+        duracion: "0:23",
+        tipo: "short"
+      },
+      {
+        id: "FfmZoFRtOhU",
+        titulo: "Martirio quiere decir testimonio",
+        categoria: "Vatican Shorts",
+        descripcion: "Cápsula del Santo Padre sobre los testigos de la fe.",
+        duracion: "0:15",
+        tipo: "short"
+      },
+      {
+        id: "pF5TrFOvVuA",
+        titulo: "La justicia: Antídoto contra la corrupción",
+        categoria: "Vatican Shorts",
+        descripcion: "Enseñanza sobre la doctrina social y las virtudes.",
+        duracion: "1:00",
+        tipo: "short"
+      },
+      // OTROS CONTENIDOS
       {
         id: "6x8Kpye8jwc",
         titulo: "Documental: Los Secretos del Vaticano y el Papado",
@@ -342,7 +377,7 @@
         descripcion: "Recorrido histórico por los archivos y el patrimonio sacro de la Santa Sede.",
         duracion: "45 min",
         tipo: "video",
-        top: 4
+        top: 5
       },
       {
         id: "M7lc1UVf-VE",
@@ -351,7 +386,7 @@
         descripcion: "Lectura dramatizada con reflexiones teológicas para la vida diaria.",
         duracion: "30 min",
         tipo: "audio",
-        top: 5
+        top: 6
       },
       {
         id: "aI7bQotscDE",
@@ -360,25 +395,7 @@
         descripcion: "Animación didáctica para explicar el Evangelio a los más pequeños.",
         duracion: "10 min",
         tipo: "video",
-        top: 6
-      },
-      {
-        id: "Wd2raJ32NsM",
-        titulo: "Podcast Vaticano: Meditación Diaria con Papa León",
-        categoria: "Audios",
-        descripcion: "Audio diario de 5 minutos para acompañar la oración del peregrino.",
-        duracion: "8 min",
-        tipo: "audio",
         top: 7
-      },
-      {
-        id: "WJUQ8mHWsDk",
-        titulo: "Vida de los Santos: San Francisco de Asís y el Magisterio",
-        categoria: "Documentales",
-        descripcion: "Historia de fe y testimonio evangélico explicada por teólogos.",
-        duracion: "35 min",
-        tipo: "video",
-        top: 8
       }
     ];
 
@@ -393,7 +410,7 @@
     let favoritos = JSON.parse(localStorage.getItem('modo_peregrino_favs') || '[]');
     let currentVideoId = null;
 
-    // EXTRAER ID DE YOUTUBE
+    // EXTRAER ID DE YOUTUBE (INCLUIDO FORMATO SHORTS)
     function extraerYouTubeId(url) {
       if (!url) return null;
       url = url.trim();
@@ -407,7 +424,7 @@
       return `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1`;
     }
 
-    // CREAR TARJETA DE VIDEO ESTILO FORMED
+    // CREAR TARJETA DE VIDEO ESTILO FORMED (HORIZONTAL)
     function crearCard(item) {
       const isFav = favoritos.includes(item.id);
       const card = document.createElement('div');
@@ -440,8 +457,76 @@
       return card;
     }
 
-    // CARGAR CARRUSELES
+    // CREAR TARJETA DE VATICAN SHORTS (VERTICAL 9:16)
+    function crearShortCard(item) {
+      const isFav = favoritos.includes(item.id);
+      const card = document.createElement('div');
+      card.className = "tv-focusable min-w-[160px] max-w-[180px] bg-vatican-card border border-vatican-border hover:border-vatican-gold rounded-xl overflow-hidden shadow-lg transition-all group cursor-pointer flex-shrink-0 flex flex-col justify-between";
+      card.setAttribute('tabindex', '0');
+
+      card.innerHTML = `
+        <div onclick="reproducirVideo('${item.id}', '${item.titulo}', '${item.categoria}', '${item.descripcion}')">
+          <div class="relative aspect-[9/16] bg-slate-900 overflow-hidden">
+            <img src="https://img.youtube.com/vi/${item.id}/hqdefault.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+            <div class="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded flex items-center gap-1">
+              <i class="fa-solid fa-bolt"></i> SHORT
+            </div>
+            <div class="absolute bottom-2 left-2 right-2">
+              <h4 class="font-bold text-xs text-white line-clamp-2 drop-shadow-md">${item.titulo}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="p-2 flex items-center justify-between text-[10px] border-t border-slate-800 bg-slate-950/80">
+          <span class="text-vatican-gold font-semibold">Vatican Short</span>
+          <button onclick="toggleFavoritoCard(event, '${item.id}')" class="text-slate-400 hover:text-vatican-gold p-1">
+            <i class="${isFav ? 'fa-solid text-vatican-gold' : 'fa-regular'} fa-star"></i>
+          </button>
+        </div>
+      `;
+      return card;
+    }
+
+    // AUTO-ACTUALIZACIÓN VÍA RSS DE YOUTUBE (VATICAN NEWS)
+    async function cargarFeedVaticanoRSS() {
+      try {
+        // Canal Vatican News Español ID: UC7E-LYc1wivk33iYT5bR3zQ
+        const feedUrl = "https://www.youtube.com/feeds/videos.xml?channel_id=UC7E-LYc1wivk33iYT5bR3zQ";
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
+        
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (data && data.items) {
+          data.items.slice(0, 8).forEach(item => {
+            const videoId = extraerYouTubeId(item.link);
+            if (videoId && !catalog.some(c => c.id === videoId)) {
+              const esShort = item.title.toLowerCase().includes('short') || item.link.includes('/shorts/');
+              catalog.unshift({
+                id: videoId,
+                titulo: item.title,
+                categoria: esShort ? "Vatican Shorts" : "Papa León",
+                descripcion: "Publicado en Vatican News: " + item.pubDate,
+                duracion: esShort ? "0:60" : "Reciente",
+                tipo: esShort ? "short" : "video"
+              });
+            }
+          });
+          cargarHome();
+        }
+      } catch (err) {
+        console.log("Cargando catálogo base local de Vatican News.");
+      }
+    }
+
+    // CARGAR CARRUSELES EN HOME
     function cargarHome() {
+      // Shorts
+      const shortsRail = document.getElementById('shortsRail');
+      shortsRail.innerHTML = '';
+      const shortsList = catalog.filter(i => i.tipo === 'short' || i.categoria === 'Vatican Shorts');
+      shortsList.forEach(s => shortsRail.appendChild(crearShortCard(s)));
+
       // Litúrgico
       const litRail = document.getElementById('liturgicalRail');
       litRail.innerHTML = '';
@@ -477,15 +562,17 @@
         topRail.appendChild(topCard);
       });
 
-      // Carruseles temáticos
+      // Papa León / Vaticano
       const pRail = document.getElementById('papeLeonRail');
       pRail.innerHTML = '';
-      catalog.filter(i => i.categoria === 'Papa León').forEach(i => pRail.appendChild(crearCard(i)));
+      catalog.filter(i => i.categoria === 'Papa León' || i.categoria === 'Vatican Live').forEach(i => pRail.appendChild(crearCard(i)));
 
+      // Audios
       const aRail = document.getElementById('audiosRail');
       aRail.innerHTML = '';
       catalog.filter(i => i.categoria === 'Audios').forEach(i => aRail.appendChild(crearCard(i)));
 
+      // Niños
       const kRail = document.getElementById('kidsRail');
       kRail.innerHTML = '';
       catalog.filter(i => i.categoria === 'Niños').forEach(i => kRail.appendChild(crearCard(i)));
@@ -523,7 +610,9 @@
         return;
       }
 
-      lista.forEach(item => gridContainer.appendChild(crearCard(item)));
+      lista.forEach(item => {
+        gridContainer.appendChild(item.tipo === 'short' ? crearShortCard(item) : crearCard(item));
+      });
     }
 
     function buscarContenido() {
@@ -539,7 +628,9 @@
       gridContainer.innerHTML = '';
 
       const filtrados = catalog.filter(v => v.titulo.toLowerCase().includes(q) || v.descripcion.toLowerCase().includes(q));
-      filtrados.forEach(item => gridContainer.appendChild(crearCard(item)));
+      filtrados.forEach(item => {
+        gridContainer.appendChild(item.tipo === 'short' ? crearShortCard(item) : crearCard(item));
+      });
     }
 
     function resetearVista() {
@@ -595,22 +686,25 @@
     }
 
     function abrirProbadorDirecto() {
-      reproducirVideo('WJUQ8mHWsDk', 'Probador Universal de YouTube', 'Prueba Live', 'Pega cualquier enlace de YouTube para comprobar su reproducción.');
+      reproducirVideo('5lfWxoaPGRg', 'Probador Universal de YouTube', 'Vatican Live', 'Pega cualquier enlace de YouTube o Short para comprobar su reproducción.');
     }
 
     function cargarLinkPersonalizado() {
       const val = document.getElementById('customLinkInput').value;
       const id = extraerYouTubeId(val);
       if (id) {
-        reproducirVideo(id, 'Video Cargado Correctamente', 'Prueba Live', `Reproduciendo ID: ${id}`);
+        reproducirVideo(id, 'Video Cargado Correctamente', 'Contenido Personalizado', `Reproduciendo ID: ${id}`);
         document.getElementById('customLinkInput').value = '';
       } else {
-        alert('Ingresa un enlace válido de YouTube.');
+        alert('Ingresa un enlace válido de YouTube o Short.');
       }
     }
 
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarModal(); });
-    window.onload = () => cargarHome();
+    window.onload = () => {
+      cargarHome();
+      cargarFeedVaticanoRSS(); // Ejecuta la actualización en vivo desde el Vaticano
+    };
   </script>
 </body>
 </html>
